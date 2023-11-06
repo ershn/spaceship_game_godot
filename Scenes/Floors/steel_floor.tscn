@@ -1,0 +1,24 @@
+[gd_scene load_steps=7 format=3 uid="uid://cvcui8ep0i7h5"]
+
+[ext_resource type="PackedScene" uid="uid://dgpedoelpv5ur" path="res://Scenes/floor.tscn" id="1_qktc5"]
+[ext_resource type="Resource" uid="uid://bcxdkjlwqniwv" path="res://Definitions/Structures/steel_floor.tres" id="2_gn6ij"]
+[ext_resource type="Script" path="res://Scripts/TileMaps/AtlasTileRef.cs" id="3_kttkv"]
+[ext_resource type="Script" path="res://Scripts/Structures/StructureTileGraphicsDef.cs" id="4_wyajv"]
+
+[sub_resource type="Resource" id="Resource_3ycd2"]
+script = ExtResource("3_kttkv")
+AtlasId = 0
+AtlasCoords = Vector2i(0, 0)
+AlternativeId = 0
+
+[sub_resource type="Resource" id="Resource_44hys"]
+script = ExtResource("4_wyajv")
+TileRef = SubResource("Resource_3ycd2")
+
+[node name="SteelFloor" instance=ExtResource("1_qktc5")]
+
+[node name="DefHolder" parent="." index="1"]
+FloorDef = ExtResource("2_gn6ij")
+
+[node name="StructureTileGraphics" parent="." index="12"]
+TileGraphicsDef = SubResource("Resource_44hys")

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dgpedoelpv5ur"]
+
+[ext_resource type="PackedScene" uid="uid://bgjabsb56erim" path="res://Scenes/structure.tscn" id="1_8w7uk"]
+[ext_resource type="Script" path="res://Scripts/Structures/Floors/FloorConstructor.cs" id="2_a0v33"]
+[ext_resource type="Script" path="res://Scripts/Structures/Floors/FloorDefHolder.cs" id="2_ysn7w"]
+
+[node name="Floor" instance=ExtResource("1_8w7uk")]
+
+[node name="DefHolder" type="Node" parent="." index="1"]
+script = ExtResource("2_ysn7w")
+
+[node name="FloorConstructor" type="Node" parent="." index="5"]
+script = ExtResource("2_a0v33")
+
+[node name="StructureDeconstructor" parent="." index="8" node_paths=PackedStringArray("_destructor", "_canceler", "_deconstructionWork")]
+_destructor = NodePath("../Destructor")
+_canceler = NodePath("../Canceler")
+_deconstructionWork = NodePath("../DeconstructionWork")

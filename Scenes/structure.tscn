@@ -1,0 +1,57 @@
+[gd_scene load_steps=12 format=3 uid="uid://bgjabsb56erim"]
+
+[ext_resource type="Script" path="res://Scripts/Grids/GridPosition.cs" id="1_c3rwg"]
+[ext_resource type="Script" path="res://Scripts/Entities/Destructor.cs" id="2_k1idc"]
+[ext_resource type="Script" path="res://Scripts/Entities/Canceler.cs" id="3_njkd6"]
+[ext_resource type="Script" path="res://Scripts/Structures/StructureGraphics.cs" id="4_56i2c"]
+[ext_resource type="Script" path="res://Scripts/Jobs/ConstructionWork.cs" id="5_1ebji"]
+[ext_resource type="Script" path="res://Scripts/Structures/StructureConstructor.cs" id="5_bmk60"]
+[ext_resource type="Script" path="res://Scripts/Structures/StructureTileGraphics.cs" id="5_kjn4k"]
+[ext_resource type="Script" path="res://Scripts/Jobs/DeconstructionWork.cs" id="6_5fvvg"]
+[ext_resource type="Script" path="res://Scripts/Structures/StructureComponentInventory.cs" id="6_vg8tp"]
+[ext_resource type="Script" path="res://Scripts/Structures/StructureDeconstructor.cs" id="7_5qycl"]
+[ext_resource type="Script" path="res://Scripts/Entities/Health.cs" id="7_ifrpy"]
+
+[node name="Structure" type="Node2D"]
+
+[node name="GridPosition" type="Node" parent="."]
+script = ExtResource("1_c3rwg")
+
+[node name="Destructor" type="Node" parent="."]
+script = ExtResource("2_k1idc")
+
+[node name="Canceler" type="Node" parent="."]
+script = ExtResource("3_njkd6")
+
+[node name="StructureComponentInventory" type="Node" parent="." node_paths=PackedStringArray("_gridPosition", "_destructor")]
+script = ExtResource("6_vg8tp")
+_gridPosition = NodePath("../GridPosition")
+_destructor = NodePath("../Destructor")
+
+[node name="StructureConstructor" type="Node" parent="." node_paths=PackedStringArray("_destructor", "_canceler", "_constructionWork")]
+script = ExtResource("5_bmk60")
+_destructor = NodePath("../Destructor")
+_canceler = NodePath("../Canceler")
+_constructionWork = NodePath("../ConstructionWork")
+
+[node name="ConstructionWork" type="Node" parent="."]
+script = ExtResource("5_1ebji")
+
+[node name="StructureDeconstructor" type="Node" parent="."]
+script = ExtResource("7_5qycl")
+
+[node name="DeconstructionWork" type="Node" parent="."]
+script = ExtResource("6_5fvvg")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("7_ifrpy")
+
+[node name="StructureGraphics" type="Node" parent="."]
+script = ExtResource("4_56i2c")
+
+[node name="StructureTileGraphics" type="Node2D" parent="."]
+script = ExtResource("5_kjn4k")
+
+[connection signal="OnConstructionCompleted" from="StructureConstructor" to="StructureDeconstructor" method="Allow"]
+[connection signal="OnConstructionCompleted" from="StructureConstructor" to="StructureGraphics" method="ConstructionCompleted"]
+[connection signal="OnWorkProgress" from="ConstructionWork" to="Health" method="SetTotalHealth"]

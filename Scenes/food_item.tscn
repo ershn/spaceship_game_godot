@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3 uid="uid://bye7pthby83dg"]
+
+[ext_resource type="Script" path="res://Scripts/Items/ItemGraphics.cs" id="1_s8dj3"]
+[ext_resource type="Script" path="res://Scripts/Grids/GridPosition.cs" id="2_f2wug"]
+[ext_resource type="Script" path="res://Scripts/Entities/Destructor.cs" id="3_b3rf8"]
+[ext_resource type="Script" path="res://Scripts/Items/Foods/FoodItemDefHolder.cs" id="4_147cl"]
+[ext_resource type="Script" path="res://Scripts/Items/ItemAmount.cs" id="5_3qv4g"]
+[ext_resource type="Script" path="res://Scripts/Items/Foods/FoodItemCalories.cs" id="6_wxtkt"]
+
+[node name="FoodItem" type="Node2D"]
+z_index = 5
+
+[node name="ItemGraphics" type="Sprite2D" parent="."]
+script = ExtResource("1_s8dj3")
+
+[node name="GridPosition" type="Node" parent="."]
+script = ExtResource("2_f2wug")
+
+[node name="Destructor" type="Node" parent="."]
+script = ExtResource("3_b3rf8")
+
+[node name="DefHolder" type="Node" parent="."]
+script = ExtResource("4_147cl")
+
+[node name="ItemAmount" type="Node" parent="."]
+script = ExtResource("5_3qv4g")
+
+[node name="FoodItemCalories" type="Node" parent="." node_paths=PackedStringArray("_itemAmount")]
+script = ExtResource("6_wxtkt")
+_itemAmount = NodePath("../ItemAmount")
+
+[connection signal="OnAmountChanged" from="ItemAmount" to="ItemGraphics" method="ToAmountSprite" flags=18]
+[connection signal="OnAmountChangedToZero" from="ItemAmount" to="Destructor" method="Destroy" flags=18]

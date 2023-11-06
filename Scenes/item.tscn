@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqamoduuu0xmn"]
+
+[ext_resource type="Script" path="res://Scripts/Items/ItemDefHolder.cs" id="1_cp3cy"]
+[ext_resource type="Script" path="res://Scripts/Entities/Destructor.cs" id="2_3bxa3"]
+[ext_resource type="Script" path="res://Scripts/Grids/GridPosition.cs" id="2_qw3ba"]
+[ext_resource type="Script" path="res://Scripts/Items/ItemAmount.cs" id="3_ey352"]
+[ext_resource type="Script" path="res://Scripts/Items/ItemGraphics.cs" id="4_s5w83"]
+
+[node name="Item" type="Node2D"]
+z_index = 5
+
+[node name="ItemGraphics" type="Sprite2D" parent="."]
+script = ExtResource("4_s5w83")
+
+[node name="GridPosition" type="Node" parent="."]
+script = ExtResource("2_qw3ba")
+
+[node name="Destructor" type="Node" parent="."]
+script = ExtResource("2_3bxa3")
+
+[node name="DefHolder" type="Node" parent="."]
+script = ExtResource("1_cp3cy")
+
+[node name="ItemAmount" type="Node" parent="."]
+script = ExtResource("3_ey352")
+
+[connection signal="OnAmountChanged" from="ItemAmount" to="ItemGraphics" method="ToAmountSprite"]
+[connection signal="OnAmountChangedToZero" from="ItemAmount" to="Destructor" method="Destroy"]

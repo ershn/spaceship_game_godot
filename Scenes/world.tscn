@@ -1,6 +1,51 @@
-[gd_scene load_steps=2 format=3 uid="uid://brkx4ccop5swt"]
+[gd_scene load_steps=8 format=3 uid="uid://biv3s7y002iun"]
 
-[ext_resource type="Script" path="res://Scripts/World.cs" id="1_gwn26"]
+[ext_resource type="TileSet" uid="uid://dtion7x6r1s10" path="res://Art/Tiles/tilset.tres" id="2_ijb7n"]
+[ext_resource type="Script" path="res://Scripts/Jobs/JobScheduler.cs" id="2_mkjku"]
+[ext_resource type="Script" path="res://Scripts/TileMaps/WorldTileMap.cs" id="2_ylwcg"]
+[ext_resource type="Script" path="res://Scripts/Grids/Grids.cs" id="3_eouaa"]
+[ext_resource type="Script" path="res://Scripts/Items/ItemInstantiator.cs" id="4_k18dl"]
+[ext_resource type="Script" path="res://Scripts/Items/ItemCreator.cs" id="5_rudlh"]
+[ext_resource type="Script" path="res://Scripts/Items/ItemAllotter.cs" id="6_kv2o1"]
 
 [node name="World" type="Node2D"]
-script = ExtResource("1_gwn26")
+
+[node name="WorldTileMap" type="TileMap" parent="."]
+unique_name_in_owner = true
+tile_set = ExtResource("2_ijb7n")
+format = 2
+layer_0/name = "base"
+layer_1/name = "blueprints"
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 0.470588)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 1
+layer_1/tile_data = PackedInt32Array()
+script = ExtResource("2_ylwcg")
+
+[node name="Grids" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_eouaa")
+
+[node name="JobScheduler" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_mkjku")
+
+[node name="ItemInstantiator" type="Node" parent="." node_paths=PackedStringArray("_tileMap")]
+unique_name_in_owner = true
+script = ExtResource("4_k18dl")
+_tileMap = NodePath("../WorldTileMap")
+
+[node name="ItemCreator" type="Node" parent="." node_paths=PackedStringArray("_grids", "_instantiator")]
+unique_name_in_owner = true
+script = ExtResource("5_rudlh")
+_grids = NodePath("../Grids")
+_instantiator = NodePath("../ItemInstantiator")
+
+[node name="ItemAllotter" type="Node" parent="." node_paths=PackedStringArray("_grids", "_jobScheduler", "_itemCreator")]
+unique_name_in_owner = true
+script = ExtResource("6_kv2o1")
+_grids = NodePath("../Grids")
+_jobScheduler = NodePath("../JobScheduler")
+_itemCreator = NodePath("../ItemCreator")

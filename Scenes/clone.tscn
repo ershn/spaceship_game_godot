@@ -1,0 +1,65 @@
+[gd_scene load_steps=11 format=3 uid="uid://dk00qjyfparbs"]
+
+[ext_resource type="Texture2D" uid="uid://b4ufl76e2uti" path="res://Art/Sprites/Beings/clone.png" id="2_jeunk"]
+[ext_resource type="Script" path="res://Scripts/Grids/GridPosition.cs" id="3_4j3lb"]
+[ext_resource type="Script" path="res://Scripts/Beings/Mover.cs" id="4_kio63"]
+[ext_resource type="Script" path="res://Scripts/Beings/Death.cs" id="4_ubdl3"]
+[ext_resource type="Script" path="res://Scripts/Jobs/JobExecutor.cs" id="6_6vgd2"]
+[ext_resource type="Script" path="res://Scripts/Jobs/Worker.cs" id="7_b2i65"]
+[ext_resource type="Script" path="res://Scripts/Beings/Backpack.cs" id="8_6v7i4"]
+[ext_resource type="Script" path="res://Scripts/Beings/FoodConsumer.cs" id="8_ecqv1"]
+[ext_resource type="Script" path="res://Scripts/Beings/Stomach.cs" id="10_pasmt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_82nkj"]
+radius = 13.0
+
+[node name="Clone" type="CharacterBody2D"]
+z_index = 10
+motion_mode = 1
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1.68639, -15.7567)
+scale = Vector2(1, 1.034)
+texture = ExtResource("2_jeunk")
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+region_filter_clip_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_82nkj")
+
+[node name="GridPosition" type="Node" parent="."]
+script = ExtResource("3_4j3lb")
+
+[node name="Death" type="Node" parent="."]
+script = ExtResource("4_ubdl3")
+
+[node name="JobExecutor" type="Node" parent="." node_paths=PackedStringArray("_death")]
+script = ExtResource("6_6vgd2")
+_death = NodePath("../Death")
+
+[node name="Mover" type="NavigationAgent2D" parent="." node_paths=PackedStringArray("_characterBody2D")]
+target_desired_distance = 20.0
+path_postprocessing = 1
+debug_enabled = true
+script = ExtResource("4_kio63")
+_characterBody2D = NodePath("..")
+
+[node name="Worker" type="Node" parent="."]
+script = ExtResource("7_b2i65")
+
+[node name="FoodConsumer" type="Node" parent="." node_paths=PackedStringArray("_backpack", "_stomach")]
+script = ExtResource("8_ecqv1")
+_backpack = NodePath("../Backpack")
+_stomach = NodePath("../Stomach")
+
+[node name="Backpack" type="Node" parent="." node_paths=PackedStringArray("_gridPosition")]
+script = ExtResource("8_6v7i4")
+_gridPosition = NodePath("../GridPosition")
+
+[node name="Stomach" type="Node" parent="." node_paths=PackedStringArray("_death", "_jobExecutor", "_foodConsumer")]
+script = ExtResource("10_pasmt")
+_death = NodePath("../Death")
+_jobExecutor = NodePath("../JobExecutor")
+_foodConsumer = NodePath("../FoodConsumer")

@@ -11,10 +11,23 @@ config_version=5
 [application]
 
 config/name="Spaceship game"
-run/main_scene="res://Scenes/world.tscn"
+run/main_scene="res://Scenes/game.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://Art/Sprites/icon.svg"
+
+[debug]
+
+shapes/navigation/enable_geometry_face_random_color=false
+
+[display]
+
+window/size/always_on_top=true
 
 [dotnet]
 
 project/assembly_name="Spaceship game"
+
+[editor]
+
+naming/default_signal_callback_name="{NodeName}{SignalName}"
+naming/default_signal_callback_to_self_name="{SignalName}"

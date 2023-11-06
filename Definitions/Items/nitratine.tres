@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="ItemDef" load_steps=12 format=3 uid="uid://dco7cc3jlcvys"]
+
+[ext_resource type="Script" path="res://Scripts/Items/ItemDef.cs" id="1_acvcs"]
+[ext_resource type="Texture2D" uid="uid://bi2n3en7p57o1" path="res://Art/Sprites/Items/nitratine_0.tres" id="1_iet58"]
+[ext_resource type="Script" path="res://Scripts/Items/AmountSprite.cs" id="2_2ikhc"]
+[ext_resource type="Texture2D" uid="uid://c471ubsdncwoe" path="res://Art/Sprites/Items/nitratine_1.tres" id="3_l8ct3"]
+[ext_resource type="Texture2D" uid="uid://bbjed04e5evuv" path="res://Art/Sprites/Items/nitratine_2.tres" id="4_vbu6v"]
+[ext_resource type="Script" path="res://Scripts/Items/MassMode.cs" id="5_ajr7q"]
+[ext_resource type="PackedScene" uid="uid://cqamoduuu0xmn" path="res://Scenes/item.tscn" id="5_volao"]
+
+[sub_resource type="Resource" id="Resource_wonoc"]
+script = ExtResource("2_2ikhc")
+MinAmount = 1
+Sprite = ExtResource("1_iet58")
+
+[sub_resource type="Resource" id="Resource_klbc5"]
+script = ExtResource("2_2ikhc")
+MinAmount = 100000000
+Sprite = ExtResource("3_l8ct3")
+
+[sub_resource type="Resource" id="Resource_r25mm"]
+script = ExtResource("2_2ikhc")
+MinAmount = 1000000000
+Sprite = ExtResource("4_vbu6v")
+
+[sub_resource type="Resource" id="Resource_sufvj"]
+script = ExtResource("5_ajr7q")
+
+[resource]
+resource_name = "Nitratine"
+script = ExtResource("1_acvcs")
+_amountMode = SubResource("Resource_sufvj")
+AmountSprites = Array[Object]([SubResource("Resource_wonoc"), SubResource("Resource_klbc5"), SubResource("Resource_r25mm")])
+PackedScene = ExtResource("5_volao")
