@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -7,118 +8,196 @@ using Godot;
 [GlobalClass]
 public partial class JobScheduler : Node
 {
-    readonly struct Request
+    readonly struct Request : IDisposable
     {
         public readonly IJob Job;
-        public readonly TaskCompletionSource<object> TaskCompletionSource;
+        public readonly JobExecutor Executor;
+        public readonly TaskCompletionSource TaskCompletionSource;
         public readonly CancellationToken CancellationToken;
+        readonly CancellationTokenRegistration _cancellationTokenRegistration;
 
         public Request(
             IJob job,
-            TaskCompletionSource<object> taskCompletionSource,
-            CancellationToken cancellationToken
+            TaskCompletionSource taskCompletionSource,
+            CancellationToken cancellationToken,
+            JobExecutor executor = null
         )
         {
             Job = job;
+            Executor = executor;
             TaskCompletionSource = taskCompletionSource;
             CancellationToken = cancellationToken;
+
+            _cancellationTokenRegistration = cancellationToken.Register(
+                taskCompletionSource.SetCanceled
+            );
         }
+
+        public void Dispose()
+        {
+            _cancellationTokenRegistration.Dispose();
+        }
+
+        public bool Canceled => CancellationToken.IsCancellationRequested;
     }
 
     readonly HashSet<JobExecutor> _idleExecutors = new();
 
-    readonly Queue<Request> _pendingCommonRequests = new();
-    readonly Dictionary<JobExecutor, Queue<Request>> _pendingExecutorRequests = new();
-
-    public void AddExecutor(JobExecutor executor)
-    {
-        _pendingExecutorRequests[executor] = new();
-        ProcessIdleExecutor(executor);
-    }
-
-    public void RemoveExecutor(JobExecutor executor)
-    {
-        _pendingExecutorRequests.Remove(executor);
-    }
+    readonly Deque<Request> _pendingCommonRequests = new();
+    readonly Dictionary<JobExecutor, Deque<Request>> _pendingExecutorRequests = new();
 
     public Task Execute(IJob job, CancellationToken ct)
     {
-        var tcs = new TaskCompletionSource<object>();
-        ProcessPendingRequest(new Request(job, tcs, ct));
+        var tcs = new TaskCompletionSource();
+        ProcessRequest(new Request(job, tcs, ct));
         return tcs.Task;
     }
 
     public Task Execute(IJob job, JobExecutor executor, CancellationToken ct)
     {
-        var tcs = new TaskCompletionSource<object>();
-        ProcessPendingRequest(new Request(job, tcs, ct), executor);
+        var tcs = new TaskCompletionSource();
+        ProcessRequest(new Request(job, tcs, ct, executor));
         return tcs.Task;
     }
 
-    void ProcessPendingRequest(in Request request)
+    void ProcessRequest(in Request request)
     {
-        var executor = _idleExecutors.FirstOrDefault();
-        if (executor is not null)
-        {
-            _idleExecutors.Remove(executor);
-            _ = RunExecutor(executor, request);
-        }
+        if (TryAcquireExecutor(request, out var executor))
+            _ = ExecuteRequest(request, executor);
         else
-            _pendingCommonRequests.Enqueue(request);
+            EnqueueRequest(request);
     }
 
-    void ProcessPendingRequest(in Request request, JobExecutor executor)
-    {
-        if (_idleExecutors.Remove(executor))
-            _ = RunExecutor(executor, request);
-        else
-            _pendingExecutorRequests[executor].Enqueue(request);
-    }
-
-    async Task RunExecutor(JobExecutor executor, Request request)
+    async Task ExecuteRequest(Request request, JobExecutor executor)
     {
         try
         {
             await executor.Execute(request.Job, request.CancellationToken);
-            request.TaskCompletionSource.SetResult(null);
+            request.TaskCompletionSource.SetResult();
+            request.Dispose();
         }
         catch (TaskCanceledException)
         {
-            request.TaskCompletionSource.SetCanceled();
+            var requeued = false;
+            if (request.Job.Retriable && !request.Canceled)
+                requeued = RequeueRequest(request);
+
+            if (!requeued)
+            {
+                request.TaskCompletionSource.SetCanceled();
+                request.Dispose();
+            }
+
+            throw;
         }
         finally
         {
             if (executor.CanProcess())
-                ProcessIdleExecutor(executor);
+                ProcessExecutor(executor);
         }
     }
 
-    void ProcessIdleExecutor(JobExecutor executor)
+    void ProcessExecutor(JobExecutor executor)
     {
         if (TryDequeueRequestForExecutor(executor, out var request))
-            _ = RunExecutor(executor, request);
+            _ = ExecuteRequest(request, executor);
         else
-            ParkExecutor(executor);
+            ReleaseExecutor(executor);
+    }
+
+    void EnqueueRequest(in Request request)
+    {
+        if (request.Executor is not null)
+            _pendingExecutorRequests[request.Executor].EnqueueBack(request);
+        else
+            _pendingCommonRequests.EnqueueBack(request);
+    }
+
+    bool RequeueRequest(in Request request)
+    {
+        if (request.Executor is not null)
+        {
+            if (!_pendingExecutorRequests.TryGetValue(request.Executor, out var requests))
+                return false;
+
+            requests.EnqueueFront(request);
+            return true;
+        }
+        else
+        {
+            _pendingCommonRequests.EnqueueFront(request);
+            return true;
+        }
     }
 
     bool TryDequeueRequestForExecutor(JobExecutor executor, out Request request)
     {
-        var executorRequests = _pendingExecutorRequests[executor];
-        while (executorRequests.TryDequeue(out var dequeuedRequest))
+        if (
+            TryDequeueRequest(_pendingExecutorRequests[executor], out var dequeuedRequest)
+            || TryDequeueRequest(_pendingCommonRequests, out dequeuedRequest)
+        )
         {
             request = dequeuedRequest;
             return true;
         }
-        while (_pendingCommonRequests.TryDequeue(out var dequeuedRequest))
+        else
         {
-            request = dequeuedRequest;
-            return true;
+            request = default;
+            return false;
+        }
+    }
+
+    bool TryDequeueRequest(Deque<Request> requests, out Request request)
+    {
+        while (requests.TryDequeueFront(out var dequeuedRequest))
+        {
+            if (dequeuedRequest.Canceled)
+            {
+                dequeuedRequest.Dispose();
+            }
+            else
+            {
+                request = dequeuedRequest;
+                return true;
+            }
         }
         request = default;
         return false;
     }
 
-    void ParkExecutor(JobExecutor executor)
+    public void AddExecutor(JobExecutor executor)
+    {
+        _pendingExecutorRequests[executor] = new();
+        ProcessExecutor(executor);
+    }
+
+    public void RemoveExecutor(JobExecutor executor)
+    {
+        if (_pendingExecutorRequests.Remove(executor, out var requests))
+        {
+            foreach (var request in requests)
+            {
+                request.TaskCompletionSource.TrySetCanceled();
+                request.Dispose();
+            }
+        }
+    }
+
+    bool TryAcquireExecutor(in Request request, out JobExecutor executor)
+    {
+        if (request.Executor is not null)
+        {
+            executor = request.Executor;
+            return _idleExecutors.Remove(executor);
+        }
+        else
+        {
+            executor = _idleExecutors.FirstOrDefault();
+            return _idleExecutors.Remove(executor);
+        }
+    }
+
+    void ReleaseExecutor(JobExecutor executor)
     {
         _idleExecutors.Add(executor);
     }

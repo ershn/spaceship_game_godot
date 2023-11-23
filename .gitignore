@@ -1,5 +1,9 @@
 # Godot 4+ specific ignores
 .godot/
 
+# Unit test ignores
+UnitTests/bin/
+UnitTests/obj/
+
 # Editor settings
 .vscode/

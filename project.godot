@@ -21,6 +21,8 @@ shapes/navigation/enable_geometry_face_random_color=false
 
 [display]
 
+window/size/viewport_width=1000
+window/size/viewport_height=500
 window/size/always_on_top=true
 
 [dotnet]
@@ -31,3 +33,9 @@ project/assembly_name="Spaceship game"
 
 naming/default_signal_callback_name="{NodeName}{SignalName}"
 naming/default_signal_callback_to_self_name="{SignalName}"
+
+[layer_names]
+
+2d_physics/layer_1="beings"
+2d_navigation/layer_1="enabled"
+2d_navigation/layer_2="disabled"

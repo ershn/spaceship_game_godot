@@ -3,5 +3,7 @@ using Godot;
 public abstract partial class EntityDef : Resource
 {
     [Export]
-    public PackedScene PackedScene;
+    public string ScenePath;
+
+    public PackedScene GetPackedScene() => ResourceLoader.Load<PackedScene>(ScenePath);
 }

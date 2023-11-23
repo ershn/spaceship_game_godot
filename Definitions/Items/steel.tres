@@ -1,11 +1,10 @@
-[gd_resource type="Resource" script_class="ItemDef" load_steps=12 format=3 uid="uid://dj3vpq761xnre"]
+[gd_resource type="Resource" script_class="ItemDef" load_steps=11 format=3 uid="uid://dj3vpq761xnre"]
 
 [ext_resource type="Texture2D" uid="uid://bxhlsopmsulbj" path="res://Art/Sprites/Items/steel_0.tres" id="1_0sers"]
 [ext_resource type="Script" path="res://Scripts/Items/ItemDef.cs" id="1_wwkpq"]
 [ext_resource type="Script" path="res://Scripts/Items/AmountSprite.cs" id="2_tc6cx"]
 [ext_resource type="Texture2D" uid="uid://bvlmyc1u8ptuj" path="res://Art/Sprites/Items/steel_1.tres" id="3_sn63r"]
 [ext_resource type="Texture2D" uid="uid://tftq1s28ish8" path="res://Art/Sprites/Items/steel_2.tres" id="4_e87wn"]
-[ext_resource type="PackedScene" uid="uid://cqamoduuu0xmn" path="res://Scenes/item.tscn" id="5_2diux"]
 [ext_resource type="Script" path="res://Scripts/Items/MassMode.cs" id="5_5n72p"]
 
 [sub_resource type="Resource" id="Resource_k4nw6"]
@@ -31,4 +30,4 @@ resource_name = "Steel"
 script = ExtResource("1_wwkpq")
 _amountMode = SubResource("Resource_elliq")
 AmountSprites = Array[Object]([SubResource("Resource_k4nw6"), SubResource("Resource_1rw56"), SubResource("Resource_hhofl")])
-PackedScene = ExtResource("5_2diux")
+ScenePath = "res://Scenes/Items/steel.tscn"

@@ -68,7 +68,7 @@ public partial class StructureConstructor : Node
     {
         var jobScheduler = Owner.GetNode<JobScheduler>("../%JobScheduler");
 
-        var job = new WorkOnJob(_constructionWork);
+        var job = new WorkOnJob(_constructionWork) { Retriable = true };
         await jobScheduler.Execute(job, ct);
 
         QueueFree();

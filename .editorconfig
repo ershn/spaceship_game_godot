@@ -1,5 +1,7 @@
 root = true
 
 [*.cs]
-# Declare types in namespaces
+# Declare type in namespace
 dotnet_diagnostic.CA1050.severity = none
+# Mark member as static
+dotnet_diagnostic.CA1822.severity = none

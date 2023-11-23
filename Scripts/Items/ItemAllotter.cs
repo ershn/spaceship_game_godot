@@ -47,7 +47,11 @@ public partial class ItemAllotter : Node
             _taskCompletionSource = taskCompletionSource;
             _cancellationToken = cancellationToken;
 
-            _cancellationRegistration = _cancellationToken.Register(() => OnCompleted());
+            _cancellationRegistration = _cancellationToken.Register(() =>
+            {
+                _taskCompletionSource.SetCanceled();
+                OnCompleted();
+            });
         }
 
         public void Dispose()
@@ -57,34 +61,33 @@ public partial class ItemAllotter : Node
 
         public ItemDef ItemDef => _itemDef;
 
-        public bool Fulfilled => _deliveredAmount == _requestedAmount;
-
-        public bool Canceled => _cancellationToken.IsCancellationRequested;
-
         public ulong UnallottedAmount => _requestedAmount - _allottedAmount;
 
-        public async void Allot(ItemAmount item, ulong amount)
+        public async Task Allot(ItemAmount item, ulong amount)
         {
             _allottedAmount += amount;
             try
             {
-                var job = new DeliverItemJob(item, amount, _inventory);
+                using var job = new DeliverItemJob(item, amount, _inventory);
                 await _jobScheduler.Execute(job, _cancellationToken);
 
                 _deliveredAmount += amount;
                 _onAmountDelivered?.Invoke(amount);
 
-                if (Fulfilled)
+                if (_deliveredAmount == _requestedAmount)
+                {
+                    _taskCompletionSource.SetResult();
                     OnCompleted();
-
-                _taskCompletionSource.SetResult();
+                }
             }
             catch (TaskCanceledException)
             {
-                _allottedAmount -= amount;
-                OnAllotmentCanceled();
-
-                _taskCompletionSource.SetCanceled();
+                if (!_cancellationToken.IsCancellationRequested)
+                {
+                    _allottedAmount -= amount;
+                    OnAllotmentCanceled();
+                }
+                throw;
             }
         }
     }
@@ -150,8 +153,7 @@ public partial class ItemAllotter : Node
         };
         request.OnAllotmentCanceled += () =>
         {
-            if (!request.Canceled)
-                AllotExistingItems(request);
+            AllotExistingItems(request);
         };
     }
 
@@ -159,7 +161,7 @@ public partial class ItemAllotter : Node
     {
         var items = ItemGrid.Filter(request.ItemDef).CumulateAmount(request.UnallottedAmount);
         foreach (var (item, markedAmount) in items)
-            request.Allot(item, markedAmount);
+            _ = request.Allot(item, markedAmount);
     }
 
     void AllotNewItem(ItemAmount item)
@@ -170,7 +172,7 @@ public partial class ItemAllotter : Node
         foreach (var request in requests.Where(request => request.UnallottedAmount > 0))
         {
             var markedAmount = Math.Min(item.Amount, request.UnallottedAmount);
-            request.Allot(item, markedAmount);
+            _ = request.Allot(item, markedAmount);
             if (item.Amount == 0)
                 break;
         }

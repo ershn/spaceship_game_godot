@@ -118,7 +118,7 @@ public partial class Stomach : Node
             var markedCalories = foodItems.Sum(item => item.markedCalories);
             GD.Print($"Consume food: {markedCalories / 1.KiloCalorie()} kcal");
 
-            var job = new EatFoodJob(foodItems.CaloriesToMass(), _foodConsumer);
+            using var job = new EatFoodJob(foodItems.CaloriesToMass(), _foodConsumer);
             await _jobScheduler.Execute(job, _jobExecutor, CancellationToken.None);
 
             GD.Print("Food consumption completed");

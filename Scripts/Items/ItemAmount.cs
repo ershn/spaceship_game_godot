@@ -24,36 +24,27 @@ public partial class ItemAmount : Node, ITemplate<ItemDef>, IPosition
     [Signal]
     public delegate void OnAmountChangedEventHandler(long amount);
 
-    ItemDef _itemDef;
+    [Export]
+    ItemDefHolder _itemDefHolder;
 
     // TODO: display as mass/count
     [Export]
     ulong _amount = 1;
     ulong _reservedAmount = 0;
 
-    bool _started;
-
-    public override void _Ready()
-    {
-        _itemDef = GetNode<ItemDefHolder>("../DefHolder").ItemDef;
-    }
-
-    // TODO: find a better way to simulate a Start
-    public override void _Process(double _delta)
-    {
-        _started = true;
-        SignalAmountChange(_amount);
-        SetProcess(false);
-    }
-
-    public ItemDef Def => _itemDef;
-
     public void Initialize(ulong amount)
     {
-        Debug.Assert(!_started);
+        Debug.Assert(!IsNodeReady());
 
         _amount = amount;
     }
+
+    public override void _Ready()
+    {
+        SignalAmountChange(_amount);
+    }
+
+    public ItemDef Def => _itemDefHolder.ItemDef;
 
     public ulong Amount => _amount - _reservedAmount;
 

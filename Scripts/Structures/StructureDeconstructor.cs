@@ -41,7 +41,7 @@ public partial class StructureDeconstructor : Node
         try
         {
             _started = true;
-            var job = new WorkOnJob(_deconstructionWork);
+            var job = new WorkOnJob(_deconstructionWork) { Retriable = true };
             await _jobScheduler.Execute(job, ct);
             _destructor.Destroy();
         }

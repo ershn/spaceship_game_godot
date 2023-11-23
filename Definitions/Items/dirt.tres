@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="ItemDef" load_steps=11 format=3 uid="uid://d2wkkr2pjcac5"]
+
+[ext_resource type="Texture2D" uid="uid://d4jd51pesdrl2" path="res://Art/Sprites/Items/dirt_0.tres" id="1_5kb6j"]
+[ext_resource type="Script" path="res://Scripts/Items/ItemDef.cs" id="1_n633a"]
+[ext_resource type="Script" path="res://Scripts/Items/AmountSprite.cs" id="2_yusoq"]
+[ext_resource type="Texture2D" uid="uid://7qww7dwsuskw" path="res://Art/Sprites/Items/dirt_1.tres" id="3_11j6t"]
+[ext_resource type="Texture2D" uid="uid://11bai4q2mwtk" path="res://Art/Sprites/Items/dirt_2.tres" id="4_tf78t"]
+[ext_resource type="Script" path="res://Scripts/Items/MassMode.cs" id="5_nelgf"]
+
+[sub_resource type="Resource" id="Resource_vo0tq"]
+script = ExtResource("2_yusoq")
+MinAmount = 1
+Sprite = ExtResource("1_5kb6j")
+
+[sub_resource type="Resource" id="Resource_85bcy"]
+script = ExtResource("2_yusoq")
+MinAmount = 100000000
+Sprite = ExtResource("3_11j6t")
+
+[sub_resource type="Resource" id="Resource_38l63"]
+script = ExtResource("2_yusoq")
+MinAmount = 1000000000
+Sprite = ExtResource("4_tf78t")
+
+[sub_resource type="Resource" id="Resource_dpcow"]
+script = ExtResource("5_nelgf")
+
+[resource]
+resource_name = "Dirt"
+script = ExtResource("1_n633a")
+_amountMode = SubResource("Resource_dpcow")
+AmountSprites = Array[Object]([SubResource("Resource_vo0tq"), SubResource("Resource_85bcy"), SubResource("Resource_38l63")])
+ScenePath = "res://Scenes/Items/dirt.tscn"

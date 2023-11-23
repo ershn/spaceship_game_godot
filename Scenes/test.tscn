@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://j54wudp25lro"]
+
+[ext_resource type="Script" path="res://Scripts/Test.cs" id="1_1h1vj"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_mt5ja"]
+vertices = PackedVector2Array(367.5, 148.75, 511.25, 138.75, 492.5, 238.75, 395, 241.25)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(367.5, 148.75, 511.25, 138.75, 492.5, 238.75, 395, 241.25)])
+
+[node name="Node2D" type="Node2D"]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_mt5ja")
+
+[node name="Test" type="Node2D" parent="." node_paths=PackedStringArray("_region")]
+script = ExtResource("1_1h1vj")
+_region = NodePath("../NavigationRegion2D")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4tok74fst6c6"]
+
+[ext_resource type="PackedScene" uid="uid://cqamoduuu0xmn" path="res://Scenes/item.tscn" id="1_8bi7j"]
+[ext_resource type="Texture2D" uid="uid://d4jd51pesdrl2" path="res://Art/Sprites/Items/dirt_0.tres" id="2_m1ghv"]
+[ext_resource type="Resource" uid="uid://d2wkkr2pjcac5" path="res://Definitions/Items/dirt.tres" id="3_n1xi1"]
+
+[node name="Item" instance=ExtResource("1_8bi7j")]
+
+[node name="ItemGraphics" parent="." index="0"]
+texture = ExtResource("2_m1ghv")
+
+[node name="DefHolder" parent="." index="3"]
+ItemDef = ExtResource("3_n1xi1")
+
+[node name="ItemAmount" parent="." index="4"]
+_amount = 10000000

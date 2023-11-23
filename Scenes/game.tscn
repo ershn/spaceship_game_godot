@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://brkx4ccop5swt"]
+[gd_scene load_steps=22 format=3 uid="uid://brkx4ccop5swt"]
 
 [ext_resource type="PackedScene" uid="uid://biv3s7y002iun" path="res://Scenes/world.tscn" id="2_uoclp"]
 [ext_resource type="Texture2D" uid="uid://bxhlsopmsulbj" path="res://Art/Sprites/Items/steel_0.tres" id="3_16os4"]
@@ -11,19 +11,32 @@
 [ext_resource type="Texture2D" uid="uid://h8nydvcld6p2" path="res://Art/Sprites/Items/potato_0.tres" id="9_f8dey"]
 [ext_resource type="Resource" uid="uid://80xxybtd1uce" path="res://Definitions/Items/potato.tres" id="10_wsggw"]
 [ext_resource type="PackedScene" uid="uid://cvcui8ep0i7h5" path="res://Scenes/Floors/steel_floor.tscn" id="11_5flbh"]
+[ext_resource type="PackedScene" uid="uid://b4tok74fst6c6" path="res://Scenes/Items/dirt.tscn" id="12_hy8bn"]
+[ext_resource type="Script" path="res://Scripts/UI/HUDInputReader.cs" id="12_lou6x"]
+[ext_resource type="Texture2D" uid="uid://blq0065na0s3v" path="res://Art/Sprites/UI/cancel_button.tres" id="12_qgu0t"]
+[ext_resource type="Texture2D" uid="uid://dtue36l4oc3r3" path="res://Art/Sprites/UI/deconstruct_button.tres" id="12_suycm"]
+[ext_resource type="Texture2D" uid="uid://dp8emrsn5mpul" path="res://Art/Sprites/Structures/steel_floor.tres" id="12_titjc"]
+[ext_resource type="Script" path="res://Scripts/UI/HUDActionReducer.cs" id="12_ukajw"]
+[ext_resource type="Texture2D" uid="uid://hgoqhl1sphni" path="res://Art/Sprites/Structures/dirt_floor.tres" id="13_djnb6"]
+[ext_resource type="Script" path="res://Scripts/UI/StructureDefSelector.cs" id="14_4yc6g"]
+[ext_resource type="Resource" uid="uid://bcxdkjlwqniwv" path="res://Definitions/Structures/steel_floor.tres" id="15_3a8e5"]
+[ext_resource type="Resource" uid="uid://dctqllgmbpikl" path="res://Definitions/Structures/dirt_floor.tres" id="17_m2gd5"]
 
 [node name="Game" type="Node2D"]
 
 [node name="World" parent="." instance=ExtResource("2_uoclp")]
 
 [node name="WorldTileMap" parent="World" index="0"]
-layer_0/tile_data = PackedInt32Array(196610, 0, 0, 262146, 0, 0, 327682, 0, 0, 393218, 0, 0, 196611, 0, 0, 262147, 0, 0, 327683, 0, 0, 393219, 0, 0, 196612, 0, 0, 262148, 0, 0, 327684, 0, 0, 393220, 0, 0, 262149, 0, 0, 327685, 0, 0, 393221, 0, 0, 458757, 0, 0, 262150, 0, 0, 327686, 0, 0, 393222, 0, 0, 458758, 0, 0, 262151, 0, 0, 327687, 0, 0, 393223, 0, 0, 458759, 0, 0, 262152, 0, 0, 327688, 0, 0, 393224, 0, 0, 458760, 0, 0, 262153, 0, 0, 327689, 0, 0, 393225, 0, 0, 458761, 0, 0, 65542, 0, 0, 131078, 0, 0, 196614, 0, 0, 65543, 0, 0, 131079, 0, 0, 196615, 0, 0, 65544, 0, 0, 131080, 0, 0, 196616, 0, 0, 65545, 0, 0, 131081, 0, 0, 196617, 0, 0, 65539, 0, 0, 131075, 0, 0, 65540, 0, 0, 131076, 0, 0, 65541, 0, 0, 131077, 0, 0)
+layer_0/tile_data = PackedInt32Array(196610, 0, 0, 262146, 0, 0, 327682, 0, 0, 196611, 0, 0, 262147, 0, 0, 327683, 0, 0, 393219, 0, 0, 196612, 0, 0, 262148, 0, 0, 327684, 0, 0, 393220, 0, 0, 262149, 0, 0, 327685, 0, 0, 393221, 0, 0, 262150, 0, 0, 327686, 0, 0, 393222, 0, 0, 262151, 0, 0, 327687, 0, 0, 393223, 0, 0, 262152, 0, 0, 327688, 0, 0, 393224, 0, 0, 262153, 0, 0, 327689, 0, 0, 393225, 0, 0, 131080, 0, 0, 65545, 0, 0, 131081, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 65542, 0, 0, 65541, 0, 0, 65540, 0, 0, 65544, 0, 0, 196616, 0, 0, 196617, 0, 0)
 
 [node name="Clone" parent="World" instance=ExtResource("5_bx2nj")]
 position = Vector2(224, 224)
 
+[node name="Clone2" parent="World" instance=ExtResource("5_bx2nj")]
+position = Vector2(160, 352)
+
 [node name="Steel1" parent="World" instance=ExtResource("6_4m50q")]
-position = Vector2(416, 288)
+position = Vector2(608, 96)
 rotation = 1.5708
 metadata/_edit_group_ = true
 
@@ -62,8 +75,83 @@ ItemDef = ExtResource("10_wsggw")
 [node name="ItemAmount" parent="World/Potato1" index="4"]
 _amount = 100000000
 
-[node name="SteelFloor" parent="World" instance=ExtResource("11_5flbh")]
-position = Vector2(352, 224)
+[node name="SteelFloor1" parent="World" instance=ExtResource("11_5flbh")]
+position = Vector2(672, 288)
+
+[node name="Dirt1" parent="World" instance=ExtResource("12_hy8bn")]
+position = Vector2(416, 352)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="HUDInputReader" type="Node" parent="HUD"]
+script = ExtResource("12_lou6x")
+
+[node name="HUDActionReducer" type="Node" parent="HUD" node_paths=PackedStringArray("_initialWorld")]
+script = ExtResource("12_ukajw")
+_initialWorld = NodePath("../../World")
+
+[node name="SteelFloorButton" type="TextureButton" parent="HUD"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -80.0
+offset_right = 80.0
+offset_bottom = -16.0
+grow_vertical = 0
+texture_normal = ExtResource("12_titjc")
+script = ExtResource("14_4yc6g")
+_structureDef = ExtResource("15_3a8e5")
+
+[node name="DirtFloorButton" type="TextureButton" parent="HUD"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 88.0
+offset_top = -80.0
+offset_right = 152.0
+offset_bottom = -16.0
+grow_vertical = 0
+texture_normal = ExtResource("13_djnb6")
+script = ExtResource("14_4yc6g")
+_structureDef = ExtResource("17_m2gd5")
+
+[node name="DeconstructButton" type="TextureButton" parent="HUD"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -152.0
+offset_top = -80.0
+offset_right = -88.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("12_suycm")
+
+[node name="CancelButton" type="TextureButton" parent="HUD"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -80.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("12_qgu0t")
+
+[connection signal="MouseClick" from="HUD/HUDInputReader" to="HUD/HUDActionReducer" method="WorldClick"]
+[connection signal="Selected" from="HUD/SteelFloorButton" to="HUD/HUDActionReducer" method="SelectBlueprint"]
+[connection signal="pressed" from="HUD/SteelFloorButton" to="HUD/SteelFloorButton" method="OnPressed"]
+[connection signal="Selected" from="HUD/DirtFloorButton" to="HUD/HUDActionReducer" method="SelectBlueprint"]
+[connection signal="pressed" from="HUD/DirtFloorButton" to="HUD/DirtFloorButton" method="OnPressed"]
+[connection signal="pressed" from="HUD/DeconstructButton" to="HUD/HUDActionReducer" method="SelectDeconstructTask"]
+[connection signal="pressed" from="HUD/CancelButton" to="HUD/HUDActionReducer" method="SelectCancelTask"]
 
 [editable path="World"]
 [editable path="World/Clone"]

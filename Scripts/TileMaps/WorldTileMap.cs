@@ -70,6 +70,7 @@ public partial class WorldTileMap : TileMap
 
     public void RemoveTile(Layer layer, Vector2I position)
     {
-        EraseCell(GetLayerIndex(layer), position);
+        _singlePositionArray[0] = position;
+        SetCellsTerrainConnect(GetLayerIndex(layer), _singlePositionArray, 0, -1);
     }
 }

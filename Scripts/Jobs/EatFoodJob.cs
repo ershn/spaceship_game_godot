@@ -1,12 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Godot;
 
-public class EatFoodJob : IJob
+public sealed class EatFoodJob : IJob, IDisposable
 {
     readonly (ItemAmount itemAmount, ulong markedAmount)[] _foodItems;
+    int nextFoodItemIndex;
     readonly IWork _foodConsumption;
 
     public EatFoodJob(
@@ -21,22 +23,27 @@ public class EatFoodJob : IJob
             itemAmount.Reserve(markedAmount);
     }
 
+    public void Dispose()
+    {
+        for (; nextFoodItemIndex < _foodItems.Length; nextFoodItemIndex++)
+        {
+            var (itemAmount, markedAmount) = _foodItems[nextFoodItemIndex];
+            itemAmount.Unreserve(markedAmount);
+        }
+    }
+
     public async Task Execute(PhysicsBody2D executor, CancellationToken ct)
     {
         var movement = executor.GetNode<Mover>("Mover");
         var backpack = executor.GetNode<Backpack>("Backpack");
-
-        int nextItemIndex = 0;
         try
         {
-            ct.ThrowIfCancellationRequested();
-
             foreach (var (itemAmount, markedAmount) in _foodItems)
             {
                 await movement.MoveTo(itemAmount.GlobalPosition, ct);
                 itemAmount.Remove(markedAmount);
                 backpack.Add(itemAmount.Def, markedAmount);
-                nextItemIndex++;
+                nextFoodItemIndex++;
             }
 
             var worker = executor.GetNode<Worker>("Worker");
@@ -44,13 +51,7 @@ public class EatFoodJob : IJob
         }
         catch (TaskCanceledException)
         {
-            for (; nextItemIndex < _foodItems.Length; nextItemIndex++)
-            {
-                var (itemAmount, markedAmount) = _foodItems[nextItemIndex];
-                itemAmount.Unreserve(markedAmount);
-            }
             backpack.Dump();
-
             throw;
         }
     }

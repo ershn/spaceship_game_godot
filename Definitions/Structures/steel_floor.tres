@@ -22,6 +22,7 @@ script = ExtResource("4_4s3rm")
 TileRef = SubResource("Resource_f5kvk")
 
 [resource]
+resource_name = "SteelFloor"
 script = ExtResource("1_gouwx")
 Category = 0
 StructureGraphicsDef = SubResource("Resource_xro7p")
@@ -29,3 +30,4 @@ ComponentAmounts = Array[Object]([SubResource("Resource_cdu3t")])
 ConstructionTime = 5.0
 DeconstructionTimeMultiplier = 0.5
 MaxHealthPoints = 100
+ScenePath = "res://Scenes/Floors/steel_floor.tscn"

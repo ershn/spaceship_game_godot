@@ -11,10 +11,10 @@ public class WorkOnJob : IJob
         _work = work;
     }
 
+    public bool Retriable { get; init; }
+
     public async Task Execute(PhysicsBody2D executor, CancellationToken ct)
     {
-        ct.ThrowIfCancellationRequested();
-
         var mover = executor.GetNode<Mover>("Mover");
         await mover.MoveTo(_work.GlobalPosition, ct);
 

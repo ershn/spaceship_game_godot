@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="FoodItemDef" load_steps=12 format=3 uid="uid://80xxybtd1uce"]
+[gd_resource type="Resource" script_class="FoodItemDef" load_steps=11 format=3 uid="uid://80xxybtd1uce"]
 
 [ext_resource type="Script" path="res://Scripts/Items/Foods/FoodItemDef.cs" id="1_mol3n"]
 [ext_resource type="Texture2D" uid="uid://h8nydvcld6p2" path="res://Art/Sprites/Items/potato_0.tres" id="1_wo2gq"]
 [ext_resource type="Script" path="res://Scripts/Items/AmountSprite.cs" id="2_lq2cx"]
-[ext_resource type="PackedScene" uid="uid://bye7pthby83dg" path="res://Scenes/food_item.tscn" id="3_dd2wj"]
 [ext_resource type="Texture2D" uid="uid://c5q6sks5i17ks" path="res://Art/Sprites/Items/potato_1.tres" id="3_hosta"]
 [ext_resource type="Texture2D" uid="uid://dbpivimqybsw" path="res://Art/Sprites/Items/potato_2.tres" id="4_55ejm"]
 [ext_resource type="Script" path="res://Scripts/Items/MassMode.cs" id="4_jtmhn"]
@@ -32,4 +31,4 @@ script = ExtResource("1_mol3n")
 GramToCaloriesMultiplier = 1000
 _amountMode = SubResource("Resource_al0ah")
 AmountSprites = Array[Object]([SubResource("Resource_l3rub"), SubResource("Resource_1nqox"), SubResource("Resource_3eipw")])
-PackedScene = ExtResource("3_dd2wj")
+ScenePath = "res://Scenes/Items/potato.tscn"

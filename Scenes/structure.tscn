@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bgjabsb56erim"]
+[gd_scene load_steps=15 format=3 uid="uid://bgjabsb56erim"]
 
 [ext_resource type="Script" path="res://Scripts/Grids/GridPosition.cs" id="1_c3rwg"]
 [ext_resource type="Script" path="res://Scripts/Entities/Destructor.cs" id="2_k1idc"]
@@ -11,6 +11,9 @@
 [ext_resource type="Script" path="res://Scripts/Structures/StructureComponentInventory.cs" id="6_vg8tp"]
 [ext_resource type="Script" path="res://Scripts/Structures/StructureDeconstructor.cs" id="7_5qycl"]
 [ext_resource type="Script" path="res://Scripts/Entities/Health.cs" id="7_ifrpy"]
+[ext_resource type="Texture2D" uid="uid://cq223a7r4o38t" path="res://Art/Sprites/UI/progress_bar_under.tres" id="12_ixn4w"]
+[ext_resource type="Texture2D" uid="uid://c1yeemi30wd5m" path="res://Art/Sprites/UI/progress_bar_progress.tres" id="13_esr0x"]
+[ext_resource type="Script" path="res://Scripts/UI/WorkProgressBar.cs" id="14_x1vnk"]
 
 [node name="Structure" type="Node2D"]
 
@@ -52,6 +55,31 @@ script = ExtResource("4_56i2c")
 [node name="StructureTileGraphics" type="Node2D" parent="."]
 script = ExtResource("5_kjn4k")
 
+[node name="WorkProgressBar" type="TextureProgressBar" parent="."]
+visible = false
+z_index = 20
+z_as_relative = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = 38.0
+offset_right = 28.0
+offset_bottom = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.0
+texture_under = ExtResource("12_ixn4w")
+texture_progress = ExtResource("13_esr0x")
+texture_progress_offset = Vector2(4, 4)
+script = ExtResource("14_x1vnk")
+
 [connection signal="OnConstructionCompleted" from="StructureConstructor" to="StructureDeconstructor" method="Allow"]
 [connection signal="OnConstructionCompleted" from="StructureConstructor" to="StructureGraphics" method="ConstructionCompleted"]
 [connection signal="OnWorkProgress" from="ConstructionWork" to="Health" method="SetTotalHealth"]
+[connection signal="OnWorkProgress" from="ConstructionWork" to="WorkProgressBar" method="SetProgress"]
+[connection signal="OnWorkProgress" from="DeconstructionWork" to="WorkProgressBar" method="SetProgress"]
+[connection signal="OnWorkReset" from="DeconstructionWork" to="WorkProgressBar" method="Reset"]

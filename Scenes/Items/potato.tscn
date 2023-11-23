@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dksv8jjyur3uv"]
+
+[ext_resource type="PackedScene" uid="uid://bye7pthby83dg" path="res://Scenes/food_item.tscn" id="1_4ulrw"]
+[ext_resource type="Texture2D" uid="uid://h8nydvcld6p2" path="res://Art/Sprites/Items/potato_0.tres" id="2_fvisc"]
+[ext_resource type="Resource" uid="uid://80xxybtd1uce" path="res://Definitions/Items/potato.tres" id="2_i3dm2"]
+
+[node name="FoodItem" instance=ExtResource("1_4ulrw")]
+
+[node name="ItemGraphics" parent="." index="0"]
+texture = ExtResource("2_fvisc")
+
+[node name="DefHolder" parent="." index="3"]
+ItemDef = ExtResource("2_i3dm2")
+
+[node name="ItemAmount" parent="." index="4"]
+_amount = 10000000
