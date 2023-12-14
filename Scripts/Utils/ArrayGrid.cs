@@ -5,10 +5,10 @@ public class ArrayGrid<T>
     readonly T[,] _array;
     Vector2I _centerPosition;
 
-    public ArrayGrid(uint sideSize)
+    public ArrayGrid(Vector2I size)
     {
-        _array = new T[sideSize, sideSize];
-        _centerPosition = new((int)sideSize / 2, (int)sideSize / 2);
+        _array = new T[size.X, size.Y];
+        _centerPosition = new(size.X / 2, size.Y / 2);
     }
 
     public T this[Vector2I position]

@@ -21,8 +21,8 @@ shapes/navigation/enable_geometry_face_random_color=false
 
 [display]
 
-window/size/viewport_width=1000
-window/size/viewport_height=500
+window/size/viewport_width=1400
+window/size/viewport_height=800
 window/size/always_on_top=true
 
 [dotnet]

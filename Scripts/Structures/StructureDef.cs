@@ -18,6 +18,10 @@ public abstract partial class StructureDef : EntityDef, IWorldLayerGet
     [Export]
     public float DeconstructionTimeMultiplier = .5f;
 
+    [ExportGroup("Navigation")]
+    [Export]
+    public bool Traversable = true;
+
     // [ExportGroup("Status")]
     // public bool SetupRequired = false;
 
@@ -29,7 +33,7 @@ public abstract partial class StructureDef : EntityDef, IWorldLayerGet
     // public StateGraphAsset ResourceProcessor;
 
     public abstract bool IsConstructibleAt(
-        Grids grids,
+        EntityGrids entityGrids,
         Vector2I cellPosition,
         bool ignoreExisting = false
     );

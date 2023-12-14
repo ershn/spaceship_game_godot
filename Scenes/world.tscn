@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://biv3s7y002iun"]
+[gd_scene load_steps=11 format=3 uid="uid://biv3s7y002iun"]
 
 [ext_resource type="TileSet" uid="uid://dtion7x6r1s10" path="res://Art/Tiles/tilset.tres" id="2_ijb7n"]
 [ext_resource type="Script" path="res://Scripts/Jobs/JobScheduler.cs" id="2_mkjku"]
 [ext_resource type="Script" path="res://Scripts/TileMaps/WorldTileMap.cs" id="2_ylwcg"]
-[ext_resource type="Script" path="res://Scripts/Grids/Grids.cs" id="3_eouaa"]
+[ext_resource type="Script" path="res://Scripts/Grids/EntityGrids.cs" id="3_5ihp1"]
 [ext_resource type="Script" path="res://Scripts/Items/ItemInstantiator.cs" id="4_k18dl"]
+[ext_resource type="Script" path="res://Scripts/Navigation/NavGrid.cs" id="4_m8p08"]
 [ext_resource type="Script" path="res://Scripts/Items/ItemCreator.cs" id="5_rudlh"]
 [ext_resource type="Script" path="res://Scripts/Items/ItemAllotter.cs" id="6_kv2o1"]
 [ext_resource type="Script" path="res://Scripts/Structures/StructureInstantiator.cs" id="8_7h0sf"]
@@ -26,9 +27,15 @@ layer_1/z_index = 1
 layer_1/tile_data = PackedInt32Array()
 script = ExtResource("2_ylwcg")
 
-[node name="Grids" type="Node" parent="."]
+[node name="EntityGrids" type="Node" parent="."]
 unique_name_in_owner = true
-script = ExtResource("3_eouaa")
+script = ExtResource("3_5ihp1")
+
+[node name="NavGrid" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_m8p08")
+_mapSize = Vector2i(50, 50)
+_cellSize = Vector2i(64, 64)
 
 [node name="JobScheduler" type="Node" parent="."]
 unique_name_in_owner = true
@@ -39,16 +46,16 @@ unique_name_in_owner = true
 script = ExtResource("4_k18dl")
 _tileMap = NodePath("../WorldTileMap")
 
-[node name="ItemCreator" type="Node" parent="." node_paths=PackedStringArray("_grids", "_instantiator")]
+[node name="ItemCreator" type="Node" parent="." node_paths=PackedStringArray("_entityGrids", "_instantiator")]
 unique_name_in_owner = true
 script = ExtResource("5_rudlh")
-_grids = NodePath("../Grids")
+_entityGrids = NodePath("../EntityGrids")
 _instantiator = NodePath("../ItemInstantiator")
 
-[node name="ItemAllotter" type="Node" parent="." node_paths=PackedStringArray("_grids", "_jobScheduler", "_itemCreator")]
+[node name="ItemAllotter" type="Node" parent="." node_paths=PackedStringArray("_entityGrids", "_jobScheduler", "_itemCreator")]
 unique_name_in_owner = true
 script = ExtResource("6_kv2o1")
-_grids = NodePath("../Grids")
+_entityGrids = NodePath("../EntityGrids")
 _jobScheduler = NodePath("../JobScheduler")
 _itemCreator = NodePath("../ItemCreator")
 
@@ -57,8 +64,8 @@ unique_name_in_owner = true
 script = ExtResource("8_7h0sf")
 _tileMap = NodePath("../WorldTileMap")
 
-[node name="StructureManipulator" type="Node" parent="." node_paths=PackedStringArray("_grids", "_structureInstantiator")]
+[node name="StructureManipulator" type="Node" parent="." node_paths=PackedStringArray("_entityGrids", "_structureInstantiator")]
 unique_name_in_owner = true
 script = ExtResource("9_7tt60")
-_grids = NodePath("../Grids")
+_entityGrids = NodePath("../EntityGrids")
 _structureInstantiator = NodePath("../StructureInstantiator")

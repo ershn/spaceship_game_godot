@@ -40,39 +40,39 @@ position = Vector2(608, 96)
 rotation = 1.5708
 metadata/_edit_group_ = true
 
-[node name="ItemGraphics" parent="World/Steel1" index="0"]
-texture = ExtResource("3_16os4")
-
-[node name="DefHolder" parent="World/Steel1" index="3"]
+[node name="DefHolder" parent="World/Steel1" index="0"]
 ItemDef = ExtResource("6_8xhgu")
 
-[node name="ItemAmount" parent="World/Steel1" index="4"]
+[node name="ItemGraphics" parent="World/Steel1" index="1"]
+texture = ExtResource("3_16os4")
+
+[node name="ItemAmount" parent="World/Steel1" index="5"]
 _amount = 100000000
 
 [node name="Nitratine1" parent="World" instance=ExtResource("6_4m50q")]
 position = Vector2(224, 288)
 metadata/_edit_group_ = true
 
-[node name="ItemGraphics" parent="World/Nitratine1" index="0"]
-texture = ExtResource("4_hobak")
-
-[node name="DefHolder" parent="World/Nitratine1" index="3"]
+[node name="DefHolder" parent="World/Nitratine1" index="0"]
 ItemDef = ExtResource("8_5ysum")
 
-[node name="ItemAmount" parent="World/Nitratine1" index="4"]
+[node name="ItemGraphics" parent="World/Nitratine1" index="1"]
+texture = ExtResource("4_hobak")
+
+[node name="ItemAmount" parent="World/Nitratine1" index="5"]
 _amount = 100000000
 
 [node name="Potato1" parent="World" instance=ExtResource("8_2x7v8")]
 position = Vector2(480, 352)
 metadata/_edit_group_ = true
 
-[node name="ItemGraphics" parent="World/Potato1" index="0"]
-texture = ExtResource("9_f8dey")
-
-[node name="DefHolder" parent="World/Potato1" index="3"]
+[node name="DefHolder" parent="World/Potato1" index="0"]
 ItemDef = ExtResource("10_wsggw")
 
-[node name="ItemAmount" parent="World/Potato1" index="4"]
+[node name="ItemGraphics" parent="World/Potato1" index="1"]
+texture = ExtResource("9_f8dey")
+
+[node name="ItemAmount" parent="World/Potato1" index="5"]
 _amount = 100000000
 
 [node name="SteelFloor1" parent="World" instance=ExtResource("11_5flbh")]

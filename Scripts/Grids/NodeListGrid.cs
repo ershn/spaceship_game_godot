@@ -4,7 +4,7 @@ using Godot;
 
 public class NodeListGrid : INodeGrid
 {
-    readonly ArrayGrid<List<Node>> _grid = new(500);
+    readonly ArrayGrid<List<Node>> _grid = new(new Vector2I(500, 500));
     readonly INodeGrid _twinGrid;
 
     public NodeListGrid(INodeGrid twinGrid = null)

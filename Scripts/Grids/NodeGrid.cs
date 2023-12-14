@@ -3,7 +3,7 @@ using Godot;
 
 public class NodeGrid : INodeGrid
 {
-    readonly ArrayGrid<Node> _grid = new(500);
+    readonly ArrayGrid<Node> _grid = new(new Vector2I(500, 500));
     readonly INodeGrid _twinGrid;
 
     public NodeGrid(INodeGrid twinGrid = null)

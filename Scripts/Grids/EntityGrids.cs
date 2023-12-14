@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using Godot;
 
 [GlobalClass]
-public partial class Grids : Node
+public partial class EntityGrids : Node
 {
     public NodeListGrid GlobalGrid { get; }
     public ItemGrid ItemGrid { get; }
     public NodeGrid FloorGrid { get; }
     public NodeGrid FurnitureGrid { get; }
 
-    public Grids()
+    public EntityGrids()
     {
         GlobalGrid = new();
         ItemGrid = new(GlobalGrid);

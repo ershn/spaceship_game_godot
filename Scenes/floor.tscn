@@ -6,13 +6,16 @@
 
 [node name="Floor" instance=ExtResource("1_8w7uk")]
 
-[node name="DefHolder" type="Node" parent="." index="1"]
+[node name="DefHolder" type="Node" parent="." index="0"]
 script = ExtResource("2_ysn7w")
+
+[node name="EntityGridElement" parent="." index="2" node_paths=PackedStringArray("_defHolder")]
+_defHolder = NodePath("../DefHolder")
 
 [node name="FloorConstructor" type="Node" parent="." index="5"]
 script = ExtResource("2_a0v33")
 
-[node name="StructureDeconstructor" parent="." index="8" node_paths=PackedStringArray("_destructor", "_canceler", "_deconstructionWork")]
+[node name="StructureDeconstructor" parent="." index="9" node_paths=PackedStringArray("_destructor", "_canceler", "_deconstructionWork")]
 _destructor = NodePath("../Destructor")
 _canceler = NodePath("../Canceler")
 _deconstructionWork = NodePath("../DeconstructionWork")

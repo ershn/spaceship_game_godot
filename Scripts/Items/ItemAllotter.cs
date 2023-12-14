@@ -93,7 +93,7 @@ public partial class ItemAllotter : Node
     }
 
     [Export]
-    Grids _grids;
+    EntityGrids _entityGrids;
 
     [Export]
     JobScheduler _jobScheduler;
@@ -108,7 +108,7 @@ public partial class ItemAllotter : Node
         _itemCreator.OnItemCreated += AllotNewItem;
     }
 
-    ItemGrid ItemGrid => _grids.ItemGrid;
+    ItemGrid ItemGrid => _entityGrids.ItemGrid;
 
     public Task Request(
         ItemDef itemDef,

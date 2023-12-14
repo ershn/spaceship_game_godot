@@ -67,9 +67,6 @@ public partial class StructureInventory : Node, IInventoryAdd, IInventoryRemove
     [Export]
     GridPosition _gridPosition;
 
-    [Export]
-    Destructor _destructor;
-
     readonly Dictionary<ItemDef, ItemSlot> _slots = new();
     uint _fullSlotCount = 0;
 
@@ -79,8 +76,6 @@ public partial class StructureInventory : Node, IInventoryAdd, IInventoryRemove
     {
         _itemCreator = Owner.GetNode<ItemCreator>("../%ItemCreator");
         _itemAllotter = Owner.GetNode<ItemAllotter>("../%ItemAllotter");
-
-        _destructor.OnDestruction += Dump;
 
         foreach (var (itemDef, slot) in _slots)
             InitSlot(itemDef, slot);

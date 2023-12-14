@@ -7,12 +7,12 @@ public partial class ItemCreator : Node
     public event Action<ItemAmount> OnItemCreated;
 
     [Export]
-    Grids _grids;
+    EntityGrids _entityGrids;
 
     [Export]
     ItemInstantiator _instantiator;
 
-    ItemGrid ItemGrid => _grids.ItemGrid;
+    ItemGrid ItemGrid => _entityGrids.ItemGrid;
 
     public void Create(Vector2I cellPosition, ItemDef itemDef, ulong amount)
     {

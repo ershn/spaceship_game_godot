@@ -35,7 +35,7 @@ public partial class Stomach : Node
 
     public override void _Ready()
     {
-        _itemGrid = Owner.GetNode<Grids>("../%Grids").ItemGrid;
+        _itemGrid = Owner.GetNode<EntityGrids>("../%EntityGrids").ItemGrid;
         _jobScheduler = Owner.GetNode<JobScheduler>("../%JobScheduler");
 
         _death.OnDeath += OnDeath;

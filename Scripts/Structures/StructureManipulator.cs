@@ -5,14 +5,14 @@ using Godot;
 public partial class StructureManipulator : Node
 {
     [Export]
-    Grids _grids;
+    EntityGrids _entityGrids;
 
     [Export]
     StructureInstantiator _structureInstantiator;
 
     public void Construct(Vector2I cellPosition, StructureDef structureDef)
     {
-        if (structureDef.IsConstructibleAt(_grids, cellPosition))
+        if (structureDef.IsConstructibleAt(_entityGrids, cellPosition))
             _structureInstantiator.Instantiate(cellPosition, structureDef);
     }
 
@@ -30,7 +30,7 @@ public partial class StructureManipulator : Node
 
     IEnumerable<Node> StructuresAt(Vector2I cellPosition, WorldLayer structureLayers)
     {
-        foreach (var grid in _grids.GetStructureLayerGrids(structureLayers))
+        foreach (var grid in _entityGrids.GetStructureLayerGrids(structureLayers))
         {
             if (grid.TryGet(cellPosition, out var structure))
                 yield return structure;

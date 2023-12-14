@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bye7pthby83dg"]
+[gd_scene load_steps=8 format=3 uid="uid://bye7pthby83dg"]
 
 [ext_resource type="Script" path="res://Scripts/Items/ItemGraphics.cs" id="1_s8dj3"]
 [ext_resource type="Script" path="res://Scripts/Grids/GridPosition.cs" id="2_f2wug"]
 [ext_resource type="Script" path="res://Scripts/Entities/Destructor.cs" id="3_b3rf8"]
+[ext_resource type="Script" path="res://Scripts/Grids/EntityGridElement.cs" id="3_f7eam"]
 [ext_resource type="Script" path="res://Scripts/Items/Foods/FoodItemDefHolder.cs" id="4_147cl"]
 [ext_resource type="Script" path="res://Scripts/Items/ItemAmount.cs" id="5_3qv4g"]
 [ext_resource type="Script" path="res://Scripts/Items/Foods/FoodItemCalories.cs" id="6_wxtkt"]
@@ -10,17 +11,22 @@
 [node name="FoodItem" type="Node2D"]
 z_index = 5
 
+[node name="DefHolder" type="Node" parent="."]
+script = ExtResource("4_147cl")
+
 [node name="ItemGraphics" type="Sprite2D" parent="."]
 script = ExtResource("1_s8dj3")
 
 [node name="GridPosition" type="Node" parent="."]
 script = ExtResource("2_f2wug")
 
+[node name="EntityGridElement" type="Node" parent="." node_paths=PackedStringArray("_defHolder", "_gridPosition")]
+script = ExtResource("3_f7eam")
+_defHolder = NodePath("../DefHolder")
+_gridPosition = NodePath("../GridPosition")
+
 [node name="Destructor" type="Node" parent="."]
 script = ExtResource("3_b3rf8")
-
-[node name="DefHolder" type="Node" parent="."]
-script = ExtResource("4_147cl")
 
 [node name="ItemAmount" type="Node" parent="." node_paths=PackedStringArray("_itemDefHolder")]
 script = ExtResource("5_3qv4g")

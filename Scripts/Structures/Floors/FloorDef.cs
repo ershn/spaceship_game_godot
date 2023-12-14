@@ -10,8 +10,8 @@ public partial class FloorDef : StructureDef
     public FloorCategory Category;
 
     public override bool IsConstructibleAt(
-        Grids grids,
+        EntityGrids entityGrids,
         Vector2I cellPosition,
         bool ignoreExisting = false
-    ) => ignoreExisting || !grids.FloorGrid.Has(cellPosition);
+    ) => ignoreExisting || !entityGrids.FloorGrid.Has(cellPosition);
 }
