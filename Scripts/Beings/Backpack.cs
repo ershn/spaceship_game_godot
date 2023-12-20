@@ -11,8 +11,7 @@ public partial class Backpack : Node, IInventoryAdd, IInventoryRemove
     [Export]
     GridPosition _gridPosition;
 
-    // TODO: display as mass
-    [Export]
+    [Export(hintString: AmountHint.Mass)]
     ulong _maxMass = 100.KiloGrams();
 
     public ulong CurrentMass { get; private set; }

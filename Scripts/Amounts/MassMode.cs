@@ -1,6 +1,6 @@
 using Godot;
 
-[GlobalClass]
+[Tool, GlobalClass]
 public partial class MassMode : AmountMode
 {
     public override AmountType AmountType => AmountType.Mass;

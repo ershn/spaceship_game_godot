@@ -34,5 +34,6 @@ StructureGraphicsDef = SubResource("Resource_po7yy")
 ComponentAmounts = Array[Object]([SubResource("Resource_fq5yj"), SubResource("Resource_wpq51")])
 ConstructionTime = 5.0
 DeconstructionTimeMultiplier = 0.5
+Traversable = true
 MaxHealthPoints = 100
 ScenePath = "res://Scenes/Floors/dirt_floor.tscn"

@@ -1,4 +1,4 @@
-public static class IntExtensions
+public static class IntAmountExtensions
 {
     public static ulong MilliGram(this int value) => (ulong)value;
 

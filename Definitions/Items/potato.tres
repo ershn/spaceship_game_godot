@@ -5,22 +5,25 @@
 [ext_resource type="Script" path="res://Scripts/Items/AmountSprite.cs" id="2_lq2cx"]
 [ext_resource type="Texture2D" uid="uid://c5q6sks5i17ks" path="res://Art/Sprites/Items/potato_1.tres" id="3_hosta"]
 [ext_resource type="Texture2D" uid="uid://dbpivimqybsw" path="res://Art/Sprites/Items/potato_2.tres" id="4_55ejm"]
-[ext_resource type="Script" path="res://Scripts/Items/MassMode.cs" id="4_jtmhn"]
+[ext_resource type="Script" path="res://Scripts/Amounts/MassMode.cs" id="4_jtmhn"]
 
 [sub_resource type="Resource" id="Resource_l3rub"]
 script = ExtResource("2_lq2cx")
 MinAmount = 1
 Sprite = ExtResource("1_wo2gq")
+metadata/_amountType = 0
 
 [sub_resource type="Resource" id="Resource_1nqox"]
 script = ExtResource("2_lq2cx")
 MinAmount = 100000000
 Sprite = ExtResource("3_hosta")
+metadata/_amountType = 0
 
 [sub_resource type="Resource" id="Resource_3eipw"]
 script = ExtResource("2_lq2cx")
 MinAmount = 1000000000
 Sprite = ExtResource("4_55ejm")
+metadata/_amountType = 0
 
 [sub_resource type="Resource" id="Resource_al0ah"]
 script = ExtResource("4_jtmhn")

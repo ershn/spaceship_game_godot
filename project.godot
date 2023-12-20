@@ -34,6 +34,10 @@ project/assembly_name="Spaceship game"
 naming/default_signal_callback_name="{NodeName}{SignalName}"
 naming/default_signal_callback_to_self_name="{SignalName}"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/AmountInspector/plugin.cfg")
+
 [layer_names]
 
 2d_physics/layer_1="beings"

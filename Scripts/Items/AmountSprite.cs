@@ -3,8 +3,7 @@ using Godot;
 [GlobalClass]
 public partial class AmountSprite : Resource
 {
-    // TODO: display as mass/count
-    [Export]
+    [Export(hintString: AmountHint.Any)]
     public ulong MinAmount;
 
     [Export]

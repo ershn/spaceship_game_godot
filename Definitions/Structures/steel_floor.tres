@@ -29,5 +29,6 @@ StructureGraphicsDef = SubResource("Resource_xro7p")
 ComponentAmounts = Array[Object]([SubResource("Resource_cdu3t")])
 ConstructionTime = 5.0
 DeconstructionTimeMultiplier = 0.5
+Traversable = true
 MaxHealthPoints = 100
 ScenePath = "res://Scenes/Floors/steel_floor.tscn"

@@ -1,10 +1,9 @@
 using Godot;
 
-[GlobalClass]
+[Tool, GlobalClass]
 public partial class CountMode : AmountMode
 {
-    // TODO: display as mass
-    [Export]
+    [Export(hintString: AmountHint.Mass)]
     ulong _unitMass;
 
     public override AmountType AmountType => AmountType.Count;

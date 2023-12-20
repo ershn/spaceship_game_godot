@@ -6,9 +6,6 @@ public partial class ItemDefAmount : Resource
     [Export]
     public ItemDef ItemDef;
 
-    // TODO: display as mass/count
-    [Export]
+    [Export(hintString: AmountHint.ModeOf + "ItemDef")]
     public ulong Amount;
-
-    public AmountMode AmountMode => ItemDef.AmountMode;
 }

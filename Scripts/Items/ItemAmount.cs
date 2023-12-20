@@ -27,8 +27,7 @@ public partial class ItemAmount : Node, ITemplate<ItemDef>, IPosition
     [Export]
     ItemDefHolder _itemDefHolder;
 
-    // TODO: display as mass/count
-    [Export]
+    [Export(hintString: AmountHint.ModeOf + "_itemDefHolder/ItemDef")]
     ulong _amount = 1;
     ulong _reservedAmount = 0;
 

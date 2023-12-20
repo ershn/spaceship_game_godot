@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://c43lj4y8h0ohm"]
+
+[node name="Container" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ValueInput" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ValueErrorIcon" type="TextureRect" parent="."]
+visible = false
+layout_mode = 2
+tooltip_text = "Invalid amount value."
+stretch_mode = 3
+
+[node name="TypeWarningIcon" type="TextureRect" parent="."]
+visible = false
+layout_mode = 2
+tooltip_text = "Couldn't determine the amount type."
+stretch_mode = 3
+
+[node name="AnyTypeWarningIcon" type="TextureRect" parent="."]
+visible = false
+layout_mode = 2
+tooltip_text = "Amount type set to Any."
+stretch_mode = 3
