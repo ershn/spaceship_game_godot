@@ -7,19 +7,19 @@
 [ext_resource type="Texture2D" uid="uid://tftq1s28ish8" path="res://Art/Sprites/Items/steel_2.tres" id="4_e87wn"]
 [ext_resource type="Script" path="res://Scripts/Amounts/MassMode.cs" id="5_5n72p"]
 
-[sub_resource type="Resource" id="Resource_k4nw6"]
+[sub_resource type="Resource" id="Resource_gpsyo"]
 script = ExtResource("2_tc6cx")
 MinAmount = 1
 Sprite = ExtResource("1_0sers")
 metadata/_amountType = 0
 
-[sub_resource type="Resource" id="Resource_1rw56"]
+[sub_resource type="Resource" id="Resource_nrckk"]
 script = ExtResource("2_tc6cx")
 MinAmount = 100000000
 Sprite = ExtResource("3_sn63r")
 metadata/_amountType = 0
 
-[sub_resource type="Resource" id="Resource_hhofl"]
+[sub_resource type="Resource" id="Resource_wkgm1"]
 script = ExtResource("2_tc6cx")
 MinAmount = 1000000000
 Sprite = ExtResource("4_e87wn")
@@ -27,10 +27,11 @@ metadata/_amountType = 0
 
 [sub_resource type="Resource" id="Resource_elliq"]
 script = ExtResource("5_5n72p")
+_defaultMass = 10000000
 
 [resource]
 resource_name = "Steel"
 script = ExtResource("1_wwkpq")
 _amountMode = SubResource("Resource_elliq")
-AmountSprites = Array[Object]([SubResource("Resource_k4nw6"), SubResource("Resource_1rw56"), SubResource("Resource_hhofl")])
+AmountSprites = [SubResource("Resource_gpsyo"), SubResource("Resource_nrckk"), SubResource("Resource_wkgm1")]
 ScenePath = "res://Scenes/Items/steel.tscn"

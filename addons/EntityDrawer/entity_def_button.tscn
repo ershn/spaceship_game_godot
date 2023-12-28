@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvpuvleksfqid"]
+
+[ext_resource type="Script" path="res://addons/EntityDrawer/EntityDefButton.cs" id="1_bbkv8"]
+[ext_resource type="Texture2D" uid="uid://yda3jr23ugb5" path="res://addons/EntityDrawer/selected.tres" id="2_udlcd"]
+
+[node name="EntityDefButton" type="TextureButton"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+toggle_mode = true
+stretch_mode = 5
+script = ExtResource("1_bbkv8")
+
+[node name="SelectedOverlay" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_udlcd")
+expand_mode = 1

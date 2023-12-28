@@ -1,15 +1,17 @@
 using Godot;
 
-[GlobalClass]
+[Tool, GlobalClass]
 public partial class GridPosition : Node, IPosition
 {
     TileMap _tileMap;
 
-    public Vector2I CellPosition => _tileMap.LocalToMap(Position);
+    public bool Valid => _tileMap is not null;
+
+    public Vector2I Coord => _tileMap.LocalToMap(Position);
 
     public override void _EnterTree()
     {
-        _tileMap = Owner.GetNode<TileMap>("../%WorldTileMap");
+        _tileMap = Owner.GetNodeOrNull<TileMap>("../%WorldTileMap");
     }
 
     public Vector2 GlobalPosition => GetOwner<Node2D>().GlobalPosition;

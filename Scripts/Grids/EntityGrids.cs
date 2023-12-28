@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 
-[GlobalClass]
+[Tool, GlobalClass]
 public partial class EntityGrids : Node
 {
     public NodeListGrid GlobalGrid { get; }

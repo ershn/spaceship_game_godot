@@ -1,6 +1,6 @@
 using Godot;
 
-[GlobalClass]
+[Tool, GlobalClass]
 public partial class ItemDefHolder : EntityDefHolder, ITemplate<ItemDef>, IWorldLayerGet
 {
     public void Template(ItemDef itemDef)

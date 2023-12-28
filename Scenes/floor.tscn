@@ -15,7 +15,7 @@ _defHolder = NodePath("../DefHolder")
 [node name="FloorConstructor" type="Node" parent="." index="5"]
 script = ExtResource("2_a0v33")
 
-[node name="StructureDeconstructor" parent="." index="9" node_paths=PackedStringArray("_destructor", "_canceler", "_deconstructionWork")]
+[node name="StructureDeconstructor" parent="." index="10" node_paths=PackedStringArray("_destructor", "_canceler", "_deconstructionWork")]
 _destructor = NodePath("../Destructor")
 _canceler = NodePath("../Canceler")
 _deconstructionWork = NodePath("../DeconstructionWork")

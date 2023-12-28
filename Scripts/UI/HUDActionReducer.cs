@@ -45,8 +45,8 @@ public partial class HUDActionReducer : Node
 
     void PlaceBlueprint(Vector2 position, StructureDef structureDef)
     {
-        var cellPosition = _worldTileMap.LocalToMap(position);
-        _worldStructureManipulator.Construct(cellPosition, structureDef);
+        var coord = _worldTileMap.LocalToMap(position);
+        _worldStructureManipulator.Construct(coord, structureDef);
     }
 
     #endregion
@@ -61,8 +61,8 @@ public partial class HUDActionReducer : Node
 
     void CancelTask(Vector2 position)
     {
-        var cellPosition = _worldTileMap.LocalToMap(position);
-        _worldStructureManipulator.Cancel(cellPosition, _structureLayers);
+        var coord = _worldTileMap.LocalToMap(position);
+        _worldStructureManipulator.Cancel(coord, _structureLayers);
     }
 
     void SelectDeconstructTask()
@@ -72,8 +72,8 @@ public partial class HUDActionReducer : Node
 
     void DeconstructTask(Vector2 position)
     {
-        var cellPosition = _worldTileMap.LocalToMap(position);
-        _worldStructureManipulator.Deconstruct(cellPosition, _structureLayers);
+        var coord = _worldTileMap.LocalToMap(position);
+        _worldStructureManipulator.Deconstruct(coord, _structureLayers);
     }
 
     #endregion

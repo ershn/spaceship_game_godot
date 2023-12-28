@@ -1,6 +1,6 @@
 using Godot;
 
-[GlobalClass]
+[Tool, GlobalClass]
 public partial class FloorDefHolder : StructureDefHolder, ITemplate<StructureDef>
 {
     public void Template(StructureDef structureDef)

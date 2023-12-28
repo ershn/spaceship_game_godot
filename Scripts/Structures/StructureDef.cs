@@ -5,6 +5,8 @@ public abstract partial class StructureDef : EntityDef, IWorldLayerGet
     public abstract WorldLayer WorldLayer { get; }
 
     [ExportGroup("Graphics")]
+    public override Texture2D PreviewSprite => StructureGraphicsDef?.PreviewSprite;
+
     [Export]
     public StructureGraphicsDef StructureGraphicsDef;
 
@@ -34,7 +36,7 @@ public abstract partial class StructureDef : EntityDef, IWorldLayerGet
 
     public abstract bool IsConstructibleAt(
         EntityGrids entityGrids,
-        Vector2I cellPosition,
+        Vector2I coord,
         bool ignoreExisting = false
     );
 }

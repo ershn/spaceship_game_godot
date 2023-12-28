@@ -5,6 +5,8 @@ namespace AmountInspector;
 
 public partial class Property : EditorProperty
 {
+    const string PropertyScenePath = "res://addons/AmountInspector/property.tscn";
+
     static readonly StringName s_amountTypeMetaName = new("_amountType");
 
     readonly Hint.Type _hintType;
@@ -32,8 +34,7 @@ public partial class Property : EditorProperty
         _hintType = hintType;
         _hintParam = hintParam;
 
-        var packedScene = GD.Load<PackedScene>("res://addons/AmountInspector/property.tscn");
-        _property = packedScene.Instantiate<Control>();
+        _property = GD.Load<PackedScene>(PropertyScenePath).Instantiate<Control>();
 
         _valueInput = _property.GetNode<LineEdit>("ValueInput");
         _valueInput.TextChanged += InputValueChanged;
@@ -132,7 +133,7 @@ public partial class Property : EditorProperty
             if (obj is null)
                 return null;
         }
-        return (AmountMode)obj.Get("_amountMode");
+        return (obj as IAmountModeGet)?.AmountMode;
     }
 
     AmountType? GetMetaAmountType()

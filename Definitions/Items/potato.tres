@@ -25,13 +25,14 @@ MinAmount = 1000000000
 Sprite = ExtResource("4_55ejm")
 metadata/_amountType = 0
 
-[sub_resource type="Resource" id="Resource_al0ah"]
+[sub_resource type="Resource" id="Resource_df2hk"]
 script = ExtResource("4_jtmhn")
+_defaultMass = 10000000
 
 [resource]
 resource_name = "Potato"
 script = ExtResource("1_mol3n")
+_massMode = SubResource("Resource_df2hk")
 GramToCaloriesMultiplier = 1000
-_amountMode = SubResource("Resource_al0ah")
-AmountSprites = Array[Object]([SubResource("Resource_l3rub"), SubResource("Resource_1nqox"), SubResource("Resource_3eipw")])
+AmountSprites = [SubResource("Resource_l3rub"), SubResource("Resource_1nqox"), SubResource("Resource_3eipw")]
 ScenePath = "res://Scenes/Items/potato.tscn"

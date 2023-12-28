@@ -76,7 +76,7 @@ public partial class Backpack : Node, IInventoryAdd, IInventoryRemove
     public void Dump()
     {
         foreach (var (itemDef, amount) in _inventory)
-            _itemCreator.Create(_gridPosition.CellPosition, itemDef, amount);
+            _itemCreator.Create(_gridPosition.Coord, itemDef, amount);
 
         CurrentMass = 0;
         _inventory.Clear();

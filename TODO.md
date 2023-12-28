@@ -60,9 +60,7 @@
 
 ## Editor
 
-- allow to paint items/structures in the viewport
-- re-implement an amount property drawer
-  - add a struct that holds the amount type alongside the value to simplify amount type detection ?
+- re-implement the generation of structure/item scenes from defs
 
 ## Release
 

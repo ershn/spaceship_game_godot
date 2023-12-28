@@ -1,20 +1,21 @@
-[gd_resource type="Resource" script_class="FloorDef" load_steps=11 format=3 uid="uid://dctqllgmbpikl"]
+[gd_resource type="Resource" script_class="FloorDef" load_steps=12 format=3 uid="uid://dctqllgmbpikl"]
 
 [ext_resource type="Resource" uid="uid://dj3vpq761xnre" path="res://Definitions/Items/steel.tres" id="1_6f8pj"]
 [ext_resource type="Script" path="res://Scripts/Structures/Floors/FloorDef.cs" id="1_qrlgg"]
 [ext_resource type="Script" path="res://Scripts/Structures/ItemDefAmount.cs" id="2_fnv6q"]
+[ext_resource type="Texture2D" uid="uid://hgoqhl1sphni" path="res://Art/Sprites/Structures/dirt_floor.tres" id="2_spo3f"]
 [ext_resource type="Script" path="res://Scripts/TileMaps/TerrainRef.cs" id="3_jj4u4"]
 [ext_resource type="Resource" uid="uid://d2wkkr2pjcac5" path="res://Definitions/Items/dirt.tres" id="3_nebk7"]
 [ext_resource type="Script" path="res://Scripts/Structures/StructureTileGraphicsDef.cs" id="4_bha1l"]
 
-[sub_resource type="Resource" id="Resource_fq5yj"]
-script = ExtResource("2_fnv6q")
-ItemDef = ExtResource("1_6f8pj")
-Amount = 10000000
-
-[sub_resource type="Resource" id="Resource_wpq51"]
+[sub_resource type="Resource" id="Resource_jhh0a"]
 script = ExtResource("2_fnv6q")
 ItemDef = ExtResource("3_nebk7")
+Amount = 10000000
+
+[sub_resource type="Resource" id="Resource_oqqox"]
+script = ExtResource("2_fnv6q")
+ItemDef = ExtResource("1_6f8pj")
 Amount = 5000000
 
 [sub_resource type="Resource" id="Resource_q685m"]
@@ -24,6 +25,7 @@ TerrainId = 0
 
 [sub_resource type="Resource" id="Resource_po7yy"]
 script = ExtResource("4_bha1l")
+_previewSprite = ExtResource("2_spo3f")
 TileRef = SubResource("Resource_q685m")
 
 [resource]
@@ -31,7 +33,7 @@ resource_name = "DirtFloor"
 script = ExtResource("1_qrlgg")
 Category = 1
 StructureGraphicsDef = SubResource("Resource_po7yy")
-ComponentAmounts = Array[Object]([SubResource("Resource_fq5yj"), SubResource("Resource_wpq51")])
+ComponentAmounts = [SubResource("Resource_jhh0a"), SubResource("Resource_oqqox")]
 ConstructionTime = 5.0
 DeconstructionTimeMultiplier = 0.5
 Traversable = true

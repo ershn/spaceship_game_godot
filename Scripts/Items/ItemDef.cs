@@ -1,8 +1,11 @@
+using System.Linq;
 using Godot;
 
-[GlobalClass]
-public partial class ItemDef : EntityDef, IWorldLayerGet
+[Tool, GlobalClass]
+public partial class ItemDef : EntityDef, IWorldLayerGet, IAmountModeGet
 {
+    public override Resource NewState() => new ItemState(this);
+
     public WorldLayer WorldLayer => WorldLayer.Item;
 
     [ExportGroup("Amount")]
@@ -11,6 +14,8 @@ public partial class ItemDef : EntityDef, IWorldLayerGet
     public virtual AmountMode AmountMode => _amountMode;
 
     [ExportGroup("Graphics")]
+    public override Texture2D PreviewSprite => AmountSprites?.FirstOrDefault()?.Sprite;
+
     [Export]
     public AmountSprite[] AmountSprites;
 }

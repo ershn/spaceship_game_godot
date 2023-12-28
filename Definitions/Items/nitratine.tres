@@ -7,19 +7,19 @@
 [ext_resource type="Texture2D" uid="uid://bbjed04e5evuv" path="res://Art/Sprites/Items/nitratine_2.tres" id="4_vbu6v"]
 [ext_resource type="Script" path="res://Scripts/Amounts/MassMode.cs" id="5_ajr7q"]
 
-[sub_resource type="Resource" id="Resource_wonoc"]
+[sub_resource type="Resource" id="Resource_yat58"]
 script = ExtResource("2_2ikhc")
 MinAmount = 1
 Sprite = ExtResource("1_iet58")
 metadata/_amountType = 0
 
-[sub_resource type="Resource" id="Resource_klbc5"]
+[sub_resource type="Resource" id="Resource_qo428"]
 script = ExtResource("2_2ikhc")
 MinAmount = 100000000
 Sprite = ExtResource("3_l8ct3")
 metadata/_amountType = 0
 
-[sub_resource type="Resource" id="Resource_r25mm"]
+[sub_resource type="Resource" id="Resource_f2fg5"]
 script = ExtResource("2_2ikhc")
 MinAmount = 1000000000
 Sprite = ExtResource("4_vbu6v")
@@ -27,10 +27,11 @@ metadata/_amountType = 0
 
 [sub_resource type="Resource" id="Resource_sufvj"]
 script = ExtResource("5_ajr7q")
+_defaultMass = 10000000
 
 [resource]
 resource_name = "Nitratine"
 script = ExtResource("1_acvcs")
 _amountMode = SubResource("Resource_sufvj")
-AmountSprites = Array[Object]([SubResource("Resource_wonoc"), SubResource("Resource_klbc5"), SubResource("Resource_r25mm")])
-ScenePath = ""
+AmountSprites = [SubResource("Resource_yat58"), SubResource("Resource_qo428"), SubResource("Resource_f2fg5")]
+ScenePath = "res://Scenes/Items/nitratine.tscn"

@@ -1,7 +1,7 @@
 using Godot;
 
-[GlobalClass]
-public partial class EntityGridElement : Node
+[Tool, GlobalClass]
+public partial class EntityGridElement : Node, ISerializationListener
 {
     EntityGrids _entityGrids;
 
@@ -11,31 +11,43 @@ public partial class EntityGridElement : Node
     [Export]
     GridPosition _gridPosition;
 
-    Vector2I _cellPosition;
+    Vector2I _coord;
     INodeGrid _layerGrid;
 
-    public override void _Ready()
-    {
-        _entityGrids = Owner.GetNode<EntityGrids>("../%EntityGrids");
+    bool Valid => _gridPosition.Valid && _entityGrids is not null;
 
-        AddToGrid();
+    public override void _EnterTree()
+    {
+        _entityGrids = Owner.GetNodeOrNull<EntityGrids>("../%EntityGrids");
+
+        TryAddToGrid();
     }
 
     public override void _ExitTree()
     {
-        RemoveFromGrid();
+        TryRemoveFromGrid();
     }
 
-    void AddToGrid()
+    void TryAddToGrid()
     {
+        if (!Valid)
+            return;
+
         var worldLayerConf = (IWorldLayerGet)_defHolder;
-        _cellPosition = _gridPosition.CellPosition;
+        _coord = _gridPosition.Coord;
         _layerGrid = _entityGrids.GetLayerGrid(worldLayerConf.WorldLayer);
-        _layerGrid.Add(_cellPosition, Owner);
+        _layerGrid.Add(_coord, Owner);
     }
 
-    void RemoveFromGrid()
+    void TryRemoveFromGrid()
     {
-        _layerGrid.Remove(_cellPosition, Owner);
+        if (!Valid)
+            return;
+
+        _layerGrid.Remove(_coord, Owner);
     }
+
+    public void OnAfterDeserialize() => Callable.From(TryAddToGrid).CallDeferred();
+
+    public void OnBeforeSerialize() => TryRemoveFromGrid();
 }

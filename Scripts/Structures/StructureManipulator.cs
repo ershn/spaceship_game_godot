@@ -10,29 +10,29 @@ public partial class StructureManipulator : Node
     [Export]
     StructureInstantiator _structureInstantiator;
 
-    public void Construct(Vector2I cellPosition, StructureDef structureDef)
+    public void Construct(Vector2I coord, StructureDef structureDef)
     {
-        if (structureDef.IsConstructibleAt(_entityGrids, cellPosition))
-            _structureInstantiator.Instantiate(cellPosition, structureDef);
+        if (structureDef.IsConstructibleAt(_entityGrids, coord))
+            _structureInstantiator.Instantiate(coord, structureDef);
     }
 
-    public void Deconstruct(Vector2I cellPosition, WorldLayer structureLayers)
+    public void Deconstruct(Vector2I coord, WorldLayer structureLayers)
     {
-        foreach (var structure in StructuresAt(cellPosition, structureLayers))
+        foreach (var structure in StructuresAt(coord, structureLayers))
             _ = structure.GetNode<StructureDeconstructor>("StructureDeconstructor").Deconstruct();
     }
 
-    public void Cancel(Vector2I cellPosition, WorldLayer structureLayers)
+    public void Cancel(Vector2I coord, WorldLayer structureLayers)
     {
-        foreach (var structure in StructuresAt(cellPosition, structureLayers))
+        foreach (var structure in StructuresAt(coord, structureLayers))
             structure.GetNode<Canceler>("Canceler").Cancel();
     }
 
-    IEnumerable<Node> StructuresAt(Vector2I cellPosition, WorldLayer structureLayers)
+    IEnumerable<Node> StructuresAt(Vector2I coord, WorldLayer structureLayers)
     {
         foreach (var grid in _entityGrids.GetStructureLayerGrids(structureLayers))
         {
-            if (grid.TryGet(cellPosition, out var structure))
+            if (grid.TryGet(coord, out var structure))
                 yield return structure;
         }
     }

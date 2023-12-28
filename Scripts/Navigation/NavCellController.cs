@@ -13,7 +13,7 @@ public partial class NavCellController : Node
         _navGrid = Owner.GetNode<NavGrid>("../%NavGrid");
     }
 
-    NavCell NavCell => _navGrid[_gridPosition.CellPosition];
+    NavCell NavCell => _navGrid[_gridPosition.Coord];
 
     public bool Traversable
     {

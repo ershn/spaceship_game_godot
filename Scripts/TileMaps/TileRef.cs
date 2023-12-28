@@ -1,4 +1,4 @@
 using Godot;
 
-[Tool, GlobalClass]
+[GlobalClass]
 public abstract partial class TileRef : Resource { }

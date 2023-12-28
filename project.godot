@@ -36,7 +36,7 @@ naming/default_signal_callback_to_self_name="{SignalName}"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AmountInspector/plugin.cfg")
+enabled=PackedStringArray("res://addons/AmountInspector/plugin.cfg", "res://addons/EntityDrawer/plugin.cfg")
 
 [layer_names]
 

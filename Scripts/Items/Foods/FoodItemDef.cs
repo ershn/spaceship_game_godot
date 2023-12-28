@@ -1,9 +1,10 @@
 using Godot;
 
-[GlobalClass]
+[Tool, GlobalClass]
 public partial class FoodItemDef : ItemDef
 {
-    readonly MassMode _massMode = new();
+    [Export]
+    MassMode _massMode;
     public override AmountMode AmountMode => _massMode;
 
     [Export]

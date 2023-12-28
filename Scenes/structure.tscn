@@ -86,11 +86,11 @@ texture_progress = ExtResource("13_esr0x")
 texture_progress_offset = Vector2(4, 4)
 script = ExtResource("14_x1vnk")
 
-[connection signal="OnDestruction" from="Destructor" to="StructureComponentInventory" method="Dump"]
 [connection signal="OnDestruction" from="Destructor" to="StructureNavCellController" method="CleanupCell"]
+[connection signal="OnDestruction" from="Destructor" to="StructureComponentInventory" method="Dump"]
+[connection signal="OnConstructionCompleted" from="StructureConstructor" to="StructureNavCellController" method="InitializeCell"]
 [connection signal="OnConstructionCompleted" from="StructureConstructor" to="StructureDeconstructor" method="Allow"]
 [connection signal="OnConstructionCompleted" from="StructureConstructor" to="StructureGraphics" method="ConstructionCompleted"]
-[connection signal="OnConstructionCompleted" from="StructureConstructor" to="StructureNavCellController" method="InitializeCell"]
 [connection signal="OnWorkProgress" from="ConstructionWork" to="Health" method="SetTotalHealth"]
 [connection signal="OnWorkProgress" from="ConstructionWork" to="WorkProgressBar" method="SetProgress"]
 [connection signal="OnWorkProgress" from="DeconstructionWork" to="WorkProgressBar" method="SetProgress"]

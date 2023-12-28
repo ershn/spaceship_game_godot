@@ -14,18 +14,18 @@ public partial class ItemCreator : Node
 
     ItemGrid ItemGrid => _entityGrids.ItemGrid;
 
-    public void Create(Vector2I cellPosition, ItemDef itemDef, ulong amount)
+    public void Create(Vector2I coord, ItemDef itemDef, ulong amount)
     {
         ItemAmount itemAmount;
 
-        if (ItemGrid.TryGetItem(cellPosition, itemDef, out var item))
+        if (ItemGrid.TryGetItem(coord, itemDef, out var item))
         {
             itemAmount = item.GetNode<ItemAmount>("ItemAmount");
             itemAmount.Add(amount);
         }
         else
         {
-            item = _instantiator.Instantiate(cellPosition, itemDef, amount);
+            item = _instantiator.Instantiate(coord, itemDef, amount);
             itemAmount = item.GetNode<ItemAmount>("ItemAmount");
         }
 

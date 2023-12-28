@@ -192,12 +192,12 @@ public partial class StructureInventory : Node, IInventoryAdd, IInventoryRemove
     {
         _itemRequestCanceller.Cancel();
 
-        var cellPosition = _gridPosition.CellPosition;
+        var coord = _gridPosition.Coord;
         foreach (var (itemDef, slot) in _slots)
         {
             if (slot.CurrentAmount > 0)
             {
-                _itemCreator.Create(cellPosition, itemDef, slot.CurrentAmount);
+                _itemCreator.Create(coord, itemDef, slot.CurrentAmount);
                 slot.ZeroAmount();
             }
         }

@@ -1,6 +1,6 @@
 using Godot;
 
-[GlobalClass]
+[Tool, GlobalClass]
 public partial class AmountSprite : Resource
 {
     [Export(hintString: AmountHint.Any)]

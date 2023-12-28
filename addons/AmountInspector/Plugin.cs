@@ -20,8 +20,8 @@ public partial class Plugin : EditorPlugin, ISerializationListener
         _inspectorPlugin = null;
     }
 
-    public void OnBeforeSerialize() => _ExitTree();
-
     public void OnAfterDeserialize() => _EnterTree();
+
+    public void OnBeforeSerialize() => _ExitTree();
 }
 #endif

@@ -38,6 +38,11 @@ public partial class ItemAmount : Node, ITemplate<ItemDef>, IPosition
         _amount = amount;
     }
 
+    public static void EditorInitialize(Node itemAmount, ulong amount)
+    {
+        itemAmount.Set("_amount", amount);
+    }
+
     public override void _Ready()
     {
         SignalAmountChange(_amount);
