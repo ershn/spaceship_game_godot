@@ -24,7 +24,8 @@ public partial class ItemInstantiator : Node
 
     public Node2D EditorInstantiate(Vector2I coord, ItemState state)
     {
-        var item = state.ItemDef.GetPackedScene().Instantiate<Node2D>();
+        var packedScene = state.ItemDef.GetPackedScene();
+        var item = packedScene.Instantiate<Node2D>(PackedScene.GenEditState.Instance);
 
         item.Name = state.ItemDef.ResourceName;
         item.Position = _tileMap.MapToLocal(coord);

@@ -24,7 +24,8 @@ public partial class StructureInstantiator : Node
 
     public Node2D EditorInstantiate(Vector2I coord, StructureState state)
     {
-        var structure = state.StructureDef.GetPackedScene().Instantiate<Node2D>();
+        var packedScene = state.StructureDef.GetPackedScene();
+        var structure = packedScene.Instantiate<Node2D>(PackedScene.GenEditState.Instance);
 
         structure.Name = state.StructureDef.ResourceName;
         structure.Position = _tileMap.MapToLocal(coord);
