@@ -14,4 +14,10 @@ public partial class FloorState : StructureState
     {
         FloorDef = floorDef;
     }
+
+    public override void _ValidateProperty(Godot.Collections.Dictionary property)
+    {
+        if ((string)property["name"] == nameof(FloorDef))
+            property["usage"] = (long)PropertyUsageFlags.ReadOnly;
+    }
 }

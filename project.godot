@@ -38,6 +38,10 @@ naming/default_signal_callback_to_self_name="{SignalName}"
 
 enabled=PackedStringArray("res://addons/AmountInspector/plugin.cfg", "res://addons/EntityDrawer/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [layer_names]
 
 2d_physics/layer_1="beings"

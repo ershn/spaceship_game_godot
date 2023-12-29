@@ -16,4 +16,10 @@ public partial class ItemState : Resource
         ItemDef = itemDef;
         Amount = itemDef.AmountMode.DefaultAmount;
     }
+
+    public override void _ValidateProperty(Godot.Collections.Dictionary property)
+    {
+        if ((string)property["name"] == nameof(ItemDef))
+            property["usage"] = (long)PropertyUsageFlags.ReadOnly;
+    }
 }
