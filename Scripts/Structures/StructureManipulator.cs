@@ -8,12 +8,12 @@ public partial class StructureManipulator : Node
     EntityGrids _entityGrids;
 
     [Export]
-    StructureInstantiator _structureInstantiator;
+    EntityInstantiator _entityInstantiator;
 
     public void Construct(Vector2I coord, StructureDef structureDef)
     {
         if (structureDef.IsConstructibleAt(_entityGrids, coord))
-            _structureInstantiator.Instantiate(coord, structureDef);
+            _entityInstantiator.Instantiate(coord, structureDef.NewState());
     }
 
     public void Deconstruct(Vector2I coord, WorldLayer structureLayers)

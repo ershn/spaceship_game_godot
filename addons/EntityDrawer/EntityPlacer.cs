@@ -8,15 +8,13 @@ namespace EntityDrawer;
 
 public class EntityPlacer
 {
+    readonly EntityInstantiator _entityInstantiator;
     readonly EntityGrids _entityGrids;
-    readonly ItemInstantiator _itemInstantiator;
-    readonly StructureInstantiator _structureInstantiator;
 
     public EntityPlacer(TileMap tileMap)
     {
+        _entityInstantiator = tileMap.GetNode<EntityInstantiator>("%EntityInstantiator");
         _entityGrids = tileMap.GetNode<EntityGrids>("%EntityGrids");
-        _itemInstantiator = tileMap.GetNode<ItemInstantiator>("%ItemInstantiator");
-        _structureInstantiator = tileMap.GetNode<StructureInstantiator>("%StructureInstantiator");
     }
 
     public bool TryPickEntity(Vector2I coord, out EntityDef entityDef)
@@ -32,7 +30,7 @@ public class EntityPlacer
         return true;
     }
 
-    public bool TryPlaceEntity(Vector2I coord, EntityDef entityDef, Resource entityState)
+    public bool TryPlaceEntity(Vector2I coord, EntityDef entityDef, EntityState entityState)
     {
         if (!CanPlaceEntity(coord, entityDef, out var removedNodes))
             return false;
@@ -75,17 +73,9 @@ public class EntityPlacer
         return structureDef.IsConstructibleAt(_entityGrids, coord, ignoreExisting: true);
     }
 
-    void PlaceEntity(Vector2I coord, Resource entityState)
+    void PlaceEntity(Vector2I coord, EntityState entityState)
     {
-        switch (entityState)
-        {
-            case ItemState itemState:
-                _itemInstantiator.EditorInstantiate(coord, itemState);
-                break;
-            case StructureState structureState:
-                _structureInstantiator.EditorInstantiate(coord, structureState);
-                break;
-        }
+        _entityInstantiator.EditorInstantiate(coord, entityState);
     }
 
     void RemoveInconsistentEntities(Vector2I coord)

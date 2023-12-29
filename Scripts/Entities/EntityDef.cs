@@ -7,7 +7,7 @@ public abstract partial class EntityDef : Resource
 
     public PackedScene GetPackedScene() => GD.Load<PackedScene>(ScenePath);
 
-    public abstract Resource NewState();
+    public abstract EntityState NewState();
 
     public abstract Texture2D PreviewSprite { get; }
 }

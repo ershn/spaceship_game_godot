@@ -4,7 +4,7 @@ using Godot;
 [Tool, GlobalClass]
 public partial class ItemDef : EntityDef, IWorldLayerGet, IAmountModeGet
 {
-    public override Resource NewState() => new ItemState(this);
+    public override ItemState NewState() => new(this);
 
     public WorldLayer WorldLayer => WorldLayer.Item;
 

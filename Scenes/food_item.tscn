@@ -36,5 +36,5 @@ _itemDefHolder = NodePath("../DefHolder")
 script = ExtResource("6_wxtkt")
 _itemAmount = NodePath("../ItemAmount")
 
-[connection signal="OnAmountChanged" from="ItemAmount" to="ItemGraphics" method="ToAmountSprite" flags=18]
-[connection signal="OnAmountChangedToZero" from="ItemAmount" to="Destructor" method="Destroy" flags=18]
+[connection signal="OnAmountChanged" from="ItemAmount" to="ItemGraphics" method="ToAmountSprite"]
+[connection signal="OnAmountChangedToZero" from="ItemAmount" to="Destructor" method="Destroy"]

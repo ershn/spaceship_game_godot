@@ -41,7 +41,7 @@ public partial class Plugin : EditorPlugin, ISerializationListener
     }
 
     EntityDef _entityDef;
-    Resource _entityState;
+    EntityState _entityState;
 
     public override void _EnterTree()
     {
@@ -232,13 +232,13 @@ public partial class Plugin : EditorPlugin, ISerializationListener
         _editorInterface.EditResource(_entityState);
     }
 
-    Resource GetDefState(EntityDef def)
+    EntityState GetDefState(EntityDef def)
     {
         var statePath = EntityStatesDirPath + def.ResourcePath.GetFile();
         if (FileAccess.FileExists(statePath))
-            return GD.Load(statePath);
+            return GD.Load<EntityState>(statePath);
 
-        Resource state = def.NewState();
+        var state = def.NewState();
         state.ResourcePath = statePath;
 
         var error = ResourceSaver.Save(state);

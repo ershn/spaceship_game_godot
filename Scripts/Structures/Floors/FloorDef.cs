@@ -3,7 +3,7 @@ using Godot;
 [Tool, GlobalClass]
 public partial class FloorDef : StructureDef
 {
-    public override Resource NewState() => new FloorState(this);
+    public override FloorState NewState() => new(this);
 
     public override WorldLayer WorldLayer => WorldLayer.Floor;
 

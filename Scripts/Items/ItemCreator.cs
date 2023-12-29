@@ -10,7 +10,7 @@ public partial class ItemCreator : Node
     EntityGrids _entityGrids;
 
     [Export]
-    ItemInstantiator _instantiator;
+    EntityInstantiator _entityInstantiator;
 
     ItemGrid ItemGrid => _entityGrids.ItemGrid;
 
@@ -25,7 +25,9 @@ public partial class ItemCreator : Node
         }
         else
         {
-            item = _instantiator.Instantiate(coord, itemDef, amount);
+            var state = itemDef.NewState();
+            state.Amount = amount;
+            item = _entityInstantiator.Instantiate(coord, state);
             itemAmount = item.GetNode<ItemAmount>("ItemAmount");
         }
 

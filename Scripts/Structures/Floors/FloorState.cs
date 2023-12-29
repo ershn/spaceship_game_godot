@@ -15,9 +15,13 @@ public partial class FloorState : StructureState
         FloorDef = floorDef;
     }
 
+    public override void Initialize(Node2D _floor) { }
+
+    public override void EditorInitialize(Node2D _floor) { }
+
     public override void _ValidateProperty(Godot.Collections.Dictionary property)
     {
         if ((string)property["name"] == nameof(FloorDef))
-            property["usage"] = (long)PropertyUsageFlags.ReadOnly;
+            property["usage"] = (long)(PropertyUsageFlags.ReadOnly | PropertyUsageFlags.Storage);
     }
 }
