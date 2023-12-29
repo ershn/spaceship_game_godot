@@ -22,6 +22,9 @@
 
 [node name="World" parent="." instance=ExtResource("2_uoclp")]
 
+[node name="WorldTileMap" parent="World" index="0"]
+layer_0/tile_data = PackedInt32Array(327688, -1, -1, 393224, -1, -1, 327689, -1, -1, 327687, -1, -1, 262152, -1, -1)
+
 [node name="Clone" parent="World" instance=ExtResource("5_bx2nj")]
 position = Vector2(672, 288)
 

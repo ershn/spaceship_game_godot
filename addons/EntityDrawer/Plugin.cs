@@ -17,6 +17,8 @@ public partial class Plugin : EditorPlugin, ISerializationListener
 
     const string PanelName = "Entity Drawer";
 
+    EditorInterface _editorInterface;
+
     Control _panel;
     Button _panelButton;
 
@@ -43,6 +45,8 @@ public partial class Plugin : EditorPlugin, ISerializationListener
 
     public override void _EnterTree()
     {
+        _editorInterface = EditorInterface.Singleton;
+
         _panel = GD.Load<PackedScene>(PanelScenePath).Instantiate<Control>();
 
         _panelButton = AddControlToBottomPanel(_panel, PanelName);
@@ -178,7 +182,7 @@ public partial class Plugin : EditorPlugin, ISerializationListener
             }
         }
 
-        var filesystem = GetEditorInterface().GetResourceFilesystem();
+        var filesystem = _editorInterface.GetResourceFilesystem();
         var dir = filesystem.GetFilesystemPath(dirPath);
         ReadPathsAt(dir, new List<string>() { dir.GetName() });
 
@@ -225,7 +229,7 @@ public partial class Plugin : EditorPlugin, ISerializationListener
         _entityDef = def;
         _entityState = GetDefState(def);
 
-        GetEditorInterface().EditResource(_entityState);
+        _editorInterface.EditResource(_entityState);
     }
 
     Resource GetDefState(EntityDef def)
@@ -250,13 +254,13 @@ public partial class Plugin : EditorPlugin, ISerializationListener
             return;
 
         if (_entityPlacer.TryPlaceEntity(coord, _entityDef, _entityState))
-            GetEditorInterface().MarkSceneAsUnsaved();
+            _editorInterface.MarkSceneAsUnsaved();
     }
 
     void Erase(Vector2I coord)
     {
         if (_entityPlacer.RemoveEntities(coord))
-            GetEditorInterface().MarkSceneAsUnsaved();
+            _editorInterface.MarkSceneAsUnsaved();
     }
 
     void Pick(Vector2I coord)
@@ -267,7 +271,7 @@ public partial class Plugin : EditorPlugin, ISerializationListener
 
     void OnFilesystemReady(Action action)
     {
-        var filesystem = GetEditorInterface().GetResourceFilesystem();
+        var filesystem = _editorInterface.GetResourceFilesystem();
         if (filesystem.GetFilesystem().GetSubdirCount() == 0)
         {
             filesystem.Connect(

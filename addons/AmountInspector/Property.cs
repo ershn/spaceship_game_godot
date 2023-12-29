@@ -27,9 +27,9 @@ public partial class Property : EditorProperty
 
     Property() { }
 
-    public Property(Hint.Type hintType, string hintParam, EditorInterface editorInterface)
+    public Property(Hint.Type hintType, string hintParam)
     {
-        var theme = editorInterface.GetBaseControl().Theme;
+        var theme = EditorInterface.Singleton.GetEditorTheme();
 
         _hintType = hintType;
         _hintParam = hintParam;

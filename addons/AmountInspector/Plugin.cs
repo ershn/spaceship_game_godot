@@ -10,7 +10,7 @@ public partial class Plugin : EditorPlugin, ISerializationListener
 
     public override void _EnterTree()
     {
-        _inspectorPlugin = new InspectorPlugin(GetEditorInterface());
+        _inspectorPlugin = new InspectorPlugin();
         AddInspectorPlugin(_inspectorPlugin);
     }
 

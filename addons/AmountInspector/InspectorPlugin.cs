@@ -5,15 +5,6 @@ namespace AmountInspector;
 
 public partial class InspectorPlugin : EditorInspectorPlugin
 {
-    readonly EditorInterface _editorInterface;
-
-    InspectorPlugin() { }
-
-    public InspectorPlugin(EditorInterface editorInterface)
-    {
-        _editorInterface = editorInterface;
-    }
-
     public override bool _CanHandle(GodotObject @object) => true;
 
     public override bool _ParseProperty(
@@ -30,7 +21,7 @@ public partial class InspectorPlugin : EditorInspectorPlugin
             return false;
 
         var hintType = Hint.Parse(hintString, out var hintParam);
-        var property = new Property(hintType, hintParam, _editorInterface);
+        var property = new Property(hintType, hintParam);
         AddPropertyEditor(name, property);
         return true;
     }
