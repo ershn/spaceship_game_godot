@@ -1,13 +1,8 @@
 using Godot;
 
 [GlobalClass]
-public partial class StructureGraphics : Node, ITemplate<StructureDef>
+public partial class StructureGraphics : Node
 {
-    public void Template(StructureDef structureDef)
-    {
-        structureDef.StructureGraphicsDef.Template(GetOwner<Node2D>());
-    }
-
     [Signal]
     public delegate void OnConstructionCompletedEventHandler();
 

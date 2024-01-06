@@ -1,5 +1,6 @@
 using Godot;
 
+[GlobalClass]
 public abstract partial class EntityState : Resource
 {
     public abstract EntityDef EntityDef { get; }

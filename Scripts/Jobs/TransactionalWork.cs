@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Godot;
 
+[GlobalClass]
 public abstract partial class TransactionalWork : Node, IWork
 {
     enum Phase

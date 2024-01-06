@@ -9,8 +9,6 @@ public partial class StructureTileGraphics : Node2D, ITemplate<StructureTileGrap
         TileGraphicsDef = def;
     }
 
-    StructureGraphics _structureGraphics;
-
     StructureTileGraphicsDef _tileGraphicsDef;
 
     [Export]
@@ -112,16 +110,11 @@ public partial class StructureTileGraphics : Node2D, ITemplate<StructureTileGrap
     {
         _tilePlacer = new(TileGraphicsDef, WorldTileMap, this);
         _tilePlacer.ToBlueprintGraphics();
-
-        _structureGraphics = GetNode<StructureGraphics>("../StructureGraphics");
-        _structureGraphics.OnConstructionCompleted += OnConstructionCompleted;
     }
 
     void Cleanup()
     {
         _tilePlacer.Remove();
-
-        _structureGraphics.OnConstructionCompleted -= OnConstructionCompleted;
     }
 
     void OnConstructionCompleted() => _tilePlacer.ToNormalGraphics();

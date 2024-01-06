@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://Scripts/Structures/StructureManipulator.cs" id="9_7tt60"]
 
 [node name="World" type="Node2D"]
+y_sort_enabled = true
 
 [node name="WorldTileMap" type="TileMap" parent="."]
 unique_name_in_owner = true

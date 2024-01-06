@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bgjabsb56erim"]
+[gd_scene load_steps=16 format=3 uid="uid://bgjabsb56erim"]
 
 [ext_resource type="Script" path="res://Scripts/Grids/GridPosition.cs" id="1_c3rwg"]
 [ext_resource type="Script" path="res://Scripts/Grids/EntityGridElement.cs" id="2_jnkmu"]
@@ -8,7 +8,6 @@
 [ext_resource type="Script" path="res://Scripts/Structures/StructureGraphics.cs" id="4_56i2c"]
 [ext_resource type="Script" path="res://Scripts/Jobs/ConstructionWork.cs" id="5_1ebji"]
 [ext_resource type="Script" path="res://Scripts/Structures/StructureConstructor.cs" id="5_bmk60"]
-[ext_resource type="Script" path="res://Scripts/Structures/StructureTileGraphics.cs" id="5_kjn4k"]
 [ext_resource type="Script" path="res://Scripts/Jobs/DeconstructionWork.cs" id="6_5fvvg"]
 [ext_resource type="Script" path="res://Scripts/Structures/StructureComponentInventory.cs" id="6_vg8tp"]
 [ext_resource type="Script" path="res://Scripts/Structures/StructureDeconstructor.cs" id="7_5qycl"]
@@ -49,8 +48,11 @@ _constructionWork = NodePath("../ConstructionWork")
 [node name="ConstructionWork" type="Node" parent="."]
 script = ExtResource("5_1ebji")
 
-[node name="StructureDeconstructor" type="Node" parent="."]
+[node name="StructureDeconstructor" type="Node" parent="." node_paths=PackedStringArray("_destructor", "_canceler", "_deconstructionWork")]
 script = ExtResource("7_5qycl")
+_destructor = NodePath("../Destructor")
+_canceler = NodePath("../Canceler")
+_deconstructionWork = NodePath("../DeconstructionWork")
 
 [node name="DeconstructionWork" type="Node" parent="."]
 script = ExtResource("6_5fvvg")
@@ -60,9 +62,6 @@ script = ExtResource("7_ifrpy")
 
 [node name="StructureGraphics" type="Node" parent="."]
 script = ExtResource("4_56i2c")
-
-[node name="StructureTileGraphics" type="Node2D" parent="."]
-script = ExtResource("5_kjn4k")
 
 [node name="WorkProgressBar" type="TextureProgressBar" parent="."]
 visible = false

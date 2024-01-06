@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bq7kkuk0mvalc"]
+
+[ext_resource type="PackedScene" uid="uid://bgjabsb56erim" path="res://Scenes/structure.tscn" id="1_kv434"]
+[ext_resource type="Script" path="res://Scripts/Structures/Furnitures/FurnitureDefHolder.cs" id="2_b3gsm"]
+[ext_resource type="Script" path="res://Scripts/Structures/Furnitures/FurnitureConstructor.cs" id="3_kdj0j"]
+
+[node name="Furniture" instance=ExtResource("1_kv434")]
+z_index = 1
+
+[node name="DefHolder" type="Node" parent="." index="0"]
+script = ExtResource("2_b3gsm")
+
+[node name="EntityGridElement" parent="." index="2" node_paths=PackedStringArray("_defHolder")]
+_defHolder = NodePath("../DefHolder")
+
+[node name="FurnitureConstructor" type="Node" parent="." index="6" node_paths=PackedStringArray("_gridPosition", "_destructor", "_canceler", "_structureConstructor")]
+script = ExtResource("3_kdj0j")
+_gridPosition = NodePath("../GridPosition")
+_destructor = NodePath("../Destructor")
+_canceler = NodePath("../Canceler")
+_structureConstructor = NodePath("../StructureConstructor")

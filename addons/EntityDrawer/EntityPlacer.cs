@@ -80,14 +80,12 @@ public class EntityPlacer
 
     void RemoveInconsistentEntities(Vector2I coord)
     {
-        // if (!_entityGrids.FurnitureGrid.TryGet(position, out var furniture))
-        //     return;
+        if (!_entityGrids.FurnitureGrid.TryGet(coord, out var furniture))
+            return;
 
-        // var furnitureDef = furniture.GetComponent<FurnitureDefHolder>().FurnitureDef;
-        // if (furnitureDef.IsConstructibleAt(entityGrids, position, ignoreExisting: true))
-        //     return;
-
-        // Undo.DestroyObjectImmediate(furniture);
+        var furnitureDef = furniture.GetNode<FurnitureDefHolder>("DefHolder").FurnitureDef;
+        if (!furnitureDef.IsConstructibleAt(_entityGrids, coord, ignoreExisting: true))
+            furniture.Free();
     }
 
     public bool RemoveEntities(Vector2I coord)

@@ -1,5 +1,6 @@
 using Godot;
 
+[GlobalClass]
 public abstract partial class StructureDef : EntityDef, IWorldLayerGet
 {
     public abstract WorldLayer WorldLayer { get; }

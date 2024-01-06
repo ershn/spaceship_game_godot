@@ -15,17 +15,18 @@ radius = 13.0
 
 [node name="Clone" type="CharacterBody2D"]
 z_index = 10
+y_sort_enabled = true
 collision_mask = 0
 motion_mode = 1
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(1.68639, -15.7567)
-scale = Vector2(1, 1.034)
+position = Vector2(0, 13)
 texture = ExtResource("2_jeunk")
+centered = false
+offset = Vector2(-30, -60)
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 64)
-region_filter_clip_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_82nkj")

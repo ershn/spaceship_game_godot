@@ -3,8 +3,11 @@ using Godot;
 [GlobalClass]
 public partial class FloorConstructor : Node
 {
+    [Export]
+    StructureConstructor _structureConstructor;
+
     public override void _Ready()
     {
-        _ = GetNode<StructureConstructor>("../StructureConstructor").Construct();
+        _ = _structureConstructor.Construct();
     }
 }

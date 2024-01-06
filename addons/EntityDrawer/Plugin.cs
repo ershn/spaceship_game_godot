@@ -8,8 +8,7 @@ namespace EntityDrawer;
 [Tool]
 public partial class Plugin : EditorPlugin, ISerializationListener
 {
-    const string ItemDefsPath = "res://Definitions/Items/";
-    const string StructureDefsPath = "res://Definitions/Structures/";
+    const string DefsPath = "res://Definitions/";
 
     const string PanelScenePath = "res://addons/EntityDrawer/panel.tscn";
     const string EntityDefButtonScenePath = "res://addons/EntityDrawer/entity_def_button.tscn";
@@ -153,9 +152,7 @@ public partial class Plugin : EditorPlugin, ISerializationListener
             child.Free();
 
         var defsButtonGroup = new ButtonGroup();
-        foreach (var (path, defs) in LoadDefsAtPath(ItemDefsPath))
-            AddDefsToGrid(path, defs, defsButtonGroup, defsGrid, _entityButtons);
-        foreach (var (path, defs) in LoadDefsAtPath(StructureDefsPath))
+        foreach (var (path, defs) in LoadDefsAtPath(DefsPath))
             AddDefsToGrid(path, defs, defsButtonGroup, defsGrid, _entityButtons);
 
         if (_entityDef is not null)
@@ -166,7 +163,7 @@ public partial class Plugin : EditorPlugin, ISerializationListener
     {
         var defPaths = new Dictionary<string, List<EntityDef>>();
 
-        void ReadPathsAt(EditorFileSystemDirectory dir, List<string> parentNames)
+        void LoadFrom(EditorFileSystemDirectory dir, List<string> parentNames)
         {
             if (dir.GetFileCount() > 0)
             {
@@ -178,13 +175,13 @@ public partial class Plugin : EditorPlugin, ISerializationListener
             for (int i = 0; i < dir.GetSubdirCount(); i++)
             {
                 var subdir = dir.GetSubdir(i);
-                ReadPathsAt(subdir, new List<string>(parentNames) { subdir.GetName() });
+                LoadFrom(subdir, new List<string>(parentNames) { subdir.GetName() });
             }
         }
 
         var filesystem = _editorInterface.GetResourceFilesystem();
         var dir = filesystem.GetFilesystemPath(dirPath);
-        ReadPathsAt(dir, new List<string>() { dir.GetName() });
+        LoadFrom(dir, new List<string>());
 
         return defPaths;
     }

@@ -1,5 +1,6 @@
 using Godot;
 
+[GlobalClass]
 public abstract partial class EntityDef : Resource
 {
     [Export]

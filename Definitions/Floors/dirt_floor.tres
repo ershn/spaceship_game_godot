@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="FloorDef" load_steps=12 format=3 uid="uid://dctqllgmbpikl"]
+
+[ext_resource type="Resource" uid="uid://d2wkkr2pjcac5" path="res://Definitions/Items/dirt.tres" id="1_4qcn2"]
+[ext_resource type="Script" path="res://Scripts/Structures/ItemDefAmount.cs" id="2_wyeit"]
+[ext_resource type="Resource" uid="uid://dj3vpq761xnre" path="res://Definitions/Items/steel.tres" id="3_xm6pi"]
+[ext_resource type="Script" path="res://Scripts/TileMaps/TerrainRef.cs" id="4_xlf83"]
+[ext_resource type="Texture2D" uid="uid://hgoqhl1sphni" path="res://Art/Sprites/Structures/dirt_floor.tres" id="5_7d7o1"]
+[ext_resource type="Script" path="res://Scripts/Structures/StructureTileGraphicsDef.cs" id="6_tcc51"]
+[ext_resource type="Script" path="res://Scripts/Structures/Floors/FloorDef.cs" id="7_2mhla"]
+
+[sub_resource type="Resource" id="Resource_jhh0a"]
+script = ExtResource("2_wyeit")
+ItemDef = ExtResource("1_4qcn2")
+Amount = 10000000
+
+[sub_resource type="Resource" id="Resource_oqqox"]
+script = ExtResource("2_wyeit")
+ItemDef = ExtResource("3_xm6pi")
+Amount = 5000000
+
+[sub_resource type="Resource" id="Resource_q685m"]
+script = ExtResource("4_xlf83")
+TerrainSetId = 0
+TerrainId = 0
+
+[sub_resource type="Resource" id="Resource_po7yy"]
+script = ExtResource("6_tcc51")
+_previewSprite = ExtResource("5_7d7o1")
+TileRef = SubResource("Resource_q685m")
+
+[resource]
+resource_name = "DirtFloor"
+script = ExtResource("7_2mhla")
+Category = 1
+StructureGraphicsDef = SubResource("Resource_po7yy")
+ComponentAmounts = [SubResource("Resource_jhh0a"), SubResource("Resource_oqqox")]
+ConstructionTime = 5.0
+DeconstructionTimeMultiplier = 0.5
+Traversable = true
+MaxHealthPoints = 100
+ScenePath = "res://Scenes/Floors/dirt_floor.tscn"

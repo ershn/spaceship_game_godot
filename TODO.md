@@ -2,7 +2,6 @@
 
 ## Game systems
 
-- re-implement furnitures
 - re-implement resource consumption/production
 
 - add multi world
