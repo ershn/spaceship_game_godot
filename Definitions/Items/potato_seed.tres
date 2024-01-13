@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ItemDef" load_steps=7 format=3 uid="uid://bn2mnw1y8b4uy"]
+
+[ext_resource type="Texture2D" uid="uid://jdyftp6yxgj6" path="res://Art/Sprites/Items/potato_seed.tres" id="1_iiku1"]
+[ext_resource type="Script" path="res://Scripts/Items/ItemDef.cs" id="1_xy5ha"]
+[ext_resource type="Script" path="res://Scripts/Items/AmountSprite.cs" id="2_4lm4d"]
+[ext_resource type="Script" path="res://Scripts/Amounts/CountMode.cs" id="3_l7yy0"]
+
+[sub_resource type="Resource" id="Resource_21k7e"]
+script = ExtResource("2_4lm4d")
+MinAmount = 1
+Sprite = ExtResource("1_iiku1")
+metadata/_amountType = 1
+
+[sub_resource type="Resource" id="Resource_un6py"]
+script = ExtResource("3_l7yy0")
+_unitMass = 1000000
+_defaultCount = 1
+
+[resource]
+resource_name = "PotatoSeed"
+script = ExtResource("1_xy5ha")
+_amountMode = SubResource("Resource_un6py")
+AmountSprites = [SubResource("Resource_21k7e")]
+ScenePath = "res://Scenes/Items/potato_seed.tscn"

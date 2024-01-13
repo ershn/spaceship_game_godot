@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://brfsimy3b2vvp"]
+
+[ext_resource type="PackedScene" uid="uid://cqamoduuu0xmn" path="res://Scenes/item.tscn" id="1_sh662"]
+[ext_resource type="Resource" uid="uid://bn2mnw1y8b4uy" path="res://Definitions/Items/potato_seed.tres" id="2_lj0i5"]
+[ext_resource type="Texture2D" uid="uid://jdyftp6yxgj6" path="res://Art/Sprites/Items/potato_seed.tres" id="3_kxw3q"]
+
+[node name="Item" instance=ExtResource("1_sh662")]
+
+[node name="DefHolder" parent="." index="0"]
+ItemDef = ExtResource("2_lj0i5")
+
+[node name="ItemGraphics" parent="." index="1"]
+texture = ExtResource("3_kxw3q")
