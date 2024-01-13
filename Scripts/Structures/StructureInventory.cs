@@ -1,15 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using Godot;
+
+#nullable enable
 
 public partial class StructureInventory : Node, IInventoryAdd, IInventoryRemove
 {
     class ItemSlot
     {
-        public event Action<bool> OnFull;
+        public event Action<bool>? OnFull;
 
         readonly ulong _maxAmount;
         public ulong MaxAmount => _maxAmount;
@@ -61,10 +64,13 @@ public partial class StructureInventory : Node, IInventoryAdd, IInventoryRemove
     [Signal]
     public delegate void OnFullEventHandler(bool full);
 
+    [AllowNull]
     ItemCreator _itemCreator;
+
+    [AllowNull]
     ItemAllotter _itemAllotter;
 
-    [Export]
+    [Export, AllowNull]
     GridPosition _gridPosition;
 
     readonly Dictionary<ItemDef, ItemSlot> _slots = new();
