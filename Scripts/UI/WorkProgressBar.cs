@@ -5,7 +5,7 @@ public partial class WorkProgressBar : TextureProgressBar
 {
     public void SetProgress(float ratio)
     {
-        Visible = true;
+        Show();
         SetValueNoSignal(ratio);
 
         if (Mathf.IsEqualApprox(ratio, 1f))
@@ -14,7 +14,7 @@ public partial class WorkProgressBar : TextureProgressBar
 
     public void Reset()
     {
-        Visible = false;
+        Hide();
         SetValueNoSignal(0d);
     }
 }

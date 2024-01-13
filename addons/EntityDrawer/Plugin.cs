@@ -49,7 +49,7 @@ public partial class Plugin : EditorPlugin, ISerializationListener
         _panel = GD.Load<PackedScene>(PanelScenePath).Instantiate<Control>();
 
         _panelButton = AddControlToBottomPanel(_panel, PanelName);
-        _panelButton.Visible = false;
+        _panelButton.Hide();
 
         _panel.GetNode<Button>("%ReloadButton").Pressed += LoadDefs;
 

@@ -74,7 +74,7 @@ public partial class Property : EditorProperty
         var validAmountType = UpdateAmountType();
 
         _valueInput.Text = AmountValueText;
-        _valueErrorIcon.Visible = false;
+        _valueErrorIcon.Hide();
         _typeWarningIcon.Visible = !validAmountType;
     }
 
