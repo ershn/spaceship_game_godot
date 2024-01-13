@@ -47,7 +47,12 @@ public partial class EntityGridElement : Node, ISerializationListener
         _layerGrid.Remove(_coord, Owner);
     }
 
-    public void OnAfterDeserialize() => Callable.From(TryAddToGrid).CallDeferred();
+    // Node grids are not restored on assembly reload, so re-add the node to the grid after a reload
+    public void OnAfterDeserialize()
+    {
+        if (IsInsideTree())
+            Callable.From(TryAddToGrid).CallDeferred();
+    }
 
-    public void OnBeforeSerialize() => TryRemoveFromGrid();
+    public void OnBeforeSerialize() { }
 }
