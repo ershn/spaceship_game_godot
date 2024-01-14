@@ -78,11 +78,17 @@ public partial class Plugin : EditorPlugin, ISerializationListener
 
     public override void _MakeVisible(bool visible)
     {
-        _panelButton.Visible = visible;
         if (visible)
+        {
+            _panelButton.Show();
             MakeBottomPanelItemVisible(_panel);
+        }
         else
-            HideBottomPanel();
+        {
+            _panelButton.Hide();
+            if (_panel.Visible)
+                HideBottomPanel();
+        }
     }
 
     public override bool _ForwardCanvasGuiInput(InputEvent @event)
