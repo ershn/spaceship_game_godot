@@ -32,8 +32,9 @@ public abstract partial class StructureDef : EntityDef, IWorldLayerGet
     [Export]
     public uint MaxHealthPoints = 100;
 
-    // [ExportGroup("Resource processing")]
-    // public StateGraphAsset ResourceProcessor;
+    [ExportGroup("Resource processing")]
+    [Export]
+    public LogicGraphs.LogicGraph ResourceProcessor;
 
     public abstract bool IsConstructibleAt(
         EntityGrids entityGrids,

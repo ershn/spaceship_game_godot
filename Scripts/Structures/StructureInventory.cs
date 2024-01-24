@@ -1,12 +1,10 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using Godot;
-
-#nullable enable
 
 public partial class StructureInventory : Node, IInventoryAdd, IInventoryRemove
 {
@@ -64,16 +62,13 @@ public partial class StructureInventory : Node, IInventoryAdd, IInventoryRemove
     [Signal]
     public delegate void OnFullEventHandler(bool full);
 
-    [AllowNull]
-    ItemCreator _itemCreator;
+    ItemCreator _itemCreator = null!;
+    ItemAllotter _itemAllotter = null!;
 
-    [AllowNull]
-    ItemAllotter _itemAllotter;
+    [Export]
+    GridPosition _gridPosition = null!;
 
-    [Export, AllowNull]
-    GridPosition _gridPosition;
-
-    readonly Dictionary<ItemDef, ItemSlot> _slots = new();
+    readonly Dictionary<ItemDef, ItemSlot> _slots = [];
     uint _fullSlotCount = 0;
 
     readonly CancellationTokenSource _itemRequestCanceller = new();
@@ -96,12 +91,7 @@ public partial class StructureInventory : Node, IInventoryAdd, IInventoryRemove
 
     public bool Full => _fullSlotCount == _slots.Count;
 
-    public void AddSlot(ItemDef itemDef, ulong maxAmount) => AddSlot(itemDef, maxAmount, null);
-
-    public void AddSlot(ItemDef itemDef, ulong maxAmount, ulong refillThreshold) =>
-        AddSlot(itemDef, maxAmount, (ulong?)refillThreshold);
-
-    void AddSlot(ItemDef itemDef, ulong maxAmount, ulong? refillThreshold)
+    public void AddSlot(ItemDef itemDef, ulong maxAmount, ulong? refillThreshold = null)
     {
         Debug.Assert(maxAmount > 0);
         Debug.Assert(refillThreshold == null || refillThreshold < maxAmount);

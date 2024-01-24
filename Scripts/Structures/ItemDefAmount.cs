@@ -6,6 +6,6 @@ public partial class ItemDefAmount : Resource
     [Export]
     public ItemDef ItemDef;
 
-    [Export(hintString: AmountHint.ModeOf + "ItemDef")]
+    [Export(hintString: AmountHint.ModeOf + nameof(ItemDef))]
     public ulong Amount;
 }

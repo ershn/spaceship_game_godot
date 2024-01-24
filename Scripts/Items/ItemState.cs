@@ -8,7 +8,7 @@ public partial class ItemState : EntityState
     [Export]
     public ItemDef ItemDef;
 
-    [Export(hintString: AmountHint.ModeOf + "ItemDef")]
+    [Export(hintString: AmountHint.ModeOf + nameof(ItemDef))]
     public ulong Amount;
 
     ItemState() { }

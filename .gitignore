@@ -1,6 +1,9 @@
 # Godot 4+ specific ignores
 .godot/
 
+# Test ignores
+Test/
+
 # Unit test ignores
 UnitTests/bin/
 UnitTests/obj/

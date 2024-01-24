@@ -1,0 +1,128 @@
+[gd_resource type="Resource" script_class="LogicGraph" load_steps=29 format=3 uid="uid://ckotf8chk53qh"]
+
+[ext_resource type="Script" path="res://Scripts/LogicGraphs/LogicConnection.cs" id="1_g15rf"]
+[ext_resource type="Script" path="res://Scripts/LogicGraphs/LogicGraphEntrypoint.cs" id="2_b1gv6"]
+[ext_resource type="Resource" uid="uid://dco7cc3jlcvys" path="res://Definitions/Items/nitratine.tres" id="3_6r6th"]
+[ext_resource type="Script" path="res://Scripts/LogicGraphs/Nodes/RequestItem.cs" id="4_1towr"]
+[ext_resource type="Script" path="res://Scripts/LogicGraphs/Nodes/ItemConsumer.cs" id="5_ilts5"]
+[ext_resource type="Script" path="res://Scripts/LogicGraphs/Nodes/TimeConsumer.cs" id="6_7xwi5"]
+[ext_resource type="Script" path="res://Scripts/LogicGraphs/Nodes/IterationConsumer.cs" id="7_28map"]
+[ext_resource type="Script" path="res://Scripts/LogicGraphs/Sequence.cs" id="8_75g2k"]
+[ext_resource type="Resource" uid="uid://80xxybtd1uce" path="res://Definitions/Items/potato.tres" id="9_o3p5e"]
+[ext_resource type="Script" path="res://Scripts/LogicGraphs/Nodes/ItemProducer.cs" id="10_o2cl5"]
+[ext_resource type="Resource" uid="uid://bn2mnw1y8b4uy" path="res://Definitions/Items/potato_seed.tres" id="11_j3qtb"]
+[ext_resource type="Script" path="res://Scripts/LogicGraphs/LogicGraph.cs" id="12_l3a62"]
+
+[sub_resource type="Resource" id="Resource_gooau"]
+script = ExtResource("1_g15rf")
+SourceNodeIndex = -1
+Signal = &"Started"
+TargetNodeIndex = 0
+Method = &"Execute"
+
+[sub_resource type="Resource" id="Resource_5vnml"]
+script = ExtResource("1_g15rf")
+SourceNodeIndex = -1
+Signal = &"Processed"
+TargetNodeIndex = 1
+Method = &"Process"
+
+[sub_resource type="Resource" id="Resource_vh0r5"]
+script = ExtResource("1_g15rf")
+SourceNodeIndex = 1
+Signal = &"Completed"
+TargetNodeIndex = 2
+Method = &"Process"
+
+[sub_resource type="Resource" id="Resource_72xcj"]
+script = ExtResource("1_g15rf")
+SourceNodeIndex = 2
+Signal = &"Completed"
+TargetNodeIndex = 4
+Method = &"Execute"
+
+[sub_resource type="Resource" id="Resource_4hknl"]
+script = ExtResource("1_g15rf")
+SourceNodeIndex = 3
+Signal = &"Completed"
+TargetNodeIndex = 5
+Method = &"Process"
+
+[sub_resource type="Resource" id="Resource_jcfsp"]
+script = ExtResource("1_g15rf")
+SourceNodeIndex = 4
+Signal = &"First"
+TargetNodeIndex = 1
+Method = &"Reset"
+
+[sub_resource type="Resource" id="Resource_tvbam"]
+script = ExtResource("1_g15rf")
+SourceNodeIndex = 4
+Signal = &"Second"
+TargetNodeIndex = 3
+Method = &"Process"
+
+[sub_resource type="Resource" id="Resource_qvcuq"]
+script = ExtResource("1_g15rf")
+SourceNodeIndex = 5
+Signal = &"Processed"
+TargetNodeIndex = 6
+Method = &"Process"
+
+[sub_resource type="Resource" id="Resource_tbpga"]
+script = ExtResource("2_b1gv6")
+GraphEditorPosition = Vector2(60, -220)
+
+[sub_resource type="Resource" id="Resource_uvx63"]
+script = ExtResource("4_1towr")
+_itemDef = ExtResource("3_6r6th")
+_maxAmount = 10000000
+_refillThreshold = 2000000
+GraphEditorPosition = Vector2(480, -380)
+
+[sub_resource type="Resource" id="Resource_6jli2"]
+script = ExtResource("5_ilts5")
+_itemDef = ExtResource("3_6r6th")
+_amount = 100000
+_resetOnCompletion = false
+GraphEditorPosition = Vector2(480, -40)
+
+[sub_resource type="Resource" id="Resource_r3fp8"]
+script = ExtResource("6_7xwi5")
+_timeInterval = 1.0
+_resetOnCompletion = true
+GraphEditorPosition = Vector2(900, -40)
+
+[sub_resource type="Resource" id="Resource_24lb1"]
+script = ExtResource("7_28map")
+_iterationCount = 15
+_resetOnCompletion = true
+GraphEditorPosition = Vector2(1100, 240)
+
+[sub_resource type="Resource" id="Resource_ped88"]
+script = ExtResource("8_75g2k")
+GraphEditorPosition = Vector2(720, 240)
+
+[sub_resource type="Resource" id="Resource_iyux1"]
+script = ExtResource("10_o2cl5")
+_probability = 1.0
+_itemDef = ExtResource("9_o3p5e")
+_amount = 1000000
+_resetOnCompletion = true
+GraphEditorPosition = Vector2(1500, 240)
+
+[sub_resource type="Resource" id="Resource_o8nek"]
+script = ExtResource("10_o2cl5")
+_probability = 0.1
+_itemDef = ExtResource("11_j3qtb")
+_amount = 1
+_resetOnCompletion = true
+GraphEditorPosition = Vector2(1900, 240)
+
+[resource]
+script = ExtResource("12_l3a62")
+Entrypoint = SubResource("Resource_tbpga")
+Nodes = [SubResource("Resource_uvx63"), SubResource("Resource_6jli2"), SubResource("Resource_r3fp8"), SubResource("Resource_24lb1"), SubResource("Resource_ped88"), SubResource("Resource_iyux1"), SubResource("Resource_o8nek")]
+Connections = [SubResource("Resource_gooau"), SubResource("Resource_5vnml"), SubResource("Resource_vh0r5"), SubResource("Resource_72xcj"), SubResource("Resource_4hknl"), SubResource("Resource_jcfsp"), SubResource("Resource_tvbam"), SubResource("Resource_qvcuq")]
+GraphEditorScrollOffset = Vector2(173.65, -537.663)
+GraphEditorZoom = 0.971494

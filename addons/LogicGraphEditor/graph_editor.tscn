@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgmsx0nnmwdmu"]
+
+[ext_resource type="Script" path="res://addons/LogicGraphEditor/GraphEditor.cs" id="1_jikvj"]
+[ext_resource type="Script" path="res://addons/LogicGraphEditor/GraphEditorContextMenu.cs" id="2_h30l7"]
+
+[node name="GraphEditor" type="GraphEdit" node_paths=PackedStringArray("_contextMenu")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+right_disconnects = true
+minimap_enabled = false
+show_minimap_button = false
+script = ExtResource("1_jikvj")
+_contextMenu = NodePath("ContextMenu")
+
+[node name="ContextMenu" type="PopupMenu" parent="." node_paths=PackedStringArray("_graphEditor")]
+unique_name_in_owner = true
+script = ExtResource("2_h30l7")
+_graphEditor = NodePath("..")
+
+[connection signal="connection_request" from="." to="." method="OnConnectionRequest"]
+[connection signal="delete_nodes_request" from="." to="." method="OnDeleteNodesRequest"]
+[connection signal="disconnection_request" from="." to="." method="OnDisconnectionRequest"]
+[connection signal="scroll_offset_changed" from="." to="." method="OnScrollOffsetChanged"]
+[connection signal="index_pressed" from="ContextMenu" to="ContextMenu" method="ItemPressed"]

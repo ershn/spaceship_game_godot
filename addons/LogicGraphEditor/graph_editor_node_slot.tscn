@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2lnrbq58gu6r"]
+
+[ext_resource type="Script" path="res://addons/LogicGraphEditor/GraphEditorNodeSlot.cs" id="1_imp17"]
+
+[node name="GraphEditorNodeSlot" type="HBoxContainer" node_paths=PackedStringArray("_leftLabel", "_rightLabel")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_imp17")
+_leftLabel = NodePath("LeftLabel")
+_rightLabel = NodePath("RightLabel")
+
+[node name="LeftLabel" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RightLabel" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2

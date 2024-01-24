@@ -173,10 +173,14 @@ public partial class Plugin : EditorPlugin, ISerializationListener
         {
             if (dir.GetFileCount() > 0)
             {
-                var resources = new List<EntityDef>();
+                var defs = new List<EntityDef>();
                 for (int i = 0; i < dir.GetFileCount(); i++)
-                    resources.Add(GD.Load<EntityDef>(dir.GetFilePath(i)));
-                defPaths.Add(string.Join('/', parentNames), resources);
+                {
+                    var resource = GD.Load(dir.GetFilePath(i));
+                    if (resource is EntityDef def)
+                        defs.Add(def);
+                }
+                defPaths.Add(string.Join('/', parentNames), defs);
             }
             for (int i = 0; i < dir.GetSubdirCount(); i++)
             {

@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://cjdeojikeu736"]
+[gd_scene load_steps=8 format=3 uid="uid://cjdeojikeu736"]
 
 [ext_resource type="PackedScene" uid="uid://bq7kkuk0mvalc" path="res://Scenes/furniture.tscn" id="1_wb4cf"]
 [ext_resource type="Resource" uid="uid://d140l4knhfmeu" path="res://Definitions/Furnitures/potato_plant.tres" id="2_sslsi"]
 [ext_resource type="Texture2D" uid="uid://bm5twovct1dys" path="res://Art/Sprites/Structures/plants.png" id="3_4jkff"]
 [ext_resource type="Script" path="res://Scripts/Structures/StructureSpriteGraphics.cs" id="3_nt2ah"]
+[ext_resource type="Script" path="res://Scripts/LogicGraphs/LogicExecutor.cs" id="3_sjaxs"]
+[ext_resource type="Script" path="res://Scripts/Structures/StructureResourceInventory.cs" id="3_ss4sr"]
+[ext_resource type="Resource" uid="uid://ckotf8chk53qh" path="res://Definitions/Furnitures/potato_plant_graph.tres" id="4_hvk7w"]
 
 [node name="Furniture" instance=ExtResource("1_wb4cf")]
 z_index = 10
@@ -11,7 +14,15 @@ z_index = 10
 [node name="DefHolder" parent="." index="0"]
 FurnitureDef = ExtResource("2_sslsi")
 
-[node name="StructureSpriteGraphics" type="Sprite2D" parent="." index="14"]
+[node name="StructureResourceInventory" type="Node" parent="." index="13" node_paths=PackedStringArray("_gridPosition")]
+script = ExtResource("3_ss4sr")
+_gridPosition = NodePath("../GridPosition")
+
+[node name="ResourceProcessor" type="Node" parent="." index="14"]
+script = ExtResource("3_sjaxs")
+_logicGraphTemplate = ExtResource("4_hvk7w")
+
+[node name="StructureSpriteGraphics" type="Sprite2D" parent="." index="16"]
 self_modulate = Color(1, 1, 1, 0.470588)
 texture = ExtResource("3_4jkff")
 centered = false
@@ -20,4 +31,5 @@ region_enabled = true
 region_rect = Rect2(256, 0, 64, 64)
 script = ExtResource("3_nt2ah")
 
+[connection signal="OnConstructionCompleted" from="StructureConstructor" to="ResourceProcessor" method="Start"]
 [connection signal="OnConstructionCompleted" from="StructureGraphics" to="StructureSpriteGraphics" method="OnConstructionCompleted"]

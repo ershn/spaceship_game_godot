@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="FurnitureDef" load_steps=8 format=3 uid="uid://d140l4knhfmeu"]
+[gd_resource type="Resource" script_class="FurnitureDef" load_steps=9 format=3 uid="uid://d140l4knhfmeu"]
 
 [ext_resource type="Resource" uid="uid://bn2mnw1y8b4uy" path="res://Definitions/Items/potato_seed.tres" id="1_qnomd"]
 [ext_resource type="Script" path="res://Scripts/Structures/ItemDefAmount.cs" id="2_klgym"]
+[ext_resource type="Resource" uid="uid://ckotf8chk53qh" path="res://Definitions/Furnitures/potato_plant_graph.tres" id="3_abm4h"]
 [ext_resource type="Script" path="res://Scripts/Structures/Furnitures/FurnitureDef.cs" id="3_jnacw"]
 [ext_resource type="Script" path="res://Scripts/Structures/StructureSpriteGraphicsDef.cs" id="3_kgl6p"]
 [ext_resource type="Texture2D" uid="uid://cbvdqqnq751ai" path="res://Art/Sprites/Structures/potato_plant.tres" id="3_yxv23"]
@@ -26,4 +27,5 @@ ConstructionTime = 3.0
 DeconstructionTimeMultiplier = 0.5
 Traversable = true
 MaxHealthPoints = 100
+ResourceProcessor = ExtResource("3_abm4h")
 ScenePath = "res://Scenes/Furnitures/potato_plant.tscn"
