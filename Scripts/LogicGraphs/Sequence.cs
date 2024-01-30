@@ -1,4 +1,5 @@
 #nullable enable
+using System.Linq;
 using Godot;
 
 namespace LogicGraphs;
@@ -6,15 +7,23 @@ namespace LogicGraphs;
 [Tool]
 public partial class Sequence : LogicNode
 {
-    [Signal]
-    public delegate void FirstEventHandler();
+    readonly record struct Target(LogicNode Node, StringName Method) { }
 
-    [Signal]
-    public delegate void SecondEventHandler();
+    [Export, OutputMethods]
+    LogicEndpoint[] _targetMethodReferences = [];
+
+    Target[] _targets = null!;
+
+    protected override void _Ready()
+    {
+        _targets = _targetMethodReferences
+            .Select(reference => new Target(Graph.Nodes[reference.NodeIndex], reference.Member))
+            .ToArray();
+    }
 
     public void Execute()
     {
-        EmitSignal(SignalName.First);
-        EmitSignal(SignalName.Second);
+        foreach (var target in _targets)
+            target.Node.Call(target.Method);
     }
 }

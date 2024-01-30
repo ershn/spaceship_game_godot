@@ -26,9 +26,9 @@ public partial class LogicGraph : Resource
 
     public void Setup(Node2D entity)
     {
-        Entrypoint.Entity = entity;
+        Entrypoint.Setup(this, entity);
         foreach (var node in Nodes)
-            node.Entity = entity;
+            node.Setup(this, entity);
 
         foreach (var connection in Connections)
         {

@@ -61,6 +61,14 @@
 
 - re-implement the generation of structure/item scenes from defs
 
+### Logic graph editor
+
+- add auto-generated descriptions to nodes
+- prevent the removal of graph entrypoint nodes
+- implement undo/redo
+- prevent invalid connections (e.g. StateMachine output to normal method)
+- skip invalid node indexes/connections on graph load
+
 ## Release
 
 ## Licenses

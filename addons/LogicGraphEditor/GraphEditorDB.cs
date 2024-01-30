@@ -39,7 +39,7 @@ public partial class GraphEditorDB : GodotObject
         FreeConnections(_outgoingConnections);
         FreeConnections(_incomingConnections);
 
-        void FreeConnections(
+        static void FreeConnections(
             GDC.Dictionary<GraphEditorNode, GDC.Array<ConnectionEndpoint?>> connections
         )
         {
@@ -72,6 +72,14 @@ public partial class GraphEditorDB : GodotObject
         editorNode.LogicNode.Connect(
             Resource.SignalName.Changed,
             new Callable(this, nameof(MarkAsUnsaved))
+        );
+        editorNode.Connect(
+            GraphEditorNode.SignalName.OutputPortAdded,
+            new Callable(this, nameof(OnOutputPortAdded))
+        );
+        editorNode.Connect(
+            GraphEditorNode.SignalName.OutputPortRemoved,
+            new Callable(this, nameof(OnOutputPortRemoved))
         );
 
         Saved = false;
@@ -144,6 +152,8 @@ public partial class GraphEditorDB : GodotObject
         _incomingConnections[toNode][toPort] = new(fromNode, fromPort);
         _outgoingConnections[fromNode][fromPort] = new(toNode, toPort);
 
+        fromNode.OnOutputPortConnected(fromPort);
+
         Saved = false;
     }
 
@@ -159,7 +169,21 @@ public partial class GraphEditorDB : GodotObject
         _outgoingConnections[fromNode][fromPort]!.Free();
         _outgoingConnections[fromNode][fromPort] = null;
 
+        fromNode.OnOutputPortDisconnected(fromPort);
+
         Saved = false;
+    }
+
+    void OnOutputPortAdded(GraphEditorNode node)
+    {
+        var connections = _outgoingConnections[node];
+        connections.Add(null);
+    }
+
+    void OnOutputPortRemoved(GraphEditorNode node)
+    {
+        var connections = _outgoingConnections[node];
+        connections.RemoveAt(connections.Count - 1);
     }
 
     public Vector2 EditorScrollOffset => _logicGraph.GraphEditorScrollOffset;
@@ -208,6 +232,9 @@ public partial class GraphEditorDB : GodotObject
                 toNode.GetPortOfMethod(logicConnection.Method)
             );
         }
+
+        foreach (var editorNode in _editorNodes.Values)
+            DeserializeNode(editorNode);
     }
 
     void Serialize()
@@ -215,12 +242,17 @@ public partial class GraphEditorDB : GodotObject
         _logicGraph.Nodes = _editorNodes
             .Keys.Where(logicNode => logicNode != _logicGraph.Entrypoint)
             .ToArray();
+
         var logicNodeToIndex = LogicNodeToIndexFunc();
         _logicGraph.Connections = _editorNodes
             .Values.SelectMany(editorNode =>
                 GetOutgoingLogicConnections(editorNode, logicNodeToIndex)
             )
             .ToArray();
+
+        foreach (var editorNode in _editorNodes.Values)
+            SerializeNode(editorNode, logicNodeToIndex);
+
         _logicGraph.EmitChanged();
     }
 
@@ -238,15 +270,52 @@ public partial class GraphEditorDB : GodotObject
     IEnumerable<LogicConnection> GetOutgoingLogicConnections(
         GraphEditorNode editorNode,
         Func<LogicNode, int> logicNodeToIndex
-    ) =>
-        GetOutgoingConnections(editorNode)
-            .Select(connection => new LogicConnection()
-            {
-                SourceNodeIndex = logicNodeToIndex(connection.fromNode.LogicNode),
-                Signal = connection.fromNode.GetSlotOfOutputPort(connection.fromPort).Signal!,
-                TargetNodeIndex = logicNodeToIndex(connection.toNode.LogicNode),
-                Method = connection.toNode.GetSlotOfInputPort(connection.toPort).Method!
-            });
+    )
+    {
+        if (editorNode.HasDynamicOutputs)
+            return [];
+        else
+            return GetOutgoingConnections(editorNode)
+                .Select(connection => new LogicConnection()
+                {
+                    SourceNodeIndex = logicNodeToIndex(connection.fromNode.LogicNode),
+                    Signal = connection.fromNode.GetSignalOfPort(connection.fromPort)!,
+                    TargetNodeIndex = logicNodeToIndex(connection.toNode.LogicNode),
+                    Method = connection.toNode.GetMethodOfPort(connection.toPort)!
+                });
+    }
+
+    void SerializeNode(GraphEditorNode editorNode, Func<LogicNode, int> logicNodeToIndex)
+    {
+        if (!editorNode.HasDynamicOutputs)
+            return;
+
+        var outputs = GetOutgoingConnections(editorNode)
+            .Select(connection =>
+                (
+                    logicNodeToIndex(connection.toNode.LogicNode),
+                    connection.toNode.GetMethodOfPort(connection.toPort)
+                )
+            );
+        editorNode.SetDynamicOutputs(outputs);
+    }
+
+    void DeserializeNode(GraphEditorNode editorNode)
+    {
+        if (!editorNode.HasDynamicOutputs)
+            return;
+
+        int index = 0;
+        foreach (var (nodeIndex, method) in editorNode.GetDynamicOutputs())
+        {
+            var outputNode = _editorNodes[IndexToLogicNode(nodeIndex)];
+            int outputNodePort = 0;
+            if (method is not null)
+                outputNodePort = outputNode.GetPortOfMethod(method);
+            AddConnection(editorNode, index, outputNode, outputNodePort);
+            index++;
+        }
+    }
 
     bool WriteToDisk()
     {
@@ -264,7 +333,7 @@ public partial class GraphEditorDB : GodotObject
         var error = ResourceSaver.Save(resource);
         if (error != Error.Ok)
         {
-            GD.PushError($"Failed to save logic graph at ", _logicGraph.ResourcePath, ": ", error);
+            GD.PushError("Failed to save logic graph at ", _logicGraph.ResourcePath, ": ", error);
             return false;
         }
         return true;

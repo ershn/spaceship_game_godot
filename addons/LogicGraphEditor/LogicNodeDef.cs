@@ -38,9 +38,21 @@ public partial class LogicNodeDef : RefCounted, ISerializationListener
 
     public Type? Type { get; private set; }
     public string Name { get; private set; }
+
     ConstructorInfo? _constructor;
+
     public string[] Methods { get; private set; }
     public string[] Signals { get; private set; }
+
+    public bool IsInputNode { get; private set; }
+
+    FieldInfo? _outputNodesField;
+    FieldInfo? _outputMethodsField;
+
+    public bool HasDynamicOutputNodes => _outputNodesField is not null;
+    public bool HasDynamicOutputMethods => _outputMethodsField is not null;
+    public bool HasDynamicOutputs => HasDynamicOutputNodes || HasDynamicOutputMethods;
+
     public bool Internal { get; private set; }
 
 #pragma warning disable CS8618
@@ -69,7 +81,10 @@ public partial class LogicNodeDef : RefCounted, ISerializationListener
         _constructor = GetConstructor(type);
         Methods = GetDeclaredMethods(type).Select(method => method.Name).ToArray();
         Signals = GetDeclaredEvents(type).Select(@event => @event.Name).ToArray();
-        Internal = Attribute.GetCustomAttribute(type, typeof(InternalAttribute)) is not null;
+        IsInputNode = IsInputNodeClass(type);
+        _outputNodesField = TryGetOutputNodesField(type);
+        _outputMethodsField = TryGetOutputMethodsField(type);
+        Internal = IsInternalMember(type);
     }
 
     ConstructorInfo GetConstructor(Type type) =>
@@ -93,7 +108,55 @@ public partial class LogicNodeDef : RefCounted, ISerializationListener
     bool IsInternalMember(MemberInfo member) =>
         Attribute.GetCustomAttribute(member, typeof(InternalAttribute)) is not null;
 
+    bool IsInputNodeClass(Type type) =>
+        Attribute.GetCustomAttribute(type, typeof(InputNodeAttribute)) is not null;
+
+    FieldInfo? TryGetOutputNodesField(Type type) =>
+        TryGetField(type, typeof(OutputNodesAttribute), typeof(int[]));
+
+    FieldInfo? TryGetOutputMethodsField(Type type) =>
+        TryGetField(type, typeof(OutputMethodsAttribute), typeof(LogicEndpoint[]));
+
+    FieldInfo? TryGetField(Type type, Type attribute, Type fieldType)
+    {
+        var field = type.GetFields(
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
+            )
+            .FirstOrDefault(field => Attribute.GetCustomAttribute(field, attribute) is not null);
+        if (field is null)
+            return null;
+        if (field.FieldType != fieldType)
+            throw new ArgumentException($"{type} field {field.Name} isn't of type {fieldType}");
+        return field;
+    }
+
     public LogicNode Instantiate() => (LogicNode)_constructor!.Invoke([]);
+
+    public int[] GetOutputNodeIndexes(LogicNode logicNode) =>
+        GetFieldValue<int[]>(logicNode, _outputNodesField);
+
+    public LogicEndpoint[] GetOutputMethodReferences(LogicNode logicNode) =>
+        GetFieldValue<LogicEndpoint[]>(logicNode, _outputMethodsField);
+
+    public void SetOutputNodeIndexes(LogicNode logicNode, int[] nodeIndexes) =>
+        SetFieldValue(logicNode, _outputNodesField, nodeIndexes);
+
+    public void SetOutputMethodReferences(LogicNode logicNode, LogicEndpoint[] methodReferences) =>
+        SetFieldValue(logicNode, _outputMethodsField, methodReferences);
+
+    T GetFieldValue<T>(LogicNode logicNode, FieldInfo? fieldInfo)
+    {
+        if (fieldInfo is null)
+            throw new ArgumentException($"{Type} has no {typeof(T)} field");
+        return (T)fieldInfo.GetValue(logicNode)!;
+    }
+
+    void SetFieldValue<T>(LogicNode logicNode, FieldInfo? fieldInfo, T value)
+    {
+        if (fieldInfo is null)
+            throw new ArgumentException($"{Type} has no {typeof(T)} field");
+        fieldInfo.SetValue(logicNode, value);
+    }
 
     public void OnBeforeSerialize() { }
 

@@ -3,7 +3,7 @@ using Godot;
 
 namespace LogicGraphs;
 
-[Tool, GlobalClass]
+[Tool, GlobalClass, InputNode]
 public partial class MachineState : LogicNode
 {
     [Signal]
@@ -16,7 +16,7 @@ public partial class MachineState : LogicNode
     public delegate void ExitedEventHandler();
 
     [Export]
-    public string? Name;
+    public string Name = string.Empty;
 
     [Internal]
     public void Enter() => EmitSignal(SignalName.Entered);

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="LogicGraph" load_steps=29 format=3 uid="uid://ckotf8chk53qh"]
+[gd_resource type="Resource" script_class="LogicGraph" load_steps=49 format=3 uid="uid://ckotf8chk53qh"]
 
 [ext_resource type="Script" path="res://Scripts/LogicGraphs/LogicConnection.cs" id="1_g15rf"]
 [ext_resource type="Script" path="res://Scripts/LogicGraphs/LogicGraphEntrypoint.cs" id="2_b1gv6"]
@@ -8,66 +8,98 @@
 [ext_resource type="Script" path="res://Scripts/LogicGraphs/Nodes/TimeConsumer.cs" id="6_7xwi5"]
 [ext_resource type="Script" path="res://Scripts/LogicGraphs/Nodes/IterationConsumer.cs" id="7_28map"]
 [ext_resource type="Script" path="res://Scripts/LogicGraphs/Sequence.cs" id="8_75g2k"]
+[ext_resource type="Script" path="res://Scripts/LogicGraphs/LogicEndpoint.cs" id="8_gnw62"]
 [ext_resource type="Resource" uid="uid://80xxybtd1uce" path="res://Definitions/Items/potato.tres" id="9_o3p5e"]
 [ext_resource type="Script" path="res://Scripts/LogicGraphs/Nodes/ItemProducer.cs" id="10_o2cl5"]
 [ext_resource type="Resource" uid="uid://bn2mnw1y8b4uy" path="res://Definitions/Items/potato_seed.tres" id="11_j3qtb"]
 [ext_resource type="Script" path="res://Scripts/LogicGraphs/LogicGraph.cs" id="12_l3a62"]
+[ext_resource type="Script" path="res://Scripts/LogicGraphs/StateMachine.cs" id="13_4btm1"]
+[ext_resource type="Script" path="res://Scripts/LogicGraphs/MachineState.cs" id="14_ukhhw"]
+[ext_resource type="Script" path="res://Scripts/LogicGraphs/WithArguments.cs" id="15_y842i"]
 
-[sub_resource type="Resource" id="Resource_gooau"]
+[sub_resource type="Resource" id="Resource_0lhq5"]
 script = ExtResource("1_g15rf")
 SourceNodeIndex = -1
 Signal = &"Started"
 TargetNodeIndex = 0
 Method = &"Execute"
 
-[sub_resource type="Resource" id="Resource_5vnml"]
+[sub_resource type="Resource" id="Resource_6vew5"]
 script = ExtResource("1_g15rf")
 SourceNodeIndex = -1
 Signal = &"Processed"
-TargetNodeIndex = 1
+TargetNodeIndex = 11
 Method = &"Process"
 
-[sub_resource type="Resource" id="Resource_vh0r5"]
+[sub_resource type="Resource" id="Resource_0eogg"]
 script = ExtResource("1_g15rf")
 SourceNodeIndex = 1
 Signal = &"Completed"
 TargetNodeIndex = 2
 Method = &"Process"
 
-[sub_resource type="Resource" id="Resource_72xcj"]
+[sub_resource type="Resource" id="Resource_ma6jf"]
 script = ExtResource("1_g15rf")
 SourceNodeIndex = 2
 Signal = &"Completed"
 TargetNodeIndex = 4
 Method = &"Execute"
 
-[sub_resource type="Resource" id="Resource_4hknl"]
+[sub_resource type="Resource" id="Resource_kpbbf"]
 script = ExtResource("1_g15rf")
 SourceNodeIndex = 3
 Signal = &"Completed"
 TargetNodeIndex = 5
 Method = &"Process"
 
-[sub_resource type="Resource" id="Resource_jcfsp"]
-script = ExtResource("1_g15rf")
-SourceNodeIndex = 4
-Signal = &"First"
-TargetNodeIndex = 1
-Method = &"Reset"
-
-[sub_resource type="Resource" id="Resource_tvbam"]
-script = ExtResource("1_g15rf")
-SourceNodeIndex = 4
-Signal = &"Second"
-TargetNodeIndex = 3
-Method = &"Process"
-
-[sub_resource type="Resource" id="Resource_qvcuq"]
+[sub_resource type="Resource" id="Resource_gm7xl"]
 script = ExtResource("1_g15rf")
 SourceNodeIndex = 5
-Signal = &"Processed"
+Signal = &"Completed"
 TargetNodeIndex = 6
 Method = &"Process"
+
+[sub_resource type="Resource" id="Resource_h0aei"]
+script = ExtResource("1_g15rf")
+SourceNodeIndex = 7
+Signal = &"Completed"
+TargetNodeIndex = 8
+Method = &"Process"
+
+[sub_resource type="Resource" id="Resource_38ci7"]
+script = ExtResource("1_g15rf")
+SourceNodeIndex = 8
+Signal = &"Completed"
+TargetNodeIndex = 9
+Method = &"Execute"
+
+[sub_resource type="Resource" id="Resource_jmd83"]
+script = ExtResource("1_g15rf")
+SourceNodeIndex = 10
+Signal = &"Completed"
+TargetNodeIndex = 14
+Method = &"Execute"
+
+[sub_resource type="Resource" id="Resource_wnxsc"]
+script = ExtResource("1_g15rf")
+SourceNodeIndex = 12
+Signal = &"Processed"
+TargetNodeIndex = 7
+Method = &"Process"
+
+[sub_resource type="Resource" id="Resource_i4lci"]
+script = ExtResource("1_g15rf")
+SourceNodeIndex = 13
+Signal = &"Processed"
+TargetNodeIndex = 1
+Method = &"Process"
+
+[sub_resource type="Resource" id="Resource_0swyy"]
+script = ExtResource("1_g15rf")
+SourceNodeIndex = 14
+Signal = &"Called"
+TargetNodeIndex = 11
+Method = &"SwitchTo"
 
 [sub_resource type="Resource" id="Resource_tbpga"]
 script = ExtResource("2_b1gv6")
@@ -78,30 +110,41 @@ script = ExtResource("4_1towr")
 _itemDef = ExtResource("3_6r6th")
 _maxAmount = 10000000
 _refillThreshold = 2000000
-GraphEditorPosition = Vector2(480, -380)
+GraphEditorPosition = Vector2(500, -540)
 
 [sub_resource type="Resource" id="Resource_6jli2"]
 script = ExtResource("5_ilts5")
 _itemDef = ExtResource("3_6r6th")
 _amount = 100000
 _resetOnCompletion = false
-GraphEditorPosition = Vector2(480, -40)
+GraphEditorPosition = Vector2(1160, 160)
 
 [sub_resource type="Resource" id="Resource_r3fp8"]
 script = ExtResource("6_7xwi5")
 _timeInterval = 1.0
 _resetOnCompletion = true
-GraphEditorPosition = Vector2(900, -40)
+GraphEditorPosition = Vector2(1580, 160)
 
 [sub_resource type="Resource" id="Resource_24lb1"]
 script = ExtResource("7_28map")
 _iterationCount = 15
 _resetOnCompletion = true
-GraphEditorPosition = Vector2(1100, 240)
+GraphEditorPosition = Vector2(1780, 440)
+
+[sub_resource type="Resource" id="Resource_hju1v"]
+script = ExtResource("8_gnw62")
+NodeIndex = 1
+Member = &"Reset"
+
+[sub_resource type="Resource" id="Resource_wf07l"]
+script = ExtResource("8_gnw62")
+NodeIndex = 3
+Member = &"Process"
 
 [sub_resource type="Resource" id="Resource_ped88"]
 script = ExtResource("8_75g2k")
-GraphEditorPosition = Vector2(720, 240)
+_targetMethodReferences = [SubResource("Resource_hju1v"), SubResource("Resource_wf07l")]
+GraphEditorPosition = Vector2(1420, 440)
 
 [sub_resource type="Resource" id="Resource_iyux1"]
 script = ExtResource("10_o2cl5")
@@ -109,7 +152,7 @@ _probability = 1.0
 _itemDef = ExtResource("9_o3p5e")
 _amount = 1000000
 _resetOnCompletion = true
-GraphEditorPosition = Vector2(1500, 240)
+GraphEditorPosition = Vector2(2180, 440)
 
 [sub_resource type="Resource" id="Resource_o8nek"]
 script = ExtResource("10_o2cl5")
@@ -117,12 +160,69 @@ _probability = 0.1
 _itemDef = ExtResource("11_j3qtb")
 _amount = 1
 _resetOnCompletion = true
-GraphEditorPosition = Vector2(1900, 240)
+GraphEditorPosition = Vector2(2580, 440)
+
+[sub_resource type="Resource" id="Resource_bfush"]
+script = ExtResource("5_ilts5")
+_itemDef = ExtResource("3_6r6th")
+_amount = 100000
+_resetOnCompletion = false
+GraphEditorPosition = Vector2(1180, -380)
+
+[sub_resource type="Resource" id="Resource_2ge75"]
+script = ExtResource("6_7xwi5")
+_timeInterval = 1.0
+_resetOnCompletion = true
+GraphEditorPosition = Vector2(1600, -380)
+
+[sub_resource type="Resource" id="Resource_jivnp"]
+script = ExtResource("8_gnw62")
+NodeIndex = 7
+Member = &"Reset"
+
+[sub_resource type="Resource" id="Resource_66ewv"]
+script = ExtResource("8_gnw62")
+NodeIndex = 10
+Member = &"Process"
+
+[sub_resource type="Resource" id="Resource_t4x71"]
+script = ExtResource("8_75g2k")
+_targetMethodReferences = [SubResource("Resource_jivnp"), SubResource("Resource_66ewv")]
+GraphEditorPosition = Vector2(1440, -160)
+
+[sub_resource type="Resource" id="Resource_sqhcm"]
+script = ExtResource("7_28map")
+_iterationCount = 30
+_resetOnCompletion = true
+GraphEditorPosition = Vector2(1780, -160)
+
+[sub_resource type="Resource" id="Resource_l5bse"]
+script = ExtResource("13_4btm1")
+_stateNodeIndexes = PackedInt32Array(12, 13)
+_currentStateName = "Growing"
+_currentStateEntered = false
+_nextStateName = ""
+GraphEditorPosition = Vector2(500, -160)
+
+[sub_resource type="Resource" id="Resource_exs2a"]
+script = ExtResource("14_ukhhw")
+Name = "Growing"
+GraphEditorPosition = Vector2(820, -380)
+
+[sub_resource type="Resource" id="Resource_sav71"]
+script = ExtResource("14_ukhhw")
+Name = "Producing"
+GraphEditorPosition = Vector2(820, 140)
+
+[sub_resource type="Resource" id="Resource_mafb3"]
+script = ExtResource("15_y842i")
+_arguments = ["Producing"]
+GraphEditorPosition = Vector2(2180, 20)
 
 [resource]
 script = ExtResource("12_l3a62")
 Entrypoint = SubResource("Resource_tbpga")
-Nodes = [SubResource("Resource_uvx63"), SubResource("Resource_6jli2"), SubResource("Resource_r3fp8"), SubResource("Resource_24lb1"), SubResource("Resource_ped88"), SubResource("Resource_iyux1"), SubResource("Resource_o8nek")]
-Connections = [SubResource("Resource_gooau"), SubResource("Resource_5vnml"), SubResource("Resource_vh0r5"), SubResource("Resource_72xcj"), SubResource("Resource_4hknl"), SubResource("Resource_jcfsp"), SubResource("Resource_tvbam"), SubResource("Resource_qvcuq")]
-GraphEditorScrollOffset = Vector2(173.65, -537.663)
-GraphEditorZoom = 0.971494
+Nodes = [SubResource("Resource_uvx63"), SubResource("Resource_6jli2"), SubResource("Resource_r3fp8"), SubResource("Resource_24lb1"), SubResource("Resource_ped88"), SubResource("Resource_iyux1"), SubResource("Resource_o8nek"), SubResource("Resource_bfush"), SubResource("Resource_2ge75"), SubResource("Resource_t4x71"), SubResource("Resource_sqhcm"), SubResource("Resource_l5bse"), SubResource("Resource_exs2a"), SubResource("Resource_sav71"), SubResource("Resource_mafb3")]
+Connections = [SubResource("Resource_0lhq5"), SubResource("Resource_6vew5"), SubResource("Resource_0eogg"), SubResource("Resource_ma6jf"), SubResource("Resource_kpbbf"), SubResource("Resource_gm7xl"), SubResource("Resource_h0aei"), SubResource("Resource_38ci7"), SubResource("Resource_jmd83"), SubResource("Resource_wnxsc"), SubResource("Resource_i4lci"), SubResource("Resource_0swyy")]
+GraphEditorScrollOffset = Vector2(150.019, -558.97)
+GraphEditorZoom = 0.729898

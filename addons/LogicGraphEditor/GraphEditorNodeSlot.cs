@@ -13,20 +13,20 @@ public partial class GraphEditorNodeSlot : HBoxContainer
     [Export]
     Label _rightLabel = null!;
 
-    StringName? _method;
-    public StringName? Method => _method;
+    string _method = string.Empty;
+    public string? Method => _method.Length > 0 ? _method : null;
 
-    public void SetMethod(StringName method)
+    public void SetMethod(string method)
     {
         _method = method;
         _leftLabel.Text = method;
         _leftLabel.Show();
     }
 
-    StringName? _signal;
-    public StringName? Signal => _signal;
+    string _signal = string.Empty;
+    public string? Signal => _signal.Length > 0 ? _signal : null;
 
-    public void SetSignal(StringName signal)
+    public void SetSignal(string signal)
     {
         _signal = signal;
         _rightLabel.Text = signal;
