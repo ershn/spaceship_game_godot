@@ -3,6 +3,9 @@ using Godot;
 [GlobalClass]
 public partial class StructureNavCellController : NavCellController
 {
+    [Export]
+    Destructor _destructor;
+
     StructureDef _structureDef;
 
     bool _originalTraversability;
@@ -17,6 +20,8 @@ public partial class StructureNavCellController : NavCellController
     {
         _originalTraversability = Traversable;
         Traversable = _structureDef.Traversable;
+
+        _destructor.OnDestruction += CleanupCell;
     }
 
     void CleanupCell()

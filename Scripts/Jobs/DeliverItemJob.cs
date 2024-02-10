@@ -48,4 +48,8 @@ public sealed class DeliverItemJob : IJob, IDisposable
         backpack.Remove(_itemDef, _amount);
         _inventory.Add(_itemDef, _amount);
     }
+
+    public override string ToString() =>
+        $"[{nameof(DeliverItemJob)}: {_amount} of {_itemDef}"
+        + $" from {_item.GlobalPosition} to {_inventory.GlobalPosition}]";
 }

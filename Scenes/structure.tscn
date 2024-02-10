@@ -25,8 +25,9 @@ script = ExtResource("1_c3rwg")
 script = ExtResource("2_jnkmu")
 _gridPosition = NodePath("../GridPosition")
 
-[node name="StructureNavCellController" type="Node" parent="." node_paths=PackedStringArray("_gridPosition")]
+[node name="StructureNavCellController" type="Node" parent="." node_paths=PackedStringArray("_destructor", "_gridPosition")]
 script = ExtResource("3_vf1o1")
+_destructor = NodePath("../Destructor")
 _gridPosition = NodePath("../GridPosition")
 
 [node name="Destructor" type="Node" parent="."]
@@ -39,10 +40,11 @@ script = ExtResource("3_njkd6")
 script = ExtResource("6_vg8tp")
 _gridPosition = NodePath("../GridPosition")
 
-[node name="StructureConstructor" type="Node" parent="." node_paths=PackedStringArray("_destructor", "_canceler", "_constructionWork")]
+[node name="StructureConstructor" type="Node" parent="." node_paths=PackedStringArray("_destructor", "_canceler", "_componentInventory", "_constructionWork")]
 script = ExtResource("5_bmk60")
 _destructor = NodePath("../Destructor")
 _canceler = NodePath("../Canceler")
+_componentInventory = NodePath("../StructureComponentInventory")
 _constructionWork = NodePath("../ConstructionWork")
 
 [node name="ConstructionWork" type="Node" parent="."]
@@ -85,7 +87,6 @@ texture_progress = ExtResource("13_esr0x")
 texture_progress_offset = Vector2(4, 4)
 script = ExtResource("14_x1vnk")
 
-[connection signal="OnDestruction" from="Destructor" to="StructureNavCellController" method="CleanupCell"]
 [connection signal="OnDestruction" from="Destructor" to="StructureComponentInventory" method="Dump"]
 [connection signal="OnConstructionCompleted" from="StructureConstructor" to="StructureNavCellController" method="InitializeCell"]
 [connection signal="OnConstructionCompleted" from="StructureConstructor" to="StructureDeconstructor" method="Allow"]

@@ -19,6 +19,9 @@ public partial class StructureConstructor : Node
     Canceler _canceler;
 
     [Export]
+    StructureComponentInventory _componentInventory;
+
+    [Export]
     ConstructionWork _constructionWork;
 
     public async Task Construct()
@@ -47,17 +50,14 @@ public partial class StructureConstructor : Node
 
     async Task RequestComponents(CancellationToken ct)
     {
-        var componentInventory = GetNode<StructureComponentInventory>(
-            "../StructureComponentInventory"
-        );
-        if (componentInventory.Full)
+        if (_componentInventory.Full)
             return;
 
         var itemAllotter = Owner.GetNode<ItemAllotter>("../%ItemAllotter");
         var requests = new List<Task>();
-        foreach (var (itemDef, missingAmount) in componentInventory.UnfilledSlots())
+        foreach (var (itemDef, missingAmount) in _componentInventory.UnfilledSlots())
         {
-            var request = itemAllotter.Request(itemDef, missingAmount, componentInventory, ct);
+            var request = itemAllotter.Request(itemDef, missingAmount, _componentInventory, ct);
             requests.Add(request);
         }
 

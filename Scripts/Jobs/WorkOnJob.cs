@@ -21,4 +21,6 @@ public class WorkOnJob : IJob
         var worker = executor.GetNode<Worker>("Worker");
         await worker.WorkOn(_work, ct);
     }
+
+    public override string ToString() => $"[{nameof(WorkOnJob)}: at {_work.GlobalPosition}]";
 }

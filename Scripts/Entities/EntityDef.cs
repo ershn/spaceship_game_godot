@@ -11,4 +11,7 @@ public abstract partial class EntityDef : Resource
     public abstract EntityState NewState();
 
     public abstract Texture2D PreviewSprite { get; }
+
+    public override string ToString() =>
+        ResourceName.Length > 0 ? $"[{ResourceName}]" : base.ToString();
 }

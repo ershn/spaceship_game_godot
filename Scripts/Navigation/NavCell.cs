@@ -12,15 +12,9 @@ public partial class NavCell : NavigationRegion2D
     {
         var polygon = new NavigationPolygon
         {
-            Vertices = new Vector2[]
-            {
-                new(0f, 0f),
-                new(size.X, 0f),
-                new(size.X, size.Y),
-                new(0f, size.Y)
-            }
+            Vertices = [new(0f, 0f), new(size.X, 0f), new(size.X, size.Y), new(0f, size.Y)]
         };
-        polygon.AddPolygon(new int[] { 0, 1, 2, 3 });
+        polygon.AddPolygon([0, 1, 2, 3]);
 
         NavigationPolygon = polygon;
     }
