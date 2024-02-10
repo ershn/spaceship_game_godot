@@ -1,10 +1,13 @@
 # Godot 4+ specific ignores
 .godot/
 
-# Test ignores
-Test/
+# Exports
+Exports/
 
-# Unit test ignores
+# Manual tests
+Tests/
+
+# Unit tests
 UnitTests/bin/
 UnitTests/obj/
 
