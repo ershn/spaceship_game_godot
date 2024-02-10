@@ -2,8 +2,6 @@
 
 ## Game systems
 
-- re-implement resource consumption/production
-
 - add multi world
 - add spaceship movement to arbitrary worlds
 - limit the grid size of worlds
