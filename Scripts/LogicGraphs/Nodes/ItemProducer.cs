@@ -5,7 +5,7 @@ using Godot;
 namespace LogicGraphs;
 
 [Tool]
-public partial class ItemProducer : LogicNodeTemplate
+public partial class ItemProducer : CompletingNode
 {
     [Export(PropertyHint.Range, "0,1")]
     float _probability = 1f;

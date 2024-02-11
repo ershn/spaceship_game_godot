@@ -4,18 +4,18 @@ using Godot;
 namespace LogicGraphs;
 
 [Tool]
-public partial class TimeConsumer : LogicNodeTemplate
+public partial class TimeConsumer : ProgressingNode
 {
     [Export]
     double _timeInterval = 1d;
 
     double _consumedTime;
 
-    protected override bool _Process()
+    protected override float _Process()
     {
         if (_consumedTime < _timeInterval)
             _consumedTime += Entity.GetProcessDeltaTime();
-        return _consumedTime >= _timeInterval;
+        return (float)(_consumedTime / _timeInterval);
     }
 
     protected override void _Reset()

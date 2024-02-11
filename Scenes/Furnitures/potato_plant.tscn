@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cjdeojikeu736"]
+[gd_scene load_steps=29 format=3 uid="uid://cjdeojikeu736"]
 
 [ext_resource type="PackedScene" uid="uid://bq7kkuk0mvalc" path="res://Scenes/furniture.tscn" id="1_wb4cf"]
 [ext_resource type="Resource" uid="uid://d140l4knhfmeu" path="res://Definitions/Furnitures/potato_plant.tres" id="2_sslsi"]
@@ -7,6 +7,211 @@
 [ext_resource type="Script" path="res://Scripts/LogicGraphs/LogicExecutor.cs" id="3_sjaxs"]
 [ext_resource type="Script" path="res://Scripts/Structures/StructureResourceInventory.cs" id="3_ss4sr"]
 [ext_resource type="Resource" uid="uid://ckotf8chk53qh" path="res://Definitions/Furnitures/potato_plant_graph.tres" id="4_hvk7w"]
+
+[sub_resource type="Animation" id="Animation_vpb2n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(4, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_g4rut"]
+resource_name = "blueprint"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(4, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.470588)]
+}
+
+[sub_resource type="Animation" id="Animation_ltf22"]
+resource_name = "fully_grown"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(4, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_2cpg8"]
+resource_name = "growth1"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ufsf1"]
+resource_name = "growth2"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_x8ua0"]
+resource_name = "growth3"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(2, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_i8xir"]
+resource_name = "growth4"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(3, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6o3g3"]
+_data = {
+"RESET": SubResource("Animation_vpb2n"),
+"blueprint": SubResource("Animation_g4rut"),
+"fully_grown": SubResource("Animation_ltf22"),
+"growth1": SubResource("Animation_2cpg8"),
+"growth2": SubResource("Animation_ufsf1"),
+"growth3": SubResource("Animation_x8ua0"),
+"growth4": SubResource("Animation_i8xir")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6jhvw"]
+animation = &"blueprint"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sxkdy"]
+animation = &"fully_grown"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mybxb"]
+animation = &"growth1"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2e7yo"]
+animation = &"growth2"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_r2nr0"]
+animation = &"growth3"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mdsta"]
+animation = &"growth4"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ipsgn"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_a1myi"]
+advance_mode = 2
+advance_expression = "IsConstructionCompleted"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gtj6j"]
+advance_mode = 2
+advance_expression = "SetupProgress >= 0.25"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6k2os"]
+advance_mode = 2
+advance_expression = "SetupProgress >= 0.50"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_u4gs6"]
+advance_mode = 2
+advance_expression = "SetupProgress >= 0.75"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gj7x8"]
+advance_mode = 2
+advance_expression = "SetupProgress >= 0.99"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_elf5h"]
+states/End/position = Vector2(853.5, 178.969)
+states/Start/position = Vector2(140, 179.938)
+states/blueprint/node = SubResource("AnimationNodeAnimation_6jhvw")
+states/blueprint/position = Vector2(302.5, 180.625)
+states/fully_grown/node = SubResource("AnimationNodeAnimation_sxkdy")
+states/fully_grown/position = Vector2(646.5, 178.133)
+states/growth1/node = SubResource("AnimationNodeAnimation_mybxb")
+states/growth1/position = Vector2(468.422, 41)
+states/growth2/node = SubResource("AnimationNodeAnimation_2e7yo")
+states/growth2/position = Vector2(468.563, 141.5)
+states/growth3/node = SubResource("AnimationNodeAnimation_r2nr0")
+states/growth3/position = Vector2(467.875, 237.5)
+states/growth4/node = SubResource("AnimationNodeAnimation_mdsta")
+states/growth4/position = Vector2(467.25, 335.5)
+transitions = ["Start", "blueprint", SubResource("AnimationNodeStateMachineTransition_ipsgn"), "blueprint", "growth1", SubResource("AnimationNodeStateMachineTransition_a1myi"), "growth1", "growth2", SubResource("AnimationNodeStateMachineTransition_gtj6j"), "growth2", "growth3", SubResource("AnimationNodeStateMachineTransition_6k2os"), "growth3", "growth4", SubResource("AnimationNodeStateMachineTransition_u4gs6"), "growth4", "fully_grown", SubResource("AnimationNodeStateMachineTransition_gj7x8")]
+graph_offset = Vector2(-37, -5)
 
 [node name="Furniture" instance=ExtResource("1_wb4cf")]
 z_index = 10
@@ -23,13 +228,28 @@ script = ExtResource("3_sjaxs")
 _logicGraphTemplate = ExtResource("4_hvk7w")
 
 [node name="StructureSpriteGraphics" type="Sprite2D" parent="." index="16"]
-self_modulate = Color(1, 1, 1, 0.470588)
 texture = ExtResource("3_4jkff")
 centered = false
 offset = Vector2(-32, -56)
-region_enabled = true
+hframes = 5
+frame = 4
 region_rect = Rect2(256, 0, 64, 64)
 script = ExtResource("3_nt2ah")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="StructureSpriteGraphics" index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_6o3g3")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="17"]
+root_node = NodePath("../StructureSpriteGraphics")
+libraries = {
+"": SubResource("AnimationLibrary_6o3g3")
+}
+tree_root = SubResource("AnimationNodeStateMachine_elf5h")
+advance_expression_base_node = NodePath("../StructureSpriteGraphics")
+anim_player = NodePath("../StructureSpriteGraphics/AnimationPlayer")
+
 [connection signal="OnConstructionCompleted" from="StructureConstructor" to="ResourceProcessor" method="Start"]
 [connection signal="OnConstructionCompleted" from="StructureGraphics" to="StructureSpriteGraphics" method="OnConstructionCompleted"]
+[connection signal="OnSetupProgressed" from="StructureGraphics" to="StructureSpriteGraphics" method="OnSetupProgressed"]

@@ -4,7 +4,7 @@ using Godot;
 namespace LogicGraphs;
 
 [Tool]
-public partial class ItemConsumer : LogicNodeTemplate
+public partial class ItemConsumer : CompletingNode
 {
     [Export]
     ItemDef _itemDef = null!;

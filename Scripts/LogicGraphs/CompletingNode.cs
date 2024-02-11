@@ -4,10 +4,10 @@ using Godot;
 namespace LogicGraphs;
 
 [Tool]
-public abstract partial class LogicNodeTemplate : LogicNode
+public abstract partial class CompletingNode : LogicNode
 {
     [Signal]
-    public delegate void ProcessedEventHandler();
+    public delegate void ProcessedEventHandler(bool completed);
 
     [Signal]
     public delegate void CompletedEventHandler();
@@ -18,7 +18,7 @@ public abstract partial class LogicNodeTemplate : LogicNode
     public void Process()
     {
         var completed = _Process();
-        EmitSignal(SignalName.Processed);
+        EmitSignal(SignalName.Processed, completed);
         if (completed)
         {
             EmitSignal(SignalName.Completed);
