@@ -5,6 +5,12 @@ using Godot;
 [GlobalClass]
 public partial class Mover : NavigationAgent2D
 {
+    [Signal]
+    public delegate void MovedEventHandler(Vector2 direction);
+
+    [Signal]
+    public delegate void StoppedEventHandler();
+
     [Export]
     CharacterBody2D _characterBody2D;
 
@@ -42,6 +48,7 @@ public partial class Mover : NavigationAgent2D
         if (_cancellationToken.IsCancellationRequested)
         {
             _taskCompletionSource.SetCanceled(_cancellationToken);
+            EmitSignal(SignalName.Stopped);
             return;
         }
 
@@ -52,8 +59,12 @@ public partial class Mover : NavigationAgent2D
         _characterBody2D.Velocity = newDirection * _movementSpeed;
 
         _characterBody2D.MoveAndSlide();
+        EmitSignal(SignalName.Moved, _characterBody2D.GetLastMotion().Normalized());
 
         if (IsTargetReached())
+        {
             _taskCompletionSource.SetResult();
+            EmitSignal(SignalName.Stopped);
+        }
     }
 }
