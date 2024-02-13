@@ -6,7 +6,7 @@ using Godot;
 public partial class Mover : NavigationAgent2D
 {
     [Signal]
-    public delegate void MovedEventHandler(Vector2 direction);
+    public delegate void MovedEventHandler(Vector2 direction, float speedRatio);
 
     [Signal]
     public delegate void StoppedEventHandler();
@@ -20,6 +20,7 @@ public partial class Mover : NavigationAgent2D
     bool _ready;
     TaskCompletionSource _taskCompletionSource;
     CancellationToken _cancellationToken;
+    double _elapsedTime;
 
     public async Task MoveTo(Vector2 target, CancellationToken ct)
     {
@@ -31,6 +32,7 @@ public partial class Mover : NavigationAgent2D
 
         _taskCompletionSource = new TaskCompletionSource();
         _cancellationToken = ct;
+        _elapsedTime = 0d;
 
         TargetPosition = target;
         if (!IsTargetReachable())
@@ -52,19 +54,31 @@ public partial class Mover : NavigationAgent2D
             return;
         }
 
+        _elapsedTime += delta;
+
         var currentPosition = _characterBody2D.GlobalTransform.Origin;
         var nextPathPosition = GetNextPathPosition();
 
         var newDirection = (nextPathPosition - currentPosition).Normalized();
-        _characterBody2D.Velocity = newDirection * _movementSpeed;
+        var newSpeed = GetMovementSpeed();
+        _characterBody2D.Velocity = newDirection * newSpeed;
 
         _characterBody2D.MoveAndSlide();
-        EmitSignal(SignalName.Moved, _characterBody2D.GetLastMotion().Normalized());
+
+        var finalDirection = _characterBody2D.GetLastMotion().Normalized();
+        var speedRatio = newSpeed / _movementSpeed;
+        EmitSignal(SignalName.Moved, finalDirection, speedRatio);
 
         if (IsTargetReached())
         {
             _taskCompletionSource.SetResult();
             EmitSignal(SignalName.Stopped);
         }
+    }
+
+    float GetMovementSpeed()
+    {
+        var weight = Mathf.Min((float)(_elapsedTime / 1.5d), 1f);
+        return Mathf.Lerp(_movementSpeed * .5f, _movementSpeed, Mathf.Ease(weight, .25f));
     }
 }

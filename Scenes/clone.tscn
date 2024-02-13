@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://dk00qjyfparbs"]
+[gd_scene load_steps=47 format=3 uid="uid://dk00qjyfparbs"]
 
 [ext_resource type="Texture2D" uid="uid://b4ufl76e2uti" path="res://Art/Sprites/Beings/clone.png" id="2_jeunk"]
 [ext_resource type="Script" path="res://Scripts/Grids/GridPosition.cs" id="3_4j3lb"]
@@ -408,28 +408,39 @@ blend_point_3/node = SubResource("AnimationNodeAnimation_mecao")
 blend_point_3/pos = Vector2(-1, 0)
 blend_mode = 1
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d7q23"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_csxvx"]
 animation = &"walk_down"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_khmuf"]
-animation = &"walk_right"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vc8mh"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0enle"]
 animation = &"walk_up"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5i56t"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xl304"]
+animation = &"walk_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lgffu"]
 animation = &"walk_left"
 
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_70xc5"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_d7q23")
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_onms6"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_csxvx")
 blend_point_0/pos = Vector2(0, 1)
-blend_point_1/node = SubResource("AnimationNodeAnimation_khmuf")
-blend_point_1/pos = Vector2(1, 0)
-blend_point_2/node = SubResource("AnimationNodeAnimation_vc8mh")
-blend_point_2/pos = Vector2(0, -1)
-blend_point_3/node = SubResource("AnimationNodeAnimation_5i56t")
+blend_point_1/node = SubResource("AnimationNodeAnimation_0enle")
+blend_point_1/pos = Vector2(0, -1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_xl304")
+blend_point_2/pos = Vector2(1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_lgffu")
 blend_point_3/pos = Vector2(-1, 0)
 blend_mode = 1
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_uteyi"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_p2mg4"]
+graph_offset = Vector2(-272, -27.5)
+nodes/direction/node = SubResource("AnimationNodeBlendSpace2D_onms6")
+nodes/direction/position = Vector2(-10, 70)
+nodes/output/position = Vector2(340, 110)
+nodes/speed/node = SubResource("AnimationNodeTimeScale_uteyi")
+nodes/speed/position = Vector2(170, 90)
+node_connections = [&"output", 0, &"speed", &"speed", 0, &"direction"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sr0nb"]
 advance_mode = 2
@@ -443,8 +454,8 @@ states/eating/node = SubResource("AnimationNodeBlendSpace2D_05doh")
 states/eating/position = Vector2(383.571, 194.5)
 states/idling/node = SubResource("AnimationNodeBlendSpace2D_fkfpo")
 states/idling/position = Vector2(231.336, 141.105)
-states/moving/node = SubResource("AnimationNodeBlendSpace2D_70xc5")
-states/moving/position = Vector2(383.589, 85.3125)
+states/moving/node = SubResource("AnimationNodeBlendTree_p2mg4")
+states/moving/position = Vector2(382.428, 92)
 transitions = ["Start", "idling", SubResource("AnimationNodeStateMachineTransition_sr0nb")]
 graph_offset = Vector2(-91, -8)
 
@@ -517,7 +528,8 @@ advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../Sprite2D/AnimationPlayer")
 parameters/eating/blend_position = Vector2(0, 0)
 parameters/idling/blend_position = Vector2(0, 0)
-parameters/moving/blend_position = Vector2(0, 0)
+parameters/moving/direction/blend_position = Vector2(0, 0)
+parameters/moving/speed/scale = 2.0
 
 [node name="CloneAnimator" type="Node" parent="." node_paths=PackedStringArray("_mover", "_foodConsumer", "_death", "_animationTree")]
 script = ExtResource("10_0mckm")

@@ -19,7 +19,7 @@ public partial class JobExecutor : Node
         _jobScheduler = Owner.GetNode<JobScheduler>("../%JobScheduler");
         _jobScheduler.AddExecutor(this);
 
-        _death.OnDeath += OnDeath;
+        _death.Died += OnDied;
     }
 
     public override void _Notification(int what)
@@ -38,7 +38,7 @@ public partial class JobExecutor : Node
         }
     }
 
-    void OnDeath()
+    void OnDied()
     {
         ProcessMode = ProcessModeEnum.Disabled;
         _taskCanceller.Cancel();

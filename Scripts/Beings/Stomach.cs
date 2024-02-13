@@ -37,12 +37,12 @@ public partial class Stomach : Node
         _itemGrid = Owner.GetNode<EntityGrids>("../%EntityGrids").ItemGrid;
         _jobScheduler = Owner.GetNode<JobScheduler>("../%JobScheduler");
 
-        _death.OnDeath += OnDeath;
+        _death.Died += OnDied;
 
         _caloriesAfterLastMeal = _startCalories;
     }
 
-    void OnDeath()
+    void OnDied()
     {
         ProcessMode = ProcessModeEnum.Disabled;
     }

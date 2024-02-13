@@ -26,9 +26,6 @@
 [node name="Clone" parent="World" instance=ExtResource("5_bx2nj")]
 position = Vector2(672, 288)
 
-[node name="Clone2" parent="World" instance=ExtResource("5_bx2nj")]
-position = Vector2(352, 352)
-
 [node name="Steel" parent="World" instance=ExtResource("4_kf4p2")]
 position = Vector2(416, 224)
 
@@ -47,15 +44,6 @@ position = Vector2(608, 480)
 [node name="ItemAmount" parent="World/PotatoSeed" index="5"]
 _amount = 10
 
-[node name="Clone3" parent="World" instance=ExtResource("5_bx2nj")]
-position = Vector2(862.752, 508.762)
-
-[node name="Clone4" parent="World" instance=ExtResource("5_bx2nj")]
-position = Vector2(436.535, 592.1)
-
-[node name="Clone5" parent="World" instance=ExtResource("5_bx2nj")]
-position = Vector2(754.015, 684.963)
-
 [node name="Nitratine" parent="World" instance=ExtResource("8_xbq5t")]
 position = Vector2(608, 224)
 
@@ -70,6 +58,12 @@ _amount = 100000000
 
 [node name="Potato" parent="World" instance=ExtResource("6_woa12")]
 position = Vector2(864, 288)
+
+[node name="Clone2" parent="World" instance=ExtResource("5_bx2nj")]
+position = Vector2(420.024, 330.356)
+
+[node name="Clone3" parent="World" instance=ExtResource("5_bx2nj")]
+position = Vector2(799.461, 517.243)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 layer = 10
@@ -160,13 +154,9 @@ texture_normal = ExtResource("12_qgu0t")
 
 [editable path="World"]
 [editable path="World/Clone"]
-[editable path="World/Clone2"]
 [editable path="World/Steel"]
 [editable path="World/Dirt"]
 [editable path="World/PotatoSeed"]
-[editable path="World/Clone3"]
-[editable path="World/Clone4"]
-[editable path="World/Clone5"]
 [editable path="World/Nitratine"]
 [editable path="World/Steel2"]
 [editable path="World/Potato"]
