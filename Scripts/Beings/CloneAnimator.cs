@@ -1,41 +1,57 @@
+#nullable enable
 using Godot;
 
 [GlobalClass]
 public partial class CloneAnimator : Node
 {
     [Export]
-    Mover _mover;
+    Mover _mover = null!;
 
     [Export]
-    Death _death;
+    FoodConsumer _foodConsumer = null!;
 
     [Export]
-    AnimationTree _animationTree;
+    Death _death = null!;
+
+    [Export]
+    AnimationTree _animationTree = null!;
+
+    AnimationNodeStateMachinePlayback _playback = null!;
+    Vector2 _direction = Vector2.Down;
 
     public override void _Ready()
     {
-        _mover.Moved += OnMoved;
-        _mover.Stopped += OnStopped;
-        _death.OnDeath += OnDeath;
+        _playback = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
+
+        _mover.Moved += ToMoving;
+        _mover.Stopped += ToIdling;
+        _foodConsumer.StartedConsuming += ToEating;
+        _foodConsumer.StoppedConsuming += ToIdling;
+        _death.OnDeath += ToDying;
     }
 
-    void OnMoved(Vector2 direction)
+    void ToMoving(Vector2 direction)
     {
-        _animationTree.Set("parameters/idle/blend_position", direction);
-        _animationTree.Set("parameters/move/blend_position", direction);
+        _direction = direction;
 
-        _animationTree.Set("parameters/conditions/is_idling", false);
-        _animationTree.Set("parameters/conditions/is_moving", true);
+        _animationTree.Set("parameters/moving/blend_position", _direction);
+        _playback.Travel("moving");
     }
 
-    void OnStopped()
+    void ToIdling()
     {
-        _animationTree.Set("parameters/conditions/is_idling", true);
-        _animationTree.Set("parameters/conditions/is_moving", false);
+        _animationTree.Set("parameters/idling/blend_position", _direction);
+        _playback.Travel("idling");
     }
 
-    void OnDeath()
+    void ToEating()
     {
-        _animationTree.Set("parameters/conditions/died", true);
+        _animationTree.Set("parameters/eating/blend_position", _direction);
+        _playback.Travel("eating");
+    }
+
+    void ToDying()
+    {
+        _playback.Travel("dying");
     }
 }

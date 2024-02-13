@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://dk00qjyfparbs"]
+[gd_scene load_steps=45 format=3 uid="uid://dk00qjyfparbs"]
 
 [ext_resource type="Texture2D" uid="uid://b4ufl76e2uti" path="res://Art/Sprites/Beings/clone.png" id="2_jeunk"]
 [ext_resource type="Script" path="res://Scripts/Grids/GridPosition.cs" id="3_4j3lb"]
@@ -64,6 +64,98 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2i(0, 3)]
+}
+
+[sub_resource type="Animation" id="Animation_x6jpo"]
+resource_name = "eat_down"
+length = 0.625
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3125),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(1, 3), Vector2i(2, 3)]
+}
+
+[sub_resource type="Animation" id="Animation_mown7"]
+resource_name = "eat_left"
+length = 0.625
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3125),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(3, 3), Vector2i(0, 4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_j6h31"]
+resource_name = "eat_right"
+length = 0.625
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3125),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(3, 3), Vector2i(0, 4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ancfr"]
+resource_name = "eat_up"
+length = 0.625
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3125),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(1, 4), Vector2i(2, 4)]
 }
 
 [sub_resource type="Animation" id="Animation_rg2sw"]
@@ -250,6 +342,10 @@ tracks/0/keys = {
 _data = {
 "RESET": SubResource("Animation_opv35"),
 "die": SubResource("Animation_e4b7s"),
+"eat_down": SubResource("Animation_x6jpo"),
+"eat_left": SubResource("Animation_mown7"),
+"eat_right": SubResource("Animation_j6h31"),
+"eat_up": SubResource("Animation_ancfr"),
 "idle_down": SubResource("Animation_rg2sw"),
 "idle_left": SubResource("Animation_52w2d"),
 "idle_right": SubResource("Animation_jwqpf"),
@@ -265,6 +361,29 @@ radius = 13.0
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5et3n"]
 animation = &"die"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uhiev"]
+animation = &"eat_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lsjgq"]
+animation = &"eat_up"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y3p1d"]
+animation = &"eat_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8l1cb"]
+animation = &"eat_left"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_05doh"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_uhiev")
+blend_point_0/pos = Vector2(0, 1)
+blend_point_1/node = SubResource("AnimationNodeAnimation_lsjgq")
+blend_point_1/pos = Vector2(0, -1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_y3p1d")
+blend_point_2/pos = Vector2(1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_8l1cb")
+blend_point_3/pos = Vector2(-1, 0)
+blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6sj2c"]
 animation = &"idle_down"
@@ -315,32 +434,18 @@ blend_mode = 1
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sr0nb"]
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_cipoc"]
-advance_mode = 2
-advance_condition = &"is_moving"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7gdcm"]
-advance_mode = 2
-advance_condition = &"died"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_std3r"]
-advance_mode = 2
-advance_condition = &"died"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_v2yg4"]
-advance_mode = 2
-advance_condition = &"is_idling"
-
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_klild"]
-states/End/position = Vector2(716.5, 141.297)
-states/Start/position = Vector2(169, 141.531)
-states/die/node = SubResource("AnimationNodeAnimation_5et3n")
-states/die/position = Vector2(555, 143.281)
-states/idle/node = SubResource("AnimationNodeBlendSpace2D_fkfpo")
-states/idle/position = Vector2(384.836, 203)
-states/move/node = SubResource("AnimationNodeBlendSpace2D_70xc5")
-states/move/position = Vector2(384.84, 82.8125)
-transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_sr0nb"), "idle", "move", SubResource("AnimationNodeStateMachineTransition_cipoc"), "idle", "die", SubResource("AnimationNodeStateMachineTransition_7gdcm"), "move", "die", SubResource("AnimationNodeStateMachineTransition_std3r"), "move", "idle", SubResource("AnimationNodeStateMachineTransition_v2yg4")]
+states/End/position = Vector2(681, 141.01)
+states/Start/position = Vector2(78.5, 140.914)
+states/dying/node = SubResource("AnimationNodeAnimation_5et3n")
+states/dying/position = Vector2(527, 146.781)
+states/eating/node = SubResource("AnimationNodeBlendSpace2D_05doh")
+states/eating/position = Vector2(383.571, 194.5)
+states/idling/node = SubResource("AnimationNodeBlendSpace2D_fkfpo")
+states/idling/position = Vector2(231.336, 141.105)
+states/moving/node = SubResource("AnimationNodeBlendSpace2D_70xc5")
+states/moving/position = Vector2(383.589, 85.3125)
+transitions = ["Start", "idling", SubResource("AnimationNodeStateMachineTransition_sr0nb")]
 graph_offset = Vector2(-91, -8)
 
 [node name="Clone" type="CharacterBody2D"]
@@ -356,7 +461,7 @@ texture = ExtResource("2_jeunk")
 centered = false
 offset = Vector2(-30, -60)
 hframes = 4
-vframes = 4
+vframes = 5
 region_rect = Rect2(0, 0, 64, 64)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
@@ -410,14 +515,13 @@ libraries = {
 tree_root = SubResource("AnimationNodeStateMachine_klild")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../Sprite2D/AnimationPlayer")
-parameters/conditions/died = false
-parameters/conditions/is_idling = false
-parameters/conditions/is_moving = false
-parameters/idle/blend_position = Vector2(0, 0)
-parameters/move/blend_position = Vector2(0, 0)
+parameters/eating/blend_position = Vector2(0, 0)
+parameters/idling/blend_position = Vector2(0, 0)
+parameters/moving/blend_position = Vector2(0, 0)
 
-[node name="CloneAnimator" type="Node" parent="." node_paths=PackedStringArray("_mover", "_death", "_animationTree")]
+[node name="CloneAnimator" type="Node" parent="." node_paths=PackedStringArray("_mover", "_foodConsumer", "_death", "_animationTree")]
 script = ExtResource("10_0mckm")
 _mover = NodePath("../Mover")
+_foodConsumer = NodePath("../FoodConsumer")
 _death = NodePath("../Death")
 _animationTree = NodePath("../AnimationTree")

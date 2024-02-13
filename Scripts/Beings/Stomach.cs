@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Godot;
@@ -110,7 +109,7 @@ public partial class Stomach : Node
     async Task<bool> ConsumeFood(ulong calories)
     {
         var foodItems = _itemGrid.Filter<FoodItemDef>().CumulateCalories(calories);
-        if (!foodItems.Any())
+        if (foodItems.Length == 0)
             return false;
 
         try

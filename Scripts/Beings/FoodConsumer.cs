@@ -3,6 +3,14 @@ using Godot;
 [GlobalClass]
 public partial class FoodConsumer : Node, IWork
 {
+    static readonly double s_consumptionTimeInterval = .5f;
+
+    [Signal]
+    public delegate void StartedConsumingEventHandler();
+
+    [Signal]
+    public delegate void StoppedConsumingEventHandler();
+
     [Export]
     Backpack _backpack;
 
@@ -12,12 +20,29 @@ public partial class FoodConsumer : Node, IWork
     [Export]
     double _timePerKiloGramConsumed = 2d;
 
+    bool _inProgress;
     double _accumulatedTime;
 
     public bool Work(double time)
     {
+        if (!_inProgress)
+        {
+            _inProgress = true;
+            EmitSignal(SignalName.StartedConsuming);
+        }
+        var finished = Consume(time);
+        if (finished)
+        {
+            _inProgress = false;
+            EmitSignal(SignalName.StoppedConsuming);
+        }
+        return finished;
+    }
+
+    bool Consume(double time)
+    {
         _accumulatedTime += time;
-        if (_accumulatedTime < .5f)
+        if (_accumulatedTime < s_consumptionTimeInterval)
             return false;
 
         var massConsumed = MassConsumed(_accumulatedTime);

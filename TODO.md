@@ -34,7 +34,6 @@
 
 ### Clones
 
-- add an eating animation
 - add an idle animation
 
 ### Items

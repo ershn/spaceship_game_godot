@@ -1,14 +1,12 @@
-[gd_scene load_steps=21 format=3 uid="uid://brkx4ccop5swt"]
+[gd_scene load_steps=19 format=3 uid="uid://brkx4ccop5swt"]
 
 [ext_resource type="PackedScene" uid="uid://biv3s7y002iun" path="res://Scenes/world.tscn" id="2_uoclp"]
 [ext_resource type="PackedScene" uid="uid://u3o0h1pjyu88" path="res://Scenes/Items/steel.tscn" id="4_kf4p2"]
 [ext_resource type="PackedScene" uid="uid://dk00qjyfparbs" path="res://Scenes/clone.tscn" id="5_bx2nj"]
 [ext_resource type="PackedScene" uid="uid://dksv8jjyur3uv" path="res://Scenes/Items/potato.tscn" id="6_woa12"]
 [ext_resource type="PackedScene" uid="uid://b4tok74fst6c6" path="res://Scenes/Items/dirt.tscn" id="7_o7uwl"]
-[ext_resource type="PackedScene" uid="uid://hftbgv5k0fbe" path="res://Scenes/Floors/dirt_floor.tscn" id="8_2kwuf"]
 [ext_resource type="PackedScene" uid="uid://da3m1d1iv3krl" path="res://Scenes/Items/nitratine.tscn" id="8_xbq5t"]
 [ext_resource type="PackedScene" uid="uid://brfsimy3b2vvp" path="res://Scenes/Items/potato_seed.tscn" id="9_ofjc2"]
-[ext_resource type="PackedScene" uid="uid://cjdeojikeu736" path="res://Scenes/Furnitures/potato_plant.tscn" id="9_pnjva"]
 [ext_resource type="Script" path="res://Scripts/UI/HUDInputReader.cs" id="12_lou6x"]
 [ext_resource type="Texture2D" uid="uid://blq0065na0s3v" path="res://Art/Sprites/UI/cancel_button.tres" id="12_qgu0t"]
 [ext_resource type="Texture2D" uid="uid://dtue36l4oc3r3" path="res://Art/Sprites/UI/deconstruct_button.tres" id="12_suycm"]
@@ -24,9 +22,6 @@
 [node name="Game" type="Node2D"]
 
 [node name="World" parent="." instance=ExtResource("2_uoclp")]
-
-[node name="WorldTileMap" parent="World" index="0"]
-layer_0/tile_data = PackedInt32Array(327688, -1, -1)
 
 [node name="Clone" parent="World" instance=ExtResource("5_bx2nj")]
 position = Vector2(672, 288)
@@ -44,7 +39,22 @@ _amount = 100000000
 position = Vector2(480, 416)
 
 [node name="ItemAmount" parent="World/Dirt" index="5"]
-_amount = 50000000
+_amount = 100000000
+
+[node name="PotatoSeed" parent="World" instance=ExtResource("9_ofjc2")]
+position = Vector2(608, 480)
+
+[node name="ItemAmount" parent="World/PotatoSeed" index="5"]
+_amount = 10
+
+[node name="Clone3" parent="World" instance=ExtResource("5_bx2nj")]
+position = Vector2(862.752, 508.762)
+
+[node name="Clone4" parent="World" instance=ExtResource("5_bx2nj")]
+position = Vector2(436.535, 592.1)
+
+[node name="Clone5" parent="World" instance=ExtResource("5_bx2nj")]
+position = Vector2(754.015, 684.963)
 
 [node name="Nitratine" parent="World" instance=ExtResource("8_xbq5t")]
 position = Vector2(608, 224)
@@ -52,23 +62,14 @@ position = Vector2(608, 224)
 [node name="ItemAmount" parent="World/Nitratine" index="5"]
 _amount = 100000000
 
+[node name="Steel2" parent="World" instance=ExtResource("4_kf4p2")]
+position = Vector2(928, 416)
+
+[node name="ItemAmount" parent="World/Steel2" index="5"]
+_amount = 100000000
+
 [node name="Potato" parent="World" instance=ExtResource("6_woa12")]
-position = Vector2(672, 416)
-
-[node name="ItemAmount" parent="World/Potato" index="5"]
-_amount = 5000000
-
-[node name="PotatoSeed" parent="World" instance=ExtResource("9_ofjc2")]
-position = Vector2(608, 480)
-
-[node name="ItemAmount" parent="World/PotatoSeed" index="5"]
-_amount = 5
-
-[node name="DirtFloor" parent="World" instance=ExtResource("8_2kwuf")]
-position = Vector2(544, 352)
-
-[node name="PotatoPlant" parent="World" instance=ExtResource("9_pnjva")]
-position = Vector2(544, 352)
+position = Vector2(864, 288)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 layer = 10
@@ -159,10 +160,13 @@ texture_normal = ExtResource("12_qgu0t")
 
 [editable path="World"]
 [editable path="World/Clone"]
+[editable path="World/Clone2"]
 [editable path="World/Steel"]
 [editable path="World/Dirt"]
-[editable path="World/Nitratine"]
-[editable path="World/Potato"]
 [editable path="World/PotatoSeed"]
-[editable path="World/DirtFloor"]
-[editable path="World/PotatoPlant"]
+[editable path="World/Clone3"]
+[editable path="World/Clone4"]
+[editable path="World/Clone5"]
+[editable path="World/Nitratine"]
+[editable path="World/Steel2"]
+[editable path="World/Potato"]
