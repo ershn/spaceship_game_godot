@@ -41,10 +41,10 @@ public partial class JobScheduler : Node
         public bool Canceled => CancellationToken.IsCancellationRequested;
     }
 
-    readonly HashSet<JobExecutor> _idleExecutors = new();
+    readonly HashSet<JobExecutor> _idleExecutors = [];
 
     readonly Deque<Request> _pendingCommonRequests = new();
-    readonly Dictionary<JobExecutor, Deque<Request>> _pendingExecutorRequests = new();
+    readonly Dictionary<JobExecutor, Deque<Request>> _pendingExecutorRequests = [];
 
     public Task Execute(IJob job, CancellationToken ct)
     {

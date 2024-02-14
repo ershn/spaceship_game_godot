@@ -58,17 +58,14 @@ public partial class Stomach : Node
             _ = TryConsumeFood();
     }
 
-    double CyclesSinceLastMeal() => _timeSinceLastMeal / Clock.CycleLength;
-
-    ulong CaloriesConsumedSinceLastMeal() =>
-        (ulong)(_caloriesConsumedPerCycle * CyclesSinceLastMeal());
-
     ulong CurrentCalories()
     {
-        var caloriesConsumed = CaloriesConsumedSinceLastMeal();
-        return caloriesConsumed > _caloriesAfterLastMeal
-            ? 0
-            : _caloriesAfterLastMeal - caloriesConsumed;
+        var cyclesSinceLastMeal = _timeSinceLastMeal / Clock.CycleLength;
+        var caloriesSinceLastMeal = (ulong)(_caloriesConsumedPerCycle * cyclesSinceLastMeal);
+        if (caloriesSinceLastMeal < _caloriesAfterLastMeal)
+            return _caloriesAfterLastMeal - caloriesSinceLastMeal;
+        else
+            return 0;
     }
 
     public void AddCalories(ulong calories)

@@ -34,13 +34,13 @@ public sealed class EatFoodJob : IJob, IDisposable
 
     public async Task Execute(PhysicsBody2D executor, CancellationToken ct)
     {
-        var movement = executor.GetNode<Mover>("Mover");
+        var mover = executor.GetNode<Mover>("Mover");
         var backpack = executor.GetNode<Backpack>("Backpack");
         try
         {
             foreach (var (itemAmount, markedAmount) in _foodItems)
             {
-                await movement.MoveTo(itemAmount.GlobalPosition, ct);
+                await mover.MoveTo(itemAmount.GlobalPosition, ct);
                 itemAmount.Remove(markedAmount);
                 backpack.Add(itemAmount.Def, markedAmount);
                 nextFoodItemIndex++;

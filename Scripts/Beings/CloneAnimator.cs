@@ -56,6 +56,11 @@ public partial class CloneAnimator : Node
 
     void ToDying()
     {
+        _mover.Moved -= ToMoving;
+        _mover.Stopped -= ToIdling;
+        _foodConsumer.StartedConsuming -= ToEating;
+        _foodConsumer.StoppedConsuming -= ToIdling;
+
         _playback.Travel("dying");
     }
 }
